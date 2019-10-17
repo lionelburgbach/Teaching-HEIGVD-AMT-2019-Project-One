@@ -56,19 +56,20 @@
                         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 ">
                             <div class="register-card">
                                 <h3 class="title">Welcome</h3>
-                                <form action="./registration" method="post" class="register-form">
-                                    <label>Firstname</label>
-                                    <input name="lastname" type="lastname" class="form-control" placeholder="Firstname">
-                                    <label>Lastname</label>
-                                    <input name="lastname" type="lastname" class="form-control" placeholder="Lastname">
-                                    <label>Date</label>
-                                    <input name="email" type="text" class="form-control" placeholder="Date Of Birth">
+                                <form action="./login" method="post" class="register-form">
                                     <label>Email</label>
                                     <input name="email" type="text" class="form-control" placeholder="Email">
                                     <label>Password</label>
                                     <input name="password" type="password" class="form-control" placeholder="Password">
+                                    <button class="btn btn-danger btn-block">Loginr</button>
+                                </form>
+                                <form action="./registration" method="post" class="register-form">
                                     <button class="btn btn-danger btn-block">Register</button>
                                 </form>
+                                <div class="forgot">
+                                    <a href="#" class="btn btn-simple btn-danger">Forgot password?</a>
+                                </div>
+
                             </div>
                         </div>
                     </div>

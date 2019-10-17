@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = "/login")
-public class ConnectServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/registration")
+public class RegisterServlet extends HttpServlet {
 
     @EJB
     private LoginDaoManager loginDao;
@@ -23,7 +23,7 @@ public class ConnectServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(req, resp);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ConnectServlet extends HttpServlet {
         }
         else{
             req.getSession().removeAttribute("fail");
-            req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(req, resp);
         }
         out.close();
     }
