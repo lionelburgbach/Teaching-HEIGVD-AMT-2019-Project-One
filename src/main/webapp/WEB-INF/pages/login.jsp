@@ -61,7 +61,7 @@
                                     <input name="email" type="text" class="form-control" placeholder="Email">
                                     <label>Password</label>
                                     <input name="password" type="password" class="form-control" placeholder="Password">
-                                    <button class="btn btn-danger btn-block">Loginr</button>
+                                    <button class="btn btn-danger btn-block">Login</button>
                                 </form>
                                 <form action="./registration" method="post" class="register-form">
                                     <button class="btn btn-danger btn-block">Register</button>
