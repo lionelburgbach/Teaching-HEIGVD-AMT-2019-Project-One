@@ -3,9 +3,6 @@ package ch.heigvd.amt.projectOne.model;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.Date;
-import java.util.List;
-
 @Builder
 @Getter
 public class User {
@@ -15,7 +12,15 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    private Date dateOfBirth;
-    private List<Result> resultList;
-    private String imagePath;
+    //private Date dateOfBirth;
+    //private List<Result> resultList;
+    //private String imagePath;
+
+    public User(long id, String email, String password, String firstName, String lastName){
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }
