@@ -48,7 +48,7 @@
       </div><!-- /.container-->
     </nav> 
     
-    <div class="wrapper">
+    <div class="wrapper" id="test">
         <div class="register-background"> 
             <div class="filter-black"></div>
                 <div class="container">
@@ -63,9 +63,9 @@
                                     <input name="password" type="password" class="form-control" placeholder="Password">
                                     <button class="btn btn-danger btn-block">Login</button>
                                 </form>
-                                <form action="./registration" method="post" class="register-form">
-                                    <button class="btn btn-danger btn-block">Register</button>
-                                </form>
+
+                                <button onclick="getRegister()" class="btn btn-danger btn-block">Register</button>
+
                                 <div class="forgot">
                                     <a href="#" class="btn btn-simple btn-danger">Forgot password?</a>
                                 </div>
@@ -94,5 +94,39 @@
 <script src="./assets/js/bootstrap-datepicker.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
+
+<script>
+    function getRegister()
+    {
+        document.getElementById("test").innerHTML='<div class="register-background">\n' +
+            '        <div class="filter-black"></div>\n' +
+            '        <div class="container">\n' +
+            '            <div class="row">\n' +
+            '                <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 ">\n' +
+            '                    <div class="register-card">\n' +
+            '                        <h3 class="title">Welcome</h3>\n' +
+            '                        <form action="./registration" method="post" class="register-form">\n' +
+            '                            <label>Firstname</label>\n' +
+            '                            <input name="firstname" type="text" class="form-control" placeholder="Firstname">\n' +
+            '                            <label>Lastname</label>\n' +
+            '                            <input name="lastname" type="text" class="form-control" placeholder="Lastname">\n' +
+            '                            <label>Date</label>\n' +
+            '                            <input name="date" type="text" class="form-control" placeholder="Date Of Birth">\n' +
+            '                            <label>Email</label>\n' +
+            '                            <input name="email" type="text" class="form-control" placeholder="Email">\n' +
+            '                            <label>Password</label>\n' +
+            '                            <input name="password" type="password" class="form-control" placeholder="Password">\n' +
+            '                            <button class="btn btn-danger btn-block">Register</button>\n' +
+            '                        </form>\n' +
+            '                    </div>\n' +
+            '                </div>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '        <div class="footer register-footer text-center">\n' +
+            '            <h6>GBLB</h6>\n' +
+            '        </div>\n' +
+            '    </div>';
+    }
+</script>
     
 </html>

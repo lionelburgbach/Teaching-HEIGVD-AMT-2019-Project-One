@@ -1,7 +1,6 @@
 package ch.heigvd.amt.projectOne.presentation;
 
 import ch.heigvd.amt.projectOne.services.dao.LoginDaoManager;
-import ch.heigvd.amt.projectOne.services.dao.UsersManagerLocal;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -17,9 +16,6 @@ public class ConnectServlet extends HttpServlet {
 
     @EJB
     private LoginDaoManager loginDao;
-
-    @EJB
-    private UsersManagerLocal usersManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,7 +34,6 @@ public class ConnectServlet extends HttpServlet {
         String p=req.getParameter("password");
 
         if(loginDao.connect(n, p)){
-            req.setAttribute("users", usersManager.findAllUsers());
             req.getRequestDispatcher("/WEB-INF/pages/landing.jsp").forward(req, resp);
         }
         else{
