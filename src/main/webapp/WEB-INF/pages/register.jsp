@@ -34,25 +34,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="www.creative-tim.com">Creative Tim</a>
+          <a class="navbar-brand" href="#">Trail</a>
         </div>
-    
+
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navigation-example-2">
           <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="#" class="btn btn-simple">Components</a>
+                <a href="#" class="btn btn-simple">AMT 2019</a>
             </li>
-            <li>
-                <a href="#" class="btn btn-simple">Tutorial</a>
-            </li>
-            <li>
-                <a href="#" target="_blank" class="btn btn-simple"><i class="fa fa-twitter"></i></a>
-            </li>
-            <li>
-                <a href="#" target="_blank" class="btn btn-simple"><i class="fa fa-facebook"></i></a>
-            </li>
-           </ul>
+
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-->
     </nav> 
@@ -81,7 +72,7 @@
                     </div>
                 </div>     
             <div class="footer register-footer text-center">
-                    <h6>&copy; 2015, made with <i class="fa fa-heart heart"></i> by Creative Tim</h6>
+                    <h6>GBLB</h6>
             </div>
         </div>
     </div>      
