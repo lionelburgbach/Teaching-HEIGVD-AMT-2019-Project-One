@@ -45,7 +45,7 @@ public class RegisterServlet extends HttpServlet {
         registerDao.addUser(f, l, date, e, p);
 
         if(registerDao.addUser(f, l, date, e, p)){
-            req.getRequestDispatcher("/WEB-INF/pages/landing.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
         }
         else{
             req.getSession().removeAttribute("fail");

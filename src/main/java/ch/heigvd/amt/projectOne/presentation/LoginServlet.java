@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
         String p=req.getParameter("password");
 
         if(loginDao.connect(n, p)){
-            req.getRequestDispatcher("/WEB-INF/pages/landing.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
         }
         else{
             req.getSession().removeAttribute("fail");
