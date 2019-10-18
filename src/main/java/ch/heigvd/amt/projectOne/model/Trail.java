@@ -9,6 +9,7 @@ import java.util.Date;
 @Getter
 public class Trail {
 
+    private long id;
     private String name;
     private double length;
     private double upAndDown;

@@ -28,22 +28,14 @@
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Trail</a>
+          <a class="navbar-brand">Trail</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navigation-example-2">
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a href="#" class="btn btn-simple">AMT 2019</a>
-            </li>
-
+          <div class="nav navbar-nav navbar-right">
+                <a class="btn btn-simple">AMT 2019</a>
+          </div>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-->
     </nav> 
@@ -106,16 +98,16 @@
             '                    <div class="register-card">\n' +
             '                        <h3 class="title">Welcome</h3>\n' +
             '                        <form action="./registration" method="post" class="register-form">\n' +
+            '                            <label>Email</label>\n' +
+            '                            <input name="email" type="text" class="form-control" placeholder="Email">\n' +
+            '                            <label>Password</label>\n' +
+            '                            <input name="password" type="password" class="form-control" placeholder="Password">\n' +
             '                            <label>Firstname</label>\n' +
             '                            <input name="firstname" type="text" class="form-control" placeholder="Firstname">\n' +
             '                            <label>Lastname</label>\n' +
             '                            <input name="lastname" type="text" class="form-control" placeholder="Lastname">\n' +
             '                            <label>Date</label>\n' +
             '                            <input name="date" type="text" class="form-control" placeholder="Date Of Birth">\n' +
-            '                            <label>Email</label>\n' +
-            '                            <input name="email" type="text" class="form-control" placeholder="Email">\n' +
-            '                            <label>Password</label>\n' +
-            '                            <input name="password" type="password" class="form-control" placeholder="Password">\n' +
             '                            <button class="btn btn-danger btn-block">Register</button>\n' +
             '                        </form>\n' +
             '                    </div>\n' +

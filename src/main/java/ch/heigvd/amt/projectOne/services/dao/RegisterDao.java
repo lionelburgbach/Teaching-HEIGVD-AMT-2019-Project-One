@@ -19,26 +19,23 @@ public class RegisterDao implements RegisterDaoManager {
     @Override
     public boolean addUser(String firstname, String lastname, Date date, String email, String password) {
 
-        boolean up = false;
+        int rs = 0;
 
         try{
             Connection connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO user (firstname, lastname, email, password)\n" +
-                    "VALUES (?, ?, ?, ?, ?);");
+                    "VALUES (?, ?, ?, ?);");
             pstmt.setObject(1, firstname);
             pstmt.setObject(2, lastname);
             //pstmt.setObject(3, date);
             pstmt.setObject(3, email);
             pstmt.setObject(4, password);
-            int rs = pstmt.executeUpdate();
-            if(rs == 1){
-                up = true;
-            }
+            rs = pstmt.executeUpdate();
             connection.close();
         }catch (SQLException ex){
 
             Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return up;
+        return (rs == 1);
     }
 }
