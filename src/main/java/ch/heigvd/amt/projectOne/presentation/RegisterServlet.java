@@ -1,6 +1,6 @@
 package ch.heigvd.amt.projectOne.presentation;
 
-import ch.heigvd.amt.projectOne.services.dao.RegisterDaoManager;
+import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -10,16 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @WebServlet(urlPatterns = "/registration")
 public class RegisterServlet extends HttpServlet {
 
 
     @EJB
-    private RegisterDaoManager registerDao;
+    private UsersDaoLocal userManager;
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -35,17 +32,14 @@ public class RegisterServlet extends HttpServlet {
         String e=req.getParameter("email");
         String p=req.getParameter("password");
 
-        Date date = null;
-        try {
-            date = new SimpleDateFormat("dd/MM/yyyy").parse(d);
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
+        String[] s = d.split("-");
+        String day = s[0];
+        String month = s[1];
+        String year = s[2];
+        String date = year+"/"+month+"/"+day;
 
-        registerDao.addUser(f, l, date, e, p);
-
-        if(registerDao.addUser(f, l, date, e, p)){
-            req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
+        if(userManager.addUser(f, l, date, e, p)){
+            req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
         }
         else{
             req.getSession().removeAttribute("fail");

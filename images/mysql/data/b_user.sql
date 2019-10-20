@@ -11,6 +11,6 @@ USE sakila;
 
 SET AUTOCOMMIT=0;
 
-INSERT INTO user VALUES (1,'lionel','burgbacher','lionel.burgbacher@heig-vd.ch','lionel');
-INSERT INTO user VALUES (2,'adlg','adlg','adlg@amt.ch','amt');
+INSERT INTO user VALUES (1,'lionel','burgbacher','lionel.burgbacher@heig-vd.ch','lionel','1989-03-05');
+INSERT INTO user VALUES (2,'amt','amt','amt@amt.ch','amt','2019-10-10');
 COMMIT;

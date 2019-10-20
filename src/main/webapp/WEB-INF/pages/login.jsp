@@ -107,7 +107,7 @@
             '                            <label>Lastname</label>\n' +
             '                            <input name="lastname" type="text" class="form-control" placeholder="Lastname">\n' +
             '                            <label>Date</label>\n' +
-            '                            <input name="date" type="text" class="form-control" placeholder="Date Of Birth">\n' +
+            '                            <input name="date" type="text" class="form-control" placeholder="dd-mm-yyyy">\n' +
             '                            <button class="btn btn-danger btn-block">Register</button>\n' +
             '                        </form>\n' +
             '                    </div>\n' +
