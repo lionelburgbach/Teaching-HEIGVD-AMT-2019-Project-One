@@ -12,10 +12,7 @@ public class TrailServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getSession().getAttribute("email") != null) {
-            req.getRequestDispatcher("/WEB-INF/pages/trail.jsp").forward(req, resp);
-        } else {
-            resp.sendRedirect("login");
-        }
+
+        req.getRequestDispatcher("/WEB-INF/pages/trail.jsp").forward(req, resp);
     }
 }

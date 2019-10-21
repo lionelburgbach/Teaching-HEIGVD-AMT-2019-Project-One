@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,19 +31,25 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
+        <% if (session.getAttribute("email") != null){ %>
         <a class="navbar-brand js-scroll-trigger" href="home">Home</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fas fa-bars"></i>
         </button>
+        <% } else { %>
+        <a class="navbar-brand js-scroll-trigger" href="login">Login</a>
+        <% } %>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="trail">Trails</a>
             </li>
+            <% if (session.getAttribute("email") != null){ %>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="profile">Profile</a>
             </li>
+            <% } %>
             <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="logout">Logout</a>
               </li>

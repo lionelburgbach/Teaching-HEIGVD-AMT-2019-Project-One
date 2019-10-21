@@ -104,9 +104,9 @@ public class UserDao implements UsersDaoLocal {
             PreparedStatement pstmt = connection.prepareStatement("UPDATE user SET firstname=?, lastname=?, email=?, password=?, date=?");
             pstmt.setObject(1, firstname);
             pstmt.setObject(2, lastname);
-            pstmt.setObject(3, date);
             pstmt.setObject(3, email);
             pstmt.setObject(4, password);
+            pstmt.setObject(5, date);
             rs = pstmt.executeUpdate();
             connection.close();
         }catch (SQLException ex){
