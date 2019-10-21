@@ -30,16 +30,16 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
 
-        String n=req.getParameter("email");
-        String p=req.getParameter("password");
-        session.setAttribute("email", n);
+        String email =req.getParameter("email");
+        String password =req.getParameter("password");
+        session.setAttribute("email", email);
 
-        if(loginDao.connect(n, p)){
-            req.setAttribute("email", n);
+        if(loginDao.connect(email, password)){
+            req.setAttribute("email", email);
             req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
         }
         else{
-            req.getSession().removeAttribute("fail");
+            req.getSession().removeAttribute("email");
             req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
         }
     }

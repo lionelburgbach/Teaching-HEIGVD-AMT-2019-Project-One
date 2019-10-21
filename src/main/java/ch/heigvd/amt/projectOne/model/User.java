@@ -15,7 +15,6 @@ public class User {
     private String firstName;
     private String lastName;
     private String dateOfBirth;
-    //private Map<Integer, Result> resultList;
     //private String imagePath;
 
     public User(long id, String email, String password, String firstName, String lastName, String dateOfBirth){

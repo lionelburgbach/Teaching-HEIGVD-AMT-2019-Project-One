@@ -9,10 +9,18 @@ class TrailTest {
     @Test
     void itShouldBePossibleToHave100Trailers() {
 
-        Trail trail = Trail.builder()
-                .capacity(100)
-                .build();
+        Trail trail = new Trail(1, "GR", 43, 2359, "Best trail ever", 100, 0, "05-11-2019");
         assertEquals(trail.getCapacity(), 100);
+    }
+
+    @Test
+    void failToAddNewTrailer() {
+
+        Trail trail = new Trail(1, "GR", 43, 2359, "Best trail ever", 10, 0, "05-11-2019");
+        for (int i = 0; i< 10; i++){
+            trail.addTrailer();
+        }
+        assertEquals(trail.addTrailer(), false);
     }
 
 }

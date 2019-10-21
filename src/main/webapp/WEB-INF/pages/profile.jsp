@@ -52,9 +52,17 @@
     </nav>
 
   <!-- Header -->
-  <header class="masthead">
-    <div class="container d-flex h-100 align-items-center">
+  <header class="masthead" sytle="padding-top:50px;">
+    <div class="container d-flex h-100 align-items-center" style="background:#0f0f0f;">
       <div class="mx-auto text-center">
+          <div class="text-white col-sm">
+              <img src="./grayscale/img/me.png" style="width:10%;" class="img-fluid" alt="">
+              <p style="padding-top: 50px;">One of three columns</p>
+          </div>
+          <div class="text-white col-sm" style="padding-bottom: 40px;">
+              <img src="./grayscale/img/silver.png" style="width:10%;" class="img-fluid" alt="">
+              <p style="padding-top: 50px;">One of three columns</p>
+          </div>
       </div>
     </div>
   </header>

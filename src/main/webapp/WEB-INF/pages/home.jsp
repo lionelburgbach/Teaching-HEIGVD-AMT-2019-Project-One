@@ -46,9 +46,6 @@
           <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="logout">Logout</a>
             </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="logout">${sessionScope.email}</a>
-          </li>
         </ul>
       </div>
     </div>

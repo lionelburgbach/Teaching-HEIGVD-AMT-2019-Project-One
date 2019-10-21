@@ -56,7 +56,6 @@
     <div class="container d-flex h-100 align-items-center">
       <div class="mx-auto text-center">
         <h1 class="mx-auto my-0 text-uppercase">Trail</h1>
-        <a href="#about" class="btn btn-dark js-scroll-trigger">Results</a>
       </div>
     </div>
   </header>

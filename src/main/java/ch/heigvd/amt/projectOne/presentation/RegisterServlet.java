@@ -39,6 +39,7 @@ public class RegisterServlet extends HttpServlet {
         String date = year+"/"+month+"/"+day;
 
         if(userManager.addUser(f, l, date, e, p)){
+            req.setAttribute("email", e);
             req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
         }
         else{
