@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 
 @WebServlet(urlPatterns = "/registration")
 public class RegisterServlet extends HttpServlet {
-
 
     @EJB
     private UsersDaoManager userManager;
@@ -38,7 +38,12 @@ public class RegisterServlet extends HttpServlet {
         String year = s[2];
         String date = year+"/"+month+"/"+day;
 
-        if(userManager.addUser(f, l, date, e, p,1)){
+        int yearInt = Integer.parseInt(year);
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        int diff = currentYear-yearInt;
+        int category = category(diff);
+
+        if(userManager.addUser(f, l, date, e, p,category)){
             req.setAttribute("email", e);
             req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
         }
@@ -47,5 +52,22 @@ public class RegisterServlet extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
         }
         out.close();
+    }
+
+    public int category(int diff){
+
+        if(diff <= 10){
+            return 1;
+        }
+        else if(diff > 10 && diff <= 16){
+            return 2;
+        }
+        else if(diff > 16 && diff <= 50){
+            return 3;
+        }
+        else if(diff > 50){
+            return  4;
+        }
+        return -1;
     }
 }
