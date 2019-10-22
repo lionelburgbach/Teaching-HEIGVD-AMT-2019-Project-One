@@ -1,6 +1,6 @@
 package ch.heigvd.amt.projectOne.presentation;
 
-import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
+import ch.heigvd.amt.projectOne.services.dao.UsersDaoManager;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -15,7 +15,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     @EJB
-    private UsersDaoLocal loginDao;
+    private UsersDaoManager loginDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

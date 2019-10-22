@@ -69,12 +69,27 @@
 
   <!-- About Section -->
   <section id="about" class="about-section text-center">
-    <div class="container">
+    <div class="container" style="color: white;">
       <div class="row">
-        <div class="col-lg-8 mx-auto">
-          <h2 class="text-white mb-4">Built with Bootstrap 4</h2>
-          <p class="text-white-50">Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now, simply download the template on
-            <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
+        <div class="table-responsive-lg">
+          <table class="table table-dark">
+            <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Length</th>
+              <th scope="col">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${trails}" var="trail">
+              <tr>
+                <td>${trail.name}</td>
+                <td>${trail.length} KM</td>
+                <td>${trail.description}</td>
+              </tr>
+            </c:forEach>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Stateless
-public class UserDao implements UsersDaoLocal {
+public class UserDao implements UsersDaoManager {
 
     @Resource(lookup = "java:/jdbc/sakila")
     private DataSource dataSource;
@@ -59,7 +59,8 @@ public class UserDao implements UsersDaoLocal {
                 String mail = rs.getString("email");
                 String password = rs.getString("password");
                 String date = rs.getString("date");
-                user = new User(id, mail, password, firstname, lastname, date);
+                int category = rs.getInt("category");
+                user = new User(id, mail, password, firstname, lastname, date, category);
             }
             connection.close();
         }catch (SQLException ex){
@@ -71,19 +72,20 @@ public class UserDao implements UsersDaoLocal {
 
     //CREATE
     @Override
-    public boolean addUser(String firstname, String lastname, String date, String email, String password) {
+    public boolean addUser(String firstname, String lastname, String date, String email, String password, int category) {
 
         int rs = 0;
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO user (firstname, lastname, email, password, date)\n" +
-                    "VALUES (?, ?, ?, ?, ?);");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO user (firstname, lastname, email, password, date, category)\n" +
+                    "VALUES (?, ?, ?, ?, ?,?);");
             pstmt.setObject(1, firstname);
             pstmt.setObject(2, lastname);
             pstmt.setObject(3, email);
             pstmt.setObject(4, password);
             pstmt.setObject(5, date);
+            pstmt.setObject(6, category);
             rs = pstmt.executeUpdate();
             connection.close();
         }catch (SQLException ex){
@@ -95,18 +97,19 @@ public class UserDao implements UsersDaoLocal {
 
     //UPDATE
     @Override
-    public boolean updateUser(String firstname, String lastname, String date, String email, String password) {
+    public boolean updateUser(String firstname, String lastname, String date, String email, String password, int category) {
 
         int rs = 0;
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("UPDATE user SET firstname=?, lastname=?, email=?, password=?, date=?");
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE user SET firstname=?, lastname=?, email=?, password=?, date=?, category=?");
             pstmt.setObject(1, firstname);
             pstmt.setObject(2, lastname);
             pstmt.setObject(3, email);
             pstmt.setObject(4, password);
             pstmt.setObject(5, date);
+            pstmt.setObject(6, category);
             rs = pstmt.executeUpdate();
             connection.close();
         }catch (SQLException ex){

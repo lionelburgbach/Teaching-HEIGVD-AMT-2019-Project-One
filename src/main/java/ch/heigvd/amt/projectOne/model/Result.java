@@ -6,9 +6,9 @@ import lombok.Getter;
 public class Result {
 
     private User user;
-    private double time;
+    private int time;
 
-    public Result(int idUser, User user){
+    public Result(User user, int time){
         this.user = user;
         this.time = time;
     }

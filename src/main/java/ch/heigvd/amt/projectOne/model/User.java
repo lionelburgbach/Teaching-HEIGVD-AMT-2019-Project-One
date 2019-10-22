@@ -15,14 +15,16 @@ public class User {
     private String firstName;
     private String lastName;
     private String dateOfBirth;
+    private int category;
     //private String imagePath;
 
-    public User(long id, String email, String password, String firstName, String lastName, String dateOfBirth){
+    public User(long id, String email, String password, String firstName, String lastName, String dateOfBirth, int category){
         this.id = id;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
+        this.category = category;
     }
 }

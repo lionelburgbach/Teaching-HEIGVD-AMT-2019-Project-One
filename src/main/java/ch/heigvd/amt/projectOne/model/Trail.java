@@ -15,18 +15,25 @@ public class Trail {
     private int capacity;
     private int nbIn;
     private String date;
-    private List<Result>results;
+    private List<Result> results;
 
-    public Trail(long id, String name, double length, double upAndDown, String description, int capacity, int nbIn, String date){
+    public Trail(long id, String name, double length, double upAndDown, String description, int capacity, String date){
         this.id = id;
         this.name = name;
         this.length = length;
         this.upAndDown = upAndDown;
         this.description = description;
         this.capacity = capacity;
-        this.nbIn = nbIn;
         this.date = date;
-        results = new ArrayList<Result>();
+        this.nbIn = 0;
+        this.results = new ArrayList<>();
+    }
+
+    private class SortbyTime implements Comparator<Result> {
+
+        public int compare(Result a, Result b) {
+            return a.getTime() - b.getTime();
+        }
     }
 
     public boolean addTrailer(){
@@ -41,13 +48,29 @@ public class Trail {
     }
 
     public void addResult(Result res){
-       results.add(res);
+        results.add(res);
     }
 
-    public void resluts(){
+    public List<Result> results(int categorie){
 
-
+        ArrayList<Result> resultsByCategory = new ArrayList<>();
+        for (Result res : results) {
+            if(res.getUser().getCategory() == categorie){
+                resultsByCategory.add(res);
+            }
+        }
+        Collections.sort(resultsByCategory, new SortbyTime());
+        return  resultsByCategory;
     }
 
+    public int resultUser(User user){
 
+        List<Result> results = results(user.getCategory());
+        for(int i = 0; i< results.size(); i++){
+            if(results.get(i).getUser() == user){
+                return  i+1;
+            }
+        }
+        return -1;
+    }
 }

@@ -1,6 +1,6 @@
 package ch.heigvd.amt.projectOne.presentation;
 
-import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
+import ch.heigvd.amt.projectOne.services.dao.UsersDaoManager;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -16,7 +16,7 @@ public class RegisterServlet extends HttpServlet {
 
 
     @EJB
-    private UsersDaoLocal userManager;
+    private UsersDaoManager userManager;
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -38,7 +38,7 @@ public class RegisterServlet extends HttpServlet {
         String year = s[2];
         String date = year+"/"+month+"/"+day;
 
-        if(userManager.addUser(f, l, date, e, p)){
+        if(userManager.addUser(f, l, date, e, p,1)){
             req.setAttribute("email", e);
             req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
         }
