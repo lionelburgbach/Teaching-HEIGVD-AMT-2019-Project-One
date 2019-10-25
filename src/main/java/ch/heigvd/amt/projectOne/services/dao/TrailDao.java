@@ -5,6 +5,9 @@ import ch.heigvd.amt.projectOne.model.Trail;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,10 +18,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Stateless
-public class TrailDao implements TrailDaoManager {
+public class TrailDao implements TrailDaoLocal {
 
     @Resource(lookup = "java:/jdbc/sakila")
     private DataSource dataSource;
+
+    private static final Logger LOG = Logger.getLogger(TrailDao.class.getName());
 
     //READ
     @Override
@@ -32,12 +37,12 @@ public class TrailDao implements TrailDaoManager {
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
                 String name = rs.getString("name");
-                double length = rs.getDouble("length");
+                double distance = rs.getDouble("length");
                 double upAndDown = rs.getDouble("up_and_down");
                 String description = rs.getString("description");
                 int capacity = rs.getInt("capacity");
                 String date = rs.getString("date");
-                trail = new Trail(id, name, length, upAndDown, description, capacity, date);
+                trail = new Trail(id, name, distance, upAndDown, description, capacity, date);
             }
             connection.close();
         }catch (SQLException ex){
@@ -59,12 +64,12 @@ public class TrailDao implements TrailDaoManager {
             while(rs.next()){
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
-                double length = rs.getDouble("length");
+                double distance = rs.getDouble("length");
                 double upAndDown = rs.getDouble("up_and_down");
                 String description = rs.getString("description");
                 int capacity = rs.getInt("capacity");
                 String date = rs.getString("date");
-                trails.add(new Trail(id, name, length, upAndDown, description, capacity, date));
+                trails.add(new Trail(id, name, distance, upAndDown, description, capacity, date));
             }
             connection.close();
         }catch (SQLException ex){
@@ -74,9 +79,50 @@ public class TrailDao implements TrailDaoManager {
         return trails;
     }
 
+    //READ
+    /*
+    @Override
+    public List<Trail> allTrailGen() {
+
+        List<Trail> trails = new ArrayList<>();
+        try{
+            Connection connection = dataSource.getConnection();
+            String entityName = "Trail";
+            String className = "ch.heigvd.amt.projectOne.model." + entityName;
+            String tableName = entityName.toLowerCase();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM " + tableName);
+            ResultSet rs = pstmt.executeQuery();
+            Class entityClass = Class.forName(className);
+            PropertyDescriptor[] properties = Introspector.getBeanInfo(entityClass).getPropertyDescriptors();
+
+            while(rs.next()){
+                Object entity;
+                entity = entityClass.newInstance();
+                for (PropertyDescriptor property : properties) {
+                    Method method = property.getWriteMethod();
+                    String columnName = property.getName();
+                    try {
+                        method.invoke(entity, rs.getObject(columnName));
+                    }
+                    catch(SQLException e){
+                        LOG.warning("Could not retrieve value for property " + property.getName() + " in result set. " + e.getMessage());
+
+                    }
+                }
+                trails.add((Trail)entity);
+            }
+            connection.close();
+        }catch (Exception ex){
+
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return trails;
+    }
+     */
+
     //CREATE
     @Override
-    public boolean addTrail(String name, double length, double upAndDown, String description, int capacity, String date) {
+    public boolean addTrail(String name, double distance, double upAndDown, String description, int capacity, String date) {
 
         int rs = 0;
 
@@ -85,7 +131,7 @@ public class TrailDao implements TrailDaoManager {
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO user (name, length, up_and_down, description, capacity, date)\n" +
                     "VALUES (?, ?, ?, ?, ?,?);");
             pstmt.setObject(1, name);
-            pstmt.setObject(2, length);
+            pstmt.setObject(2, distance);
             pstmt.setObject(3, upAndDown);
             pstmt.setObject(4, description);
             pstmt.setObject(5, capacity);
@@ -101,7 +147,7 @@ public class TrailDao implements TrailDaoManager {
 
     //UPDATE
     @Override
-    public boolean updateTrail(String name, double length, double upAndDown, String description, int capacity, String date) {
+    public boolean updateTrail(String name, double distance, double upAndDown, String description, int capacity, String date) {
 
         int rs = 0;
 
@@ -109,7 +155,7 @@ public class TrailDao implements TrailDaoManager {
             Connection connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("UPDATE trail SET name=?, length=?, up_and_down=?, description=?, capacity=?, date=?");
             pstmt.setObject(1, name);
-            pstmt.setObject(2, length);
+            pstmt.setObject(2, distance);
             pstmt.setObject(3, upAndDown);
             pstmt.setObject(4, description);
             pstmt.setObject(5, capacity);

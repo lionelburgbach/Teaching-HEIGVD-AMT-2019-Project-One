@@ -1,6 +1,7 @@
 package ch.heigvd.amt.projectOne.presentation;
 
-import ch.heigvd.amt.projectOne.services.dao.UsersDaoManager;
+import ch.heigvd.amt.projectOne.model.User;
+import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -15,7 +16,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     @EJB
-    private UsersDaoManager loginDao;
+    private UsersDaoLocal loginDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,17 +30,16 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
 
-
         String email =req.getParameter("email");
         String password =req.getParameter("password");
-        session.setAttribute("email", email);
 
-        if(loginDao.connect(email, password)){
-            req.setAttribute("email", email);
+        User user = loginDao.connect(email, password);
+
+        if(user != null){
+            session.setAttribute("user", user);
             req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
         }
         else{
-            req.getSession().removeAttribute("email");
             req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
         }
     }

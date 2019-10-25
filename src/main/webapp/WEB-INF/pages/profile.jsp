@@ -30,7 +30,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="home">Home</a>
+        <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="home">Home</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fas fa-bars"></i>
@@ -38,13 +38,13 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="trail">Trails</a>
+              <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="trail">Trails</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="profile">Profile</a>
+              <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="profile">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="logout">Logout</a>
+                <a class="nav-link js-scroll-trigger"  style="color: #B33C12; font-size: 22px;" href="logout">Logout</a>
               </li>
           </ul>
         </div>
@@ -52,20 +52,41 @@
     </nav>
 
   <!-- Header -->
-  <header class="masthead" sytle="padding-top:50px;">
-    <div class="container d-flex h-100 align-items-center" style="background:#0f0f0f;">
+  <header class="masthead">
+    <div class="container d-flex h-100 align-items-center">
       <div class="mx-auto text-center">
-          <div class="text-white col-sm">
-              <img src="./grayscale/img/me.png" style="width:10%;" class="img-fluid" alt="">
-              <p style="padding-top: 50px;">One of three columns</p>
-          </div>
-          <div class="text-white col-sm" style="padding-bottom: 40px;">
-              <img src="./grayscale/img/silver.png" style="width:10%;" class="img-fluid" alt="">
-              <p style="padding-top: 50px;">One of three columns</p>
-          </div>
+        <h1 class="mx-auto my-0 text-uppercase">PROFILE</h1>
       </div>
     </div>
   </header>
+
+  <!-- About Section -->
+  <section id="about" class="about-section text-center" style="min-height: 850px;">
+    <div class="container">
+      <h2 class="text-white mb-4">Results</h2>
+      <div class="row">
+        <div class="container">
+          <div class="row">
+            <div class="text-white col-sm">
+              <img src="./grayscale/img/gold.png" style="width:50%;" class="img-fluid" alt="">
+              <p style="padding-top: 50px;">One of three columns</p>
+            </div>
+            <div class="text-white col-sm" style="padding-bottom: 40px;">
+              <table class="table table-dark">
+                <tr>
+                  <td>${user.firstName}</td>
+                </tr>
+                <tr>
+                  <td>${user.firstName}</td>
+                </tr>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
    <!-- Footer -->
   <footer class="bg-black small text-center text-white-50">

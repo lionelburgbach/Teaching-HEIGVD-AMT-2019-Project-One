@@ -1,6 +1,7 @@
 package ch.heigvd.amt.projectOne.presentation;
 
-import ch.heigvd.amt.projectOne.services.dao.UsersDaoManager;
+import ch.heigvd.amt.projectOne.model.User;
+import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -8,15 +9,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Calendar;
 
 @WebServlet(urlPatterns = "/registration")
 public class RegisterServlet extends HttpServlet {
 
     @EJB
-    private UsersDaoManager userManager;
+    private UsersDaoLocal userManager;
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -38,36 +39,16 @@ public class RegisterServlet extends HttpServlet {
         String year = s[2];
         String date = year+"/"+month+"/"+day;
 
-        int yearInt = Integer.parseInt(year);
-        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        int diff = currentYear-yearInt;
-        int category = category(diff);
-
-        if(userManager.addUser(f, l, date, e, p,category)){
-            req.setAttribute("email", e);
+        if(userManager.addUser(f, l, date, e, p)){
+            User user = userManager.connect(e,p);
+            HttpSession session = req.getSession();
+            session.setAttribute("user", user);
             req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
         }
         else{
-            req.getSession().removeAttribute("fail");
+            req.getSession().removeAttribute("user");
             req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
         }
         out.close();
-    }
-
-    public int category(int diff){
-
-        if(diff <= 10){
-            return 1;
-        }
-        else if(diff > 10 && diff <= 16){
-            return 2;
-        }
-        else if(diff > 16 && diff <= 50){
-            return 3;
-        }
-        else if(diff > 50){
-            return  4;
-        }
-        return -1;
     }
 }

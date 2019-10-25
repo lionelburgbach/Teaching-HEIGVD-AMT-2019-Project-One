@@ -13,35 +13,37 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Stateless
-public class UserDao implements UsersDaoManager {
+public class UserDao implements UsersDaoLocal {
 
     @Resource(lookup = "java:/jdbc/sakila")
     private DataSource dataSource;
 
     @Override
-    public boolean connect(String email, String password) {
+    public User connect(String email, String password) {
 
-        boolean connec = false;
-        int count = 0;
+        User user = null;
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) FROM user WHERE email=? AND password=?");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM user WHERE email=? AND password=?");
             pstmt.setObject(1, email);
             pstmt.setObject(2, password);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()){
-                count = rs.getInt(1);
-            }
-            if(count == 1){
-                connec = true;
+                long id = rs.getLong("id");
+                String firstname = rs.getString("firstname");
+                String lastname = rs.getString("lastname");
+                String emailUser = rs.getString("email");
+                String passwordUser = rs.getString("password");
+                String date = rs.getString("date");
+                user = new User(id, emailUser, passwordUser, firstname, lastname, date);
             }
             connection.close();
         }catch (SQLException ex){
 
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return connec;
+        return user;
     }
 
     //READ
@@ -59,8 +61,7 @@ public class UserDao implements UsersDaoManager {
                 String mail = rs.getString("email");
                 String password = rs.getString("password");
                 String date = rs.getString("date");
-                int category = rs.getInt("category");
-                user = new User(id, mail, password, firstname, lastname, date, category);
+                user = new User(id, mail, password, firstname, lastname, date);
             }
             connection.close();
         }catch (SQLException ex){
@@ -72,20 +73,19 @@ public class UserDao implements UsersDaoManager {
 
     //CREATE
     @Override
-    public boolean addUser(String firstname, String lastname, String date, String email, String password, int category) {
+    public boolean addUser(String firstname, String lastname, String date, String email, String password) {
 
         int rs = 0;
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO user (firstname, lastname, email, password, date, category)\n" +
-                    "VALUES (?, ?, ?, ?, ?,?);");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO user (firstname, lastname, email, password, date)\n" +
+                    "VALUES (?, ?, ?, ?, ?);");
             pstmt.setObject(1, firstname);
             pstmt.setObject(2, lastname);
             pstmt.setObject(3, email);
             pstmt.setObject(4, password);
             pstmt.setObject(5, date);
-            pstmt.setObject(6, category);
             rs = pstmt.executeUpdate();
             connection.close();
         }catch (SQLException ex){
@@ -97,19 +97,18 @@ public class UserDao implements UsersDaoManager {
 
     //UPDATE
     @Override
-    public boolean updateUser(String firstname, String lastname, String date, String email, String password, int category) {
+    public boolean updateUser(String firstname, String lastname, String date, String email, String password) {
 
         int rs = 0;
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("UPDATE user SET firstname=?, lastname=?, email=?, password=?, date=?, category=?");
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE user SET firstname=?, lastname=?, email=?, password=?, date=?");
             pstmt.setObject(1, firstname);
             pstmt.setObject(2, lastname);
             pstmt.setObject(3, email);
             pstmt.setObject(4, password);
             pstmt.setObject(5, date);
-            pstmt.setObject(6, category);
             rs = pstmt.executeUpdate();
             connection.close();
         }catch (SQLException ex){

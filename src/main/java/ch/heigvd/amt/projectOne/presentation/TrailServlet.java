@@ -1,6 +1,6 @@
 package ch.heigvd.amt.projectOne.presentation;
 
-import ch.heigvd.amt.projectOne.services.dao.TrailDaoManager;
+import ch.heigvd.amt.projectOne.services.dao.TrailDaoLocal;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -14,7 +14,7 @@ import java.io.IOException;
 public class TrailServlet extends HttpServlet {
 
     @EJB
-    private TrailDaoManager trailManager;
+    private TrailDaoLocal trailManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -31,28 +31,28 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <% if (session.getAttribute("email") != null){ %>
-        <a class="navbar-brand js-scroll-trigger" href="home">Home</a>
+        <% if (session.getAttribute("user") != null){ %>
+        <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="home">Home</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fas fa-bars"></i>
         </button>
         <% } else { %>
-        <a class="navbar-brand js-scroll-trigger" href="login">Login</a>
+        <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="login">Login</a>
         <% } %>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="trail">Trails</a>
+              <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="trail">Trails</a>
             </li>
-            <% if (session.getAttribute("email") != null){ %>
+            <% if (session.getAttribute("user") != null){ %>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="profile">Profile</a>
+              <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="profile">Profile</a>
             </li>
-            <% } %>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="logout">Logout</a>
+                <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="logout">Logout</a>
               </li>
+            <% } %>
           </ul>
         </div>
       </div>
@@ -62,7 +62,7 @@
   <header class="masthead">
     <div class="container d-flex h-100 align-items-center">
       <div class="mx-auto text-center">
-        <h1 class="mx-auto my-0 text-uppercase">Trail</h1>
+        <h1 class="mx-auto my-0 text-uppercase" >Trails</h1>
       </div>
     </div>
   </header>
@@ -76,16 +76,24 @@
             <thead>
             <tr>
               <th scope="col">Name</th>
-              <th scope="col">Length</th>
+              <th scope="col">Distance</th>
+              <th scope="col">Up and Down</th>
               <th scope="col">Description</th>
+              <th scope="col">Date</th>
+              <th scope="col">Places Left</th>
+              <th scope="col">Registration</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${trails}" var="trail">
               <tr>
                 <td>${trail.name}</td>
-                <td>${trail.length} KM</td>
+                <td>${trail.distance} KM</td>
+                <td>${trail.upAndDown} M</td>
                 <td>${trail.description}</td>
+                <td>${trail.date}</td>
+                <td>${trail.capacity - trail.nbIn}</td>
+                <td><button type="button" value="${trail.id}" class="btn btn-outline-warning">Enroll Me</button></td>
               </tr>
             </c:forEach>
             </tbody>

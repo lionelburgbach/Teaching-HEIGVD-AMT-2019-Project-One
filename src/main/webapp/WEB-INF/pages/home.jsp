@@ -30,7 +30,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="home">Home</a>
+      <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="home">Home</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -38,13 +38,13 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="trail">Trails</a>
+            <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="trail">Trails</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="profile">Profile</a>
+            <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="profile">Profile</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="logout">Logout</a>
+              <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="logout">Logout</a>
             </li>
         </ul>
       </div>
@@ -105,7 +105,6 @@
       <!-- Project One Row -->
       <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
         <div class="col-lg-6">
-          <img class="img-fluid" src="img/demo-image-01.jpg" alt="">
         </div>
         <div class="col-lg-6">
           <div class="bg-black text-center h-100 project">
@@ -123,7 +122,6 @@
       <!-- Project Two Row -->
       <div class="row justify-content-center no-gutters">
         <div class="col-lg-6">
-          <img class="img-fluid" src="img/demo-image-02.jpg" alt="">
         </div>
         <div class="col-lg-6 order-lg-first">
           <div class="bg-black text-center h-100 project">

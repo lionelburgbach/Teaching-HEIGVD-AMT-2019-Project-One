@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<link rel="icon" type="image/png" href="./assets/paper_img/favicon.ico">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
 	<title>GBLB</title>
@@ -28,13 +27,13 @@
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <a class="navbar-brand">Trail</a>
+          <a class="navbar-brand">AMT 2019</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navigation-example-2">
           <div class="nav navbar-nav navbar-right">
-                <a class="btn btn-simple">AMT 2019</a>
+                <a class="btn btn-simple" style="color: #B33C12; font-size: 22px;" href="trail">Trails</a>
           </div>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-->
@@ -74,18 +73,6 @@
 
 </body>
 
-<script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
-<script src="./assets/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
-
-<script src="./bootstrap3/js/bootstrap.js" type="text/javascript"></script>
-
-<!--  Plugins -->
-<script src="./assets/js/ct-paper-checkbox.js"></script>
-<script src="./assets/js/ct-paper-radio.js"></script>
-<script src="./assets/js/bootstrap-select.js"></script>
-<script src="./assets/js/bootstrap-datepicker.js"></script>
-
-<script src="./assets/js/ct-paper.js"></script>
 
 <script>
     function getRegister()
