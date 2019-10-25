@@ -7,6 +7,7 @@
 	<title>GBLB</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <link rel="icon" type="image/png" sizes="64x64" href="./assets/paper_img/logo.png">
     <meta name="viewport" content="width=device-width" />
 
     <base href="${pageContext.request.contextPath}/"/>

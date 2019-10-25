@@ -5,6 +5,7 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" sizes="64x64" href="./assets/paper_img/logo.png">
   <meta name="description" content="">
   <meta name="author" content="">
 
