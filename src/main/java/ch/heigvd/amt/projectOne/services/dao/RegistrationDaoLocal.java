@@ -8,6 +8,7 @@ import java.util.List;
 @Local
 public interface RegistrationDaoLocal {
 
-    public List<Registration> allReg(long iduser);
-    public boolean addReg(long id_user, long id_trail, int category, String date);
+    List<Registration> allReg(long iduser);
+    boolean addReg(long id_user, long id_trail, int category, String date);
+    boolean deleteReg(long id);
 }

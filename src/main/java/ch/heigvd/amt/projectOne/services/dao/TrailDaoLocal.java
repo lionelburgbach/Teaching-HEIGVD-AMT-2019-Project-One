@@ -8,10 +8,10 @@ import java.util.List;
 @Local
 public interface TrailDaoLocal {
 
-    public Trail trail(long id);
-    public List<Trail> allTrail();
+    Trail trail(long id);
+    List<Trail> allTrail();
     //public List<Trail> allTrailGen();
-    public boolean addTrail(String name, double distance, double upAndDown, String description, int capacity, String date);
-    public boolean updateTrail(String name, double distance, double upAndDown, String description, int capacity, String date);
-    public boolean deleteTrail(long id);
+    boolean addTrail(String name, double distance, double upAndDown, String description, int capacity, String date);
+    boolean updateTrail(String name, double distance, double upAndDown, String description, int capacity, String date);
+    boolean deleteTrail(long id);
 }

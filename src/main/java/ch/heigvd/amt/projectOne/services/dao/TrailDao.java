@@ -32,7 +32,7 @@ public class TrailDao implements TrailDaoLocal {
         Trail trail = null;
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail WHERE id=?");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail WHERE id=?;");
             pstmt.setObject(1, id);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
@@ -47,7 +47,7 @@ public class TrailDao implements TrailDaoLocal {
             connection.close();
         }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return trail;
     }
@@ -59,7 +59,7 @@ public class TrailDao implements TrailDaoLocal {
         List<Trail> trails = new ArrayList<>();
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail;");
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
                 int id = rs.getInt("id");
@@ -74,7 +74,7 @@ public class TrailDao implements TrailDaoLocal {
             connection.close();
         }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return trails;
     }
@@ -128,7 +128,7 @@ public class TrailDao implements TrailDaoLocal {
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO user (name, length, up_and_down, description, capacity, date)\n" +
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO trail (name, length, up_and_down, description, capacity, date)\n" +
                     "VALUES (?, ?, ?, ?, ?,?);");
             pstmt.setObject(1, name);
             pstmt.setObject(2, distance);
@@ -140,7 +140,7 @@ public class TrailDao implements TrailDaoLocal {
             connection.close();
         }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return (rs == 1);
     }
@@ -153,7 +153,7 @@ public class TrailDao implements TrailDaoLocal {
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("UPDATE trail SET name=?, length=?, up_and_down=?, description=?, capacity=?, date=?");
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE trail SET name=?, length=?, up_and_down=?, description=?, capacity=?, date=?;");
             pstmt.setObject(1, name);
             pstmt.setObject(2, distance);
             pstmt.setObject(3, upAndDown);
@@ -164,7 +164,7 @@ public class TrailDao implements TrailDaoLocal {
             connection.close();
         }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return (rs == 1);
     }
@@ -183,7 +183,7 @@ public class TrailDao implements TrailDaoLocal {
             connection.close();
         }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return (rs == 1);
     }

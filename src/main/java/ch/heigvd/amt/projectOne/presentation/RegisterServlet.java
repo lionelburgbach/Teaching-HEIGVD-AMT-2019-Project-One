@@ -1,6 +1,7 @@
 package ch.heigvd.amt.projectOne.presentation;
 
 import ch.heigvd.amt.projectOne.model.User;
+import ch.heigvd.amt.projectOne.model.Utils;
 import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
 
 import javax.ejb.EJB;
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(urlPatterns = "/registration")
 public class RegisterServlet extends HttpServlet {
@@ -30,6 +30,10 @@ public class RegisterServlet extends HttpServlet {
         String d=req.getParameter("date");
         String e=req.getParameter("email");
         String p=req.getParameter("password");
+
+        p = Utils.getCryptoHash(p);
+
+        System.out.println(p);
 
         String[] s = d.split("-");
         String day = s[0];

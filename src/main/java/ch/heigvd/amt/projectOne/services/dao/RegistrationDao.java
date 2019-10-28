@@ -40,12 +40,12 @@ public class RegistrationDao implements RegistrationDaoLocal {
             pstmt.setObject(1, iduser);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
-                //faire avec jointure
+                long id = rs.getLong("id");
                 User user = userDao.user(iduser);
                 long idTrail = rs.getInt("id_trail_fk");
                 Trail trail = trailDao.trail(idTrail);
                 String date = rs.getString("date");
-                regs.add(new Registration(user, trail, date));
+                regs.add(new Registration(id, user, trail, date));
             }
             connection.close();
         }catch (SQLException ex){
@@ -74,6 +74,25 @@ public class RegistrationDao implements RegistrationDaoLocal {
         }catch (SQLException ex){
 
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return (rs == 1);
+    }
+
+    //DELETE
+    @Override
+    public boolean deleteReg(long id) {
+
+        int rs = 0;
+
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("DELETE FROM registration WHERE id=?;");
+            pstmt.setObject(1, id);
+            rs = pstmt.executeUpdate();
+            connection.close();
+        }catch (SQLException ex){
+
+            LOG.log(Level.SEVERE, null, ex);
         }
         return (rs == 1);
     }

@@ -1,6 +1,7 @@
 package ch.heigvd.amt.projectOne.presentation;
 
 import ch.heigvd.amt.projectOne.model.User;
+import ch.heigvd.amt.projectOne.model.Utils;
 import ch.heigvd.amt.projectOne.services.dao.RegistrationDaoLocal;
 import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
 
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
@@ -37,6 +40,7 @@ public class LoginServlet extends HttpServlet {
         String email =req.getParameter("email");
         String password =req.getParameter("password");
 
+        password = Utils.getCryptoHash(password);
         User user = loginDao.connect(email, password);
 
         if(user != null){

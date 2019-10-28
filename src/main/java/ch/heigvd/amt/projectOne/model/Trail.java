@@ -38,7 +38,7 @@ public class Trail {
         }
     }
 
-    public boolean addTrailer(){
+    public synchronized boolean addTrailer(){
 
         if(nbIn < capacity){
             nbIn++;
