@@ -10,8 +10,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 USE sakila;
 
 SET AUTOCOMMIT=0;
-INSERT INTO user VALUES (1,'lionel','burgbacher','lionel.burgbacher@heig-vd.ch','lionel','1989-03-05');
-INSERT INTO user VALUES (2,'amt','amt','amt@amt.ch','amt','2019-10-10');
+INSERT INTO user VALUES (1,'Lionel','Burgbacher','lionel.burgbacher@heig-vd.ch','lionel','1989-03-05');
+INSERT INTO user VALUES (2,'Guillaume','Blanco','guillaume.blanco@heig-vd.ch','guillaume','1989-03-05');
+INSERT INTO user VALUES (3,'firstname','lastname','test','test','2019-10-10');
 COMMIT;
 
 SET AUTOCOMMIT=0;
@@ -20,4 +21,22 @@ INSERT INTO trail VALUES (2,'Matterhorn Ultraks',24,2800,'The Matterhorn Ultraks
 INSERT INTO trail VALUES (3,'Ultra-Trail du Mont-Blanc',171,10040,'The Ultra-Trail du Mont-Blanc (UTMB) is a single-stage mountain ultramarathon first held in 2003. It is a race of the Ultra-Trail World Tour.',1000,'2020-07-24');
 INSERT INTO trail VALUES (4,'Kilometre vertical de Fully',1.9,1000,'The Kilometre vertical de Fully is an international skyrunning competition held for the first time in 2001. It rans every year in July in Fully (Switzerland) and is valid for the Vertical Kilometer World Circuit.',1000,'2020-05-11');
 INSERT INTO trail VALUES (5,'Ultra-Trail Mt. Fuji',168,9500,'The Ultra-Trail Mt. Fuji is an annual ultramarathon sporting event in Yamanashi Prefecture and Shizuoka Prefecture, Japan, started in 2012.[1] The total distance is 168 km, the cumulative altitude gain is 9,500m, and the time limit is 46 hours. It is one of the Ultra-Trail World Tour.[4] It is a sister sport event of Ultra-Trail du Mont-Blanc.',1000,'2019-09-30');
+COMMIT;
+
+SET AUTOCOMMIT=0;
+INSERT INTO registration VALUES (1,3,'2020-08-20',1,2);
+INSERT INTO registration VALUES (2,3,'2020-08-20',1,3);
+INSERT INTO registration VALUES (3,3,'2020-08-20',1,4);
+INSERT INTO registration VALUES (4,3,'2020-08-20',2,2);
+INSERT INTO registration VALUES (5,3,'2020-08-20',2,3);
+INSERT INTO registration VALUES (6,3,'2020-08-20',2,4);
+COMMIT;
+
+SET AUTOCOMMIT=0;
+INSERT INTO result VALUES (1,1000,1);
+INSERT INTO result VALUES (2,1001,2);
+INSERT INTO result VALUES (3,1002,3);
+INSERT INTO result VALUES (4,1003,4);
+INSERT INTO result VALUES (5,1004,5);
+INSERT INTO result VALUES (6,1005,6);
 COMMIT;

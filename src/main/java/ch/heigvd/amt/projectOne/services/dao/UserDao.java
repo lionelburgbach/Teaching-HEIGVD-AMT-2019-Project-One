@@ -48,7 +48,7 @@ public class UserDao implements UsersDaoLocal {
 
     //READ
     @Override
-    public User user(int id) {
+    public User user(long id) {
         User user = null;
         try{
             Connection connection = dataSource.getConnection();
@@ -120,7 +120,7 @@ public class UserDao implements UsersDaoLocal {
 
     //DELETE
     @Override
-    public boolean deleteUser(int id){
+    public boolean deleteUser(long id){
 
         int rs = 0;
 

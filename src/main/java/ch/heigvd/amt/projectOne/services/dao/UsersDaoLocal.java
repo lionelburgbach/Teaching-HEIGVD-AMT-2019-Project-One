@@ -8,9 +8,9 @@ import javax.ejb.Local;
 public interface UsersDaoLocal {
 
     public User connect(String email, String password);
-    public User user(int id);
+    public User user(long id);
     public boolean addUser(String firstname, String lastname, String date, String email, String password);
     public boolean updateUser(String firstname, String lastname, String date, String email, String password);
-    public boolean deleteUser(int id);
+    public boolean deleteUser(long id);
 
 }

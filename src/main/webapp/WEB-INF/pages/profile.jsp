@@ -64,23 +64,36 @@
   <!-- About Section -->
   <section id="about" class="about-section text-center" style="min-height: 850px;">
     <div class="container">
-      <h2 class="text-white mb-4">Results</h2>
       <div class="row">
         <div class="container">
           <div class="row">
-            <div class="text-white col-sm">
-              <img src="./grayscale/img/gold.png" style="width:50%;" class="img-fluid" alt="">
-              <p style="padding-top: 50px;">One of three columns</p>
+            <div class="text-white col-sm" style="padding-top: 30px;">
+              <img src="./grayscale/img/pict.jpg" style="width:80%;" class="img-fluid" alt="">
             </div>
             <div class="text-white col-sm" style="padding-bottom: 40px;">
-              <table class="table table-dark">
-                <tr>
-                  <td>${user.firstName}</td>
-                </tr>
-                <tr>
-                  <td>${user.firstName}</td>
-                </tr>
-              </table>
+              <form>
+                <div class="form-group">
+                  <label for="firstName">Firstname</label>
+                  <input type="text" class="form-control" id="firstName" aria-describedby="emailHelp" placeholder="${user.firstName}">
+                </div>
+                <div class="form-group">
+                  <label for="lastName">Lastname</label>
+                  <input type="text" class="form-control" id="lastName" placeholder="${user.lastName}">
+                </div>
+                <div class="form-group">
+                  <label for="dateOfBirth">Date of Birth</label>
+                  <input type="text" class="form-control" id="dateOfBirth" placeholder="${user.dateOfBirth}">
+                </div>
+                <div class="form-group">
+                  <label for="Email">Email</label>
+                  <input type="email" class="form-control" id="Email" placeholder="${user.email}">
+                </div>
+                <div class="form-group">
+                  <label for="Passowrd">Password</label>
+                  <input type="password" class="form-control" id="Passowrd" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-outline-warning">Update</button>
+              </form>
             </div>
 
           </div>

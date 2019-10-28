@@ -27,7 +27,7 @@ public class TrailDao implements TrailDaoLocal {
 
     //READ
     @Override
-    public Trail trail(int id) {
+    public Trail trail(long id) {
 
         Trail trail = null;
         try{
@@ -171,7 +171,7 @@ public class TrailDao implements TrailDaoLocal {
 
     //DELETE
     @Override
-    public boolean deleteTrail(int id) {
+    public boolean deleteTrail(long id) {
 
         int rs = 0;
 

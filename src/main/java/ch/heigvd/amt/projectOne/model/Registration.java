@@ -19,7 +19,19 @@ public class Registration {
         this.trail = trail;
         this.category = category(user);
         this.date = date;
-        this.trail.addTrailer();
+        if(!trail.addTrailer()){
+            throw new IllegalArgumentException("No more place");
+        }
+    }
+
+    public Registration(User user, Trail trail, String date){
+        this.user = user;
+        this.trail = trail;
+        this.category = category(user);
+        this.date = date;
+        if(!trail.addTrailer()){
+            throw new IllegalArgumentException("No more place");
+        }
     }
 
     public int category(User user){

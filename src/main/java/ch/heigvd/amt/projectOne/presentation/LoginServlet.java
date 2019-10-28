@@ -1,6 +1,7 @@
 package ch.heigvd.amt.projectOne.presentation;
 
 import ch.heigvd.amt.projectOne.model.User;
+import ch.heigvd.amt.projectOne.services.dao.RegistrationDaoLocal;
 import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
 
 import javax.ejb.EJB;
@@ -16,7 +17,10 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     @EJB
-    private UsersDaoLocal loginDao;
+    UsersDaoLocal loginDao;
+
+    @EJB
+    RegistrationDaoLocal regDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,6 +41,7 @@ public class LoginServlet extends HttpServlet {
 
         if(user != null){
             session.setAttribute("user", user);
+            req.setAttribute("regs", regDao.allReg(user.getId()));
             req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
         }
         else{

@@ -17,15 +17,13 @@ import java.io.PrintWriter;
 public class RegisterServlet extends HttpServlet {
 
     @EJB
-    private UsersDaoLocal userManager;
+    UsersDaoLocal userManager;
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         resp.setContentType("text/html;charset=UTF-8");
-
-        PrintWriter out = resp.getWriter();
 
         String f=req.getParameter("firstname");
         String l=req.getParameter("lastname");
@@ -49,6 +47,5 @@ public class RegisterServlet extends HttpServlet {
             req.getSession().removeAttribute("user");
             req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
         }
-        out.close();
     }
 }

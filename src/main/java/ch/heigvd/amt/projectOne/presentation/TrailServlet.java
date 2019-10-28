@@ -14,7 +14,7 @@ import java.io.IOException;
 public class TrailServlet extends HttpServlet {
 
     @EJB
-    private TrailDaoLocal trailManager;
+    TrailDaoLocal trailManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
