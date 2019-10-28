@@ -46,7 +46,7 @@
             <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="profile">Profile</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="logout">Logout</a>
+              <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="login?action=logout">Logout</a>
             </li>
         </ul>
       </div>
@@ -112,7 +112,7 @@
                 <td>${reg.trail.upAndDown} M</td>
                 <td>${reg.trail.description}</td>
                 <td>${reg.trail.date}</td>
-                <form method="post" action="./delTrail">
+                <form method="post" action="./registration?action=delReg">
                   <td><button type="submit" name ="reg_id" value="${reg.id}" class="btn btn-outline-danger">Delete</button></td>
                 </form>
               </tr>

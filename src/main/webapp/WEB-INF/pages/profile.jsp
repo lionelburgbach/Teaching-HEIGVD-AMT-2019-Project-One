@@ -45,7 +45,7 @@
               <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="profile">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger"  style="color: #B33C12; font-size: 22px;" href="logout">Logout</a>
+                <a class="nav-link js-scroll-trigger"  style="color: #B33C12; font-size: 22px;" href="login?action=logout">Logout</a>
               </li>
           </ul>
         </div>

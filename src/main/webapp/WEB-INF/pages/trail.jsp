@@ -39,7 +39,7 @@
       <i class="fas fa-bars"></i>
     </button>
     <% } else { %>
-    <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="login">Login</a>
+    <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="login?action=login">Login</a>
     <% } %>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
@@ -51,7 +51,7 @@
           <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="profile">Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="logout">Logout</a>
+          <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="login?action=logout">Logout</a>
         </li>
         <% } %>
       </ul>
@@ -99,7 +99,7 @@
               <td>${trail.description}</td>
               <td>${trail.date}</td>
               <td>${trail.capacity - trail.nbIn}</td>
-              <form method="post" action="./enroll">
+              <form method="post" action="./registration?action=enroll">
                 <td><button type="submit" name ="trail_id" value="${trail.id}" class="btn btn-outline-warning">Enroll Me</button></td>
               </form>
             </tr>
@@ -131,7 +131,7 @@
 <script>
   function addTrail() {
     document.getElementById("addTrail").innerHTML ='<div class="container" style="color: white; max-width: 500px;">\n' +
-            '    <form method="post" action="./addTrail">\n' +
+            '    <form method="post" action="./trail">\n' +
             '      <div class="form-group">\n' +
             '        <label for="name">Name</label>\n' +
             '        <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>\n' +

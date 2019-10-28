@@ -48,7 +48,7 @@
                         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 ">
                             <div class="register-card">
                                 <h3 class="title">Welcome</h3>
-                                <form action="./login" method="post" class="register-form">
+                                <form action="./login?action=login" method="post" class="register-form">
                                     <label>Email</label>
                                     <input name="email" type="text" class="form-control" placeholder="Email">
                                     <label>Password</label>
@@ -85,7 +85,7 @@
             '                <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 ">\n' +
             '                    <div class="register-card">\n' +
             '                        <h3 class="title">Welcome</h3>\n' +
-            '                        <form action="./registration" method="post" class="register-form">\n' +
+            '                        <form action="./login?action=registration" method="post" class="register-form">\n' +
             '                            <label>Email</label>\n' +
             '                            <input name="email" type="text" class="form-control" placeholder="Email">\n' +
             '                            <label>Password</label>\n' +
