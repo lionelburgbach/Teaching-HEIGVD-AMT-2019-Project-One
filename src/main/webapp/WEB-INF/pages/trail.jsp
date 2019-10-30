@@ -104,6 +104,11 @@
               </form>
             </tr>
           </c:forEach>
+          <c:forEach items="${resu}" var="res">
+            <tr>
+              <td>${res.time}</td>
+            </tr>
+          </c:forEach>
           </tbody>
         </table>
       </div>

@@ -31,18 +31,93 @@ public class RegistrationDao implements RegistrationDaoLocal {
     private static final Logger LOG = Logger.getLogger(TrailDao.class.getName());
 
     @Override
-    public List<Registration> allReg(long iduser) {
+    public Registration registration(long idUser, long idTrail) {
+
+        Registration reg = null;
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM registration WHERE id_user_fk=? AND id_trail_fk=?");
+            pstmt.setObject(1, idUser);
+            pstmt.setObject(2, idTrail);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                long id = rs.getLong("id");
+                User user = userDao.user(idUser);
+                Trail trail = trailDao.trail(idTrail);
+                String date = rs.getString("date");
+                reg = new Registration(id, user, trail, date);
+            }
+            connection.close();
+        }catch (SQLException ex){
+
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return reg;
+    }
+
+    @Override
+    public List<Registration> allReg(long idUser) {
 
         List<Registration> regs = new ArrayList<>();
         try{
             Connection connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM registration WHERE id_user_fk=?");
-            pstmt.setObject(1, iduser);
+            pstmt.setObject(1, idUser);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
                 long id = rs.getLong("id");
-                User user = userDao.user(iduser);
+                User user = userDao.user(idUser);
                 long idTrail = rs.getInt("id_trail_fk");
+                Trail trail = trailDao.trail(idTrail);
+                String date = rs.getString("date");
+                regs.add(new Registration(id, user, trail, date));
+            }
+            connection.close();
+        }catch (SQLException ex){
+
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return regs;
+    }
+
+    @Override
+    public List<Registration> allRegWithResUser(long idUser) {
+
+        List<Registration> regs = new ArrayList<>();
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM registration AS reg INNER JOIN result AS res ON reg.id = res.id_reg_fk WHERE reg.id_user_fk=?;");
+            pstmt.setObject(1, idUser);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                long id = rs.getLong("id");
+                User user = userDao.user(idUser);
+                long idTrail = rs.getInt("id_trail_fk");
+                Trail trail = trailDao.trail(idTrail);
+                String date = rs.getString("date");
+                regs.add(new Registration(id, user, trail, date));
+            }
+            connection.close();
+        }catch (SQLException ex){
+
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return regs;
+    }
+
+    @Override
+    public List<Registration> allRegWithResTrail(long idTrail) {
+
+        List<Registration> regs = new ArrayList<>();
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM registration AS reg INNER JOIN result AS res ON reg.id = res.id_reg_fk WHERE reg.id_traiL_fk=? ORDER BY res.time;");
+            pstmt.setObject(1, idTrail);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                long id = rs.getLong("id");
+                long idUser = rs.getInt("id_user_fk");
+                User user = userDao.user(idUser);
                 Trail trail = trailDao.trail(idTrail);
                 String date = rs.getString("date");
                 regs.add(new Registration(id, user, trail, date));

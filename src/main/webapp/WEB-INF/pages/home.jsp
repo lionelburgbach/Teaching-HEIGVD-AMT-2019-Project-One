@@ -91,6 +91,35 @@
   <section class="about-section text-center">
     <div class="container" style="color: white;">
       <div class="row" style="text-align: center;">
+        <h2>Results</h2>
+        <div class="table-responsive-lg">
+          <table class="table table-dark">
+            <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${results}" var="res">
+              <tr>
+                <td>${res.id}</td>
+                <td>${res.registration.trail.name}</td>
+                <td>${res.time} M</td>
+              </tr>
+            </c:forEach>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section class="about-section text-center">
+    <div class="container" style="color: white;">
+      <div class="row" style="text-align: center;">
         <h2>Coming Trails</h2>
         <div class="table-responsive-lg">
           <table class="table table-dark">

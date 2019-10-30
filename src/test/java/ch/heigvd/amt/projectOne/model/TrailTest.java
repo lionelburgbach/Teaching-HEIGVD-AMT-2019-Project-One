@@ -23,6 +23,7 @@ class TrailTest {
         assertEquals(trail.addTrailer(), false);
     }
 
+    /*
     @Test
     void lioShouldBeFisrt() {
 
@@ -53,5 +54,6 @@ class TrailTest {
         assertEquals(trail.resultUser(lio, rg.getCategory()), 1);
         assertEquals(trail.resultUser(afk, rg4.getCategory()), 5);
     }
+    */
 
 }

@@ -41,6 +41,7 @@ public class RegistrationServlet extends HttpServlet {
                 String s = formatter.format(date);
                 Registration reg = new Registration(user, trail, s);
                 registrationDao.addReg(user.getId(), trail.getId(), reg.getCategory(), s);
+                req.setAttribute("regs", registrationDao.allReg(user.getId()));
                 req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
             }
             else if (action.equals("delReg")) {
