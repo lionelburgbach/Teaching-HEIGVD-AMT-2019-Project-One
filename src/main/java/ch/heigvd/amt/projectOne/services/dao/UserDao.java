@@ -97,18 +97,19 @@ public class UserDao implements UsersDaoLocal {
 
     //UPDATE
     @Override
-    public boolean updateUser(String firstname, String lastname, String date, String email, String password) {
+    public boolean updateUser(long id, String firstname, String lastname, String date, String email, String password) {
 
         int rs = 0;
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("UPDATE user SET firstname=?, lastname=?, email=?, password=?, date=?");
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE user SET firstname=?, lastname=?, email=?, password=?, date=? WHERE id=?");
             pstmt.setObject(1, firstname);
             pstmt.setObject(2, lastname);
             pstmt.setObject(3, email);
             pstmt.setObject(4, password);
             pstmt.setObject(5, date);
+            pstmt.setObject(6, id);
             rs = pstmt.executeUpdate();
             connection.close();
         }catch (SQLException ex){

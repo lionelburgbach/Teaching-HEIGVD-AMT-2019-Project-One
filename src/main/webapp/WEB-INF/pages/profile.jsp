@@ -56,13 +56,14 @@
   <header class="masthead">
     <div class="container d-flex h-100 align-items-center">
       <div class="mx-auto text-center">
-        <h1 class="mx-auto my-0 text-uppercase">PROFILE</h1>
+        <h1 class="mx-auto my-0 text-uppercase" >Profile</h1>
+        <input type="image" src="./assets/paper_img/down.png" style="padding-top:20px; width:30%;" onClick="document.getElementById('profile').scrollIntoView();">
       </div>
     </div>
   </header>
 
   <!-- About Section -->
-  <section id="about" class="about-section text-center" style="min-height: 850px;">
+  <section id="profile" class="about-section text-center" style="min-height: 850px;">
     <div class="container">
       <div class="row">
         <div class="container">
@@ -71,26 +72,26 @@
               <img src="./grayscale/img/pict.jpg" style="width:80%;" class="img-fluid" alt="">
             </div>
             <div class="text-white col-sm" style="padding-bottom: 40px;">
-              <form>
+              <form method="POST" action="./profile">
                 <div class="form-group">
                   <label for="firstName">Firstname</label>
-                  <input type="text" class="form-control" id="firstName" aria-describedby="emailHelp" placeholder="${user.firstName}">
+                  <input type="text" class="form-control" id="firstName" name="firstname" aria-describedby="emailHelp" value="${user.firstName}">
                 </div>
                 <div class="form-group">
                   <label for="lastName">Lastname</label>
-                  <input type="text" class="form-control" id="lastName" placeholder="${user.lastName}">
+                  <input type="text" class="form-control" id="lastName" name="lastname" value="${user.lastName}">
                 </div>
                 <div class="form-group">
                   <label for="dateOfBirth">Date of Birth</label>
-                  <input type="text" class="form-control" id="dateOfBirth" placeholder="${user.dateOfBirth}">
+                  <input type="text" class="form-control" id="dateOfBirth" name="date" value="${user.dateOfBirth}">
                 </div>
                 <div class="form-group">
                   <label for="Email">Email</label>
-                  <input type="email" class="form-control" id="Email" placeholder="${user.email}">
+                  <input type="email" class="form-control" id="Email" name="email" value="${user.email}">
                 </div>
                 <div class="form-group">
                   <label for="Passowrd">Password</label>
-                  <input type="password" class="form-control" id="Passowrd" placeholder="Password">
+                  <input type="password" class="form-control" id="Passowrd" name="password" placeholder="Password">
                 </div>
                 <button type="submit" class="btn btn-outline-warning">Update</button>
               </form>

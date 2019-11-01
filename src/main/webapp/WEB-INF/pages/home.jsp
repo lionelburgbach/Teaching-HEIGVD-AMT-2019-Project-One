@@ -58,12 +58,13 @@
     <div class="container d-flex h-100 align-items-center">
       <div class="mx-auto text-center">
         <h1 class="mx-auto my-0 text-uppercase">AMT 2019</h1>
+        <input type="image" src="./assets/paper_img/down.png" style="padding-top:20px; width:30%;" onClick="document.getElementById('result').scrollIntoView();">
       </div>
     </div>
   </header>
 
   <!-- About Section -->
-  <section id="about" class="about-section text-center" style="min-height: 850px;">
+  <section id="result" class="about-section text-center" style="min-height: 850px;">
     <div class="container">
       <h2 class="text-white mb-4">Results</h2>
       <div class="row">

@@ -1,17 +1,14 @@
 package ch.heigvd.amt.projectOne.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Ranking {
 
-    private List<Result> results;
+    private Map<Trail, List<Result>> results;
 
-    public Ranking(List<Result> results){
+    public Ranking(){
 
-        this.results = new ArrayList<>(results);
+        this.results = new HashMap<>();
     }
 
     private class SortbyTime implements Comparator<Result> {
@@ -21,13 +18,23 @@ public class Ranking {
         }
     }
 
-    public List<Result> results(){
+    public void add(Trail trail, List<Result> result){
 
-        ArrayList<Result> resByRanking = new ArrayList<>(results);
-        Collections.sort(resByRanking ,new SortbyTime() );
-        return  resByRanking;
+        results.put(trail, result);
     }
 
+    public Map<Trail, List<Result>>  results(){
+
+        Map<Trail, List<Result>> resByRanking = new HashMap<>(results);
+        Iterator<Map.Entry<Trail, List<Result>>> it = resByRanking.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Trail, List<Result>> pair = it.next();
+            Collections.sort(pair.getValue(), new SortbyTime());
+        }
+        return resByRanking;
+    }
+
+    /*
     public List<Result> resultsByCategory(int category){
 
         ArrayList<Result> resultsByCategory = new ArrayList<>();
@@ -50,4 +57,5 @@ public class Ranking {
         }
         return -1;
     }
+     */
 }

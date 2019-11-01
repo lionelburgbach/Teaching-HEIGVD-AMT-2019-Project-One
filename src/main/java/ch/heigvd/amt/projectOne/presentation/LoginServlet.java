@@ -75,8 +75,6 @@ public class LoginServlet extends HttpServlet {
 
             p = Utils.getCryptoHash(p);
 
-            System.out.println(p);
-
             String[] s = d.split("-");
             String day = s[0];
             String month = s[1];

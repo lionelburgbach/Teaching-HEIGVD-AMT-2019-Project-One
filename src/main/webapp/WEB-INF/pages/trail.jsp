@@ -1,3 +1,5 @@
+<%@ page import="ch.heigvd.amt.projectOne.model.Ranking" %>
+<%@ page import="ch.heigvd.amt.projectOne.model.Result" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,16 +66,19 @@
   <div class="container d-flex h-100 align-items-center">
     <div class="mx-auto text-center">
       <h1 class="mx-auto my-0 text-uppercase" >Trails</h1>
+      <input type="image" src="./assets/paper_img/down.png" style="padding-top:20px; width:30%;" onClick="document.getElementById('trail').scrollIntoView();">
     </div>
   </div>
 </header>
 
 <!-- About Section -->
-<section id="about" class="about-section text-center">
+<section id="trail" class="about-section text-center">
 
+  <% if (session.getAttribute("user") != null){ %>
   <div class="wrapper" id="addTrail" style="padding-bottom: 50px;">
   <button onclick="addTrail()" class="btn btn-outline-warning">Add Trail</button>
   </div>
+  <% } %>
 
   <div class="container" style="color: white;">
     <div class="row">
@@ -102,11 +107,6 @@
               <form method="post" action="./registration?action=enroll">
                 <td><button type="submit" name ="trail_id" value="${trail.id}" class="btn btn-outline-warning">Enroll Me</button></td>
               </form>
-            </tr>
-          </c:forEach>
-          <c:forEach items="${resu}" var="res">
-            <tr>
-              <td>${res.time}</td>
             </tr>
           </c:forEach>
           </tbody>
