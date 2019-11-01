@@ -142,6 +142,7 @@
                 <th>${result.registration.user.firstName}</th>
                 <th>${result.registration.user.lastName}</th>
                 <th>${result.time}</th>
+                <th>${count}</th>
                 <form method="post">
                   <td><button type="submit" name ="" value="" class="btn btn-outline-warning">More about him</button></td>
                 </form>
