@@ -34,6 +34,10 @@ public class Ranking {
         return resByRanking;
     }
 
+    public Map<Trail, List<Result>> getRanking(){
+        return results;
+    }
+
     /*
     public List<Result> resultsByCategory(int category){
 

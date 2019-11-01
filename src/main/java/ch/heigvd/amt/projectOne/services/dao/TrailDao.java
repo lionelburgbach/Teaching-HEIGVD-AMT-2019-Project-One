@@ -147,19 +147,20 @@ public class TrailDao implements TrailDaoLocal {
 
     //UPDATE
     @Override
-    public boolean updateTrail(String name, double distance, double upAndDown, String description, int capacity, String date) {
+    public boolean updateTrail(long id, String name, double distance, double upAndDown, String description, int capacity, String date) {
 
         int rs = 0;
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("UPDATE trail SET name=?, length=?, up_and_down=?, description=?, capacity=?, date=?;");
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE trail SET name=?, length=?, up_and_down=?, description=?, capacity=?, date=? WHERE id=?;");
             pstmt.setObject(1, name);
             pstmt.setObject(2, distance);
             pstmt.setObject(3, upAndDown);
             pstmt.setObject(4, description);
             pstmt.setObject(5, capacity);
             pstmt.setObject(6, date);
+            pstmt.setObject(7, id);
             rs = pstmt.executeUpdate();
             connection.close();
         }catch (SQLException ex){

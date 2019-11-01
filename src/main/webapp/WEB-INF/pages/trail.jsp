@@ -76,7 +76,7 @@
 
   <% if (session.getAttribute("user") != null){ %>
   <div class="wrapper" id="addTrail" style="padding-bottom: 50px;">
-  <button onclick="addTrail()" class="btn btn-outline-warning">Add Trail</button>
+    <button onclick="addTrail()" class="btn btn-outline-warning">Add Trail</button>
   </div>
   <% } %>
 
@@ -111,6 +111,50 @@
           </c:forEach>
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-section text-center">
+
+  <div class="container" style="color: white;">
+    <div class="row">
+      <div class="table-responsive-lg">
+
+          <c:forEach var="trail" items="${ranks}">
+          <table class="table table-dark">
+            <tbody>
+            <tr>
+              <th>Trail : ${trail.key.name}</th>
+              <th>Date : ${trail.key.date}</th>
+            </tr>
+            <tr>
+              <th>Firstname</th>
+              <th>Lastname</th>
+              <th>Time</th>
+              <th>Position</th>
+            </tr>
+            <c:set var="count" value="0" scope="page" />
+            <c:forEach var="result" items="${trail.value}">
+              <c:set var="count" value="${count + 1}" scope="page"/>
+              <tr>
+                <th>${result.registration.user.firstName}</th>
+                <th>${result.registration.user.lastName}</th>
+                <th>${result.time}</th>
+                <form method="post">
+                  <td><button type="submit" name ="" value="" class="btn btn-outline-warning">More about him</button></td>
+                </form>
+              </tr>
+            </c:forEach>
+            <tr>
+              <form method="post">
+                <td><button type="submit" name ="" value="" class="btn btn-outline-warning">More Results</button></td>
+              </form>
+            </tr>
+            </tbody>
+          </table>
+          </c:forEach>
       </div>
     </div>
   </div>

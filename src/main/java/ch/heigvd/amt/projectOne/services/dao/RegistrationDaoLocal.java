@@ -8,7 +8,6 @@ import java.util.List;
 @Local
 public interface RegistrationDaoLocal {
 
-
     Registration registration(long idUser, long idTrail);
     List<Registration> allReg(long idUser);
     List<Registration> allRegWithResUser(long idUser);
