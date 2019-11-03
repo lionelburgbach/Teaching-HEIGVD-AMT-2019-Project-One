@@ -64,32 +64,9 @@
   </header>
 
   <!-- About Section -->
-  <section id="result" class="about-section text-center" style="min-height: 850px;">
-    <div class="container">
-      <h2 class="text-white mb-4">Results</h2>
-      <div class="row">
-          <div class="container">
-              <div class="row">
-                <div class="text-white col-sm">
-                  <img src="./grayscale/img/gold.png" style="width:50%;" class="img-fluid" alt="">
-                  <p style="padding-top: 50px;">One of three columns</p>
-                </div>
-                <div class="text-white col-sm" style="padding-bottom: 40px;">
-                  <img src="./grayscale/img/silver.png" style="width:50%;" class="img-fluid" alt="">
-                  <p style="padding-top: 50px;">One of three columns</p>
-                </div>
-                <div class="text-white col-sm">
-                  <img src="./grayscale/img/bronze.png" style="width:50%;" class="img-fluid" alt="">
-                  <p style="padding-top: 50px;">One of three columns</p>
-                </div>
-              </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Projects Section -->
-  <section class="about-section text-center">
+  <section id="result" class="about-section text-center">
     <div class="container" style="color: white;">
       <div class="row" style="text-align: center;">
         <h2>Results</h2>

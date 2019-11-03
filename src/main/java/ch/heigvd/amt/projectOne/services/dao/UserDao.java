@@ -35,7 +35,7 @@ public class UserDao implements UsersDaoLocal {
                 String emailUser = rs.getString("email");
                 String passwordUser = rs.getString("password");
                 String date = rs.getString("date");
-                user = new User(id, emailUser, passwordUser, firstname, lastname, date);
+                user = new User(id, emailUser, passwordUser, firstname, lastname, date, null);
             }
             connection.close();
         }catch (SQLException ex){
