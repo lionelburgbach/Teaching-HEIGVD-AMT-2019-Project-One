@@ -10,5 +10,5 @@ import java.util.List;
 public interface ResultDaoLocal {
 
     List<Result> allResultUser(long idUser);
-    List<Result> allResultTrail(long idTrail);
+    List<Result> resultTrail(long idTrail);
 }

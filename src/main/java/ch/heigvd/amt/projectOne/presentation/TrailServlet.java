@@ -32,13 +32,13 @@ public class TrailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("text/html;charset=UTF-8");
-        //List<Ranking> ranks = new ArrayList<>();
         Ranking ranks = new Ranking();
-        List<Trail> trails =  trailManager.allTrail();
-        for(int i = 0; i< trails.size();i++){
-            List<Result> res = resultDao.allResultTrail(i);
+        List<Trail> trails =  trailManager.allTrailToCome();
+        List<Trail> trailsDone= trailManager.allTrailDone();
+        for(int i = 0; i< trailsDone.size();i++){
+            List<Result> res = resultDao.resultTrail(trailsDone.get(i).getId());
             if(res.size() != 0) {
-                ranks.add(trails.get(i), res);
+                ranks.add(trailsDone.get(i), res);
             }
         }
         req.setAttribute("trails", trails);

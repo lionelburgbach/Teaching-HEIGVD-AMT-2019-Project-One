@@ -5,14 +5,13 @@ import ch.heigvd.amt.projectOne.model.Trail;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,45 +79,68 @@ public class TrailDao implements TrailDaoLocal {
     }
 
     //READ
-    /*
     @Override
-    public List<Trail> allTrailGen() {
+    public List<Trail> allTrailToCome() {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentDate = new Date(System.currentTimeMillis());
+        String s = formatter.format(currentDate);
 
         List<Trail> trails = new ArrayList<>();
         try{
             Connection connection = dataSource.getConnection();
-            String entityName = "Trail";
-            String className = "ch.heigvd.amt.projectOne.model." + entityName;
-            String tableName = entityName.toLowerCase();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM " + tableName);
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail WHERE date >?;");
+            pstmt.setObject(1, s);
             ResultSet rs = pstmt.executeQuery();
-            Class entityClass = Class.forName(className);
-            PropertyDescriptor[] properties = Introspector.getBeanInfo(entityClass).getPropertyDescriptors();
-
             while(rs.next()){
-                Object entity;
-                entity = entityClass.newInstance();
-                for (PropertyDescriptor property : properties) {
-                    Method method = property.getWriteMethod();
-                    String columnName = property.getName();
-                    try {
-                        method.invoke(entity, rs.getObject(columnName));
-                    }
-                    catch(SQLException e){
-                        LOG.warning("Could not retrieve value for property " + property.getName() + " in result set. " + e.getMessage());
-
-                    }
-                }
-                trails.add((Trail)entity);
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                double distance = rs.getDouble("length");
+                double upAndDown = rs.getDouble("up_and_down");
+                String description = rs.getString("description");
+                int capacity = rs.getInt("capacity");
+                String date = rs.getString("date");
+                trails.add(new Trail(id, name, distance, upAndDown, description, capacity, date));
             }
             connection.close();
-        }catch (Exception ex){
+        }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return trails;
     }
-     */
+
+    //READ
+    @Override
+    public List<Trail> allTrailDone() {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentDate = new Date(System.currentTimeMillis());
+        String s = formatter.format(currentDate);
+
+        List<Trail> trails = new ArrayList<>();
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail WHERE date < ?;");
+            pstmt.setObject(1, s);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                double distance = rs.getDouble("length");
+                double upAndDown = rs.getDouble("up_and_down");
+                String description = rs.getString("description");
+                int capacity = rs.getInt("capacity");
+                String date = rs.getString("date");
+                trails.add(new Trail(id, name, distance, upAndDown, description, capacity, date));
+            }
+            connection.close();
+        }catch (SQLException ex){
+
+            LOG.log(Level.SEVERE, null, ex);
+        }
+        return trails;
+    }
 
     //CREATE
     @Override

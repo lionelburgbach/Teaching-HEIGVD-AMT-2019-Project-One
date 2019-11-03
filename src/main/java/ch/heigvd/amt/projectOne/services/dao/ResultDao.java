@@ -56,30 +56,28 @@ public class ResultDao implements ResultDaoLocal {
     }
 
     @Override
-    public List<Result> allResultTrail(long idTrail) {
+    public List<Result> resultTrail(long idTrail) {
 
         List<Result> results = new ArrayList<>();
 
-        List<Registration> registrations = registrationDao.allRegWithResTrail(idTrail);
-
-        for (Registration reg: registrations) {
-
-            try {
-                Connection connection = dataSource.getConnection();
-                PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM result AS res INNER JOIN registration AS reg ON reg.id=res.id_reg_fk WHERE reg.id=? ORDER BY res.time ASC;");
-                pstmt.setObject(1, reg.getId());
-                ResultSet rs = pstmt.executeQuery();
-                while (rs.next()) {
-                    long id = Long.parseLong(rs.getString("id"));
-                    int time = Integer.parseInt(rs.getString("time"));
-                    results.add(new Result(id, reg, time));
-                }
-                connection.close();
-            } catch (SQLException ex) {
-
-                LOG.log(Level.SEVERE, null, ex);
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM result AS res INNER JOIN registration AS reg ON reg.id=res.id_reg_fk WHERE reg.id_trail_fk=? ORDER BY res.time ASC;");
+            pstmt.setObject(1, idTrail);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                long id = Long.parseLong(rs.getString("id"));
+                int time = Integer.parseInt(rs.getString("time"));
+                long idUser = Integer.parseInt(rs.getString("id_user_fk"));
+                Registration reg = registrationDao.registration(idUser, idTrail);
+                results.add(new Result(id, reg, time));
             }
+            connection.close();
+        } catch (SQLException ex) {
+
+            LOG.log(Level.SEVERE, null, ex);
         }
+
         return results;
     }
 }
