@@ -8,6 +8,7 @@ class RegistrationTest {
 
     @Test
     public void shouldBecorrectCategory(){
+
         User lio = new User(1, "amt@amt.ch", "amt", "lionel", "Burgbacher", "05-03-1989", null);
         User Gui = new User(2, "amt@amt.ch", "amt", "Guillaume", "Blanco", "05-03-2005", null);
         User Jee = new User(3, "amt@amt.ch", "amt", "Mathieu", "Jee", "05-03-1967", null);
