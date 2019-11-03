@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `sakila`.`user` (
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(300) NOT NULL,
   `date` DATE NOT NULL,
+  `profil_picture` longblob,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;

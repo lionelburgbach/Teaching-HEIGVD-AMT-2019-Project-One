@@ -143,8 +143,8 @@
                 <th>${result.registration.user.lastName}</th>
                 <th>${result.time}</th>
                 <th>${count}</th>
-                <form method="post">
-                  <td><button type="submit" name ="" value="" class="btn btn-outline-warning">More about him</button></td>
+                <form method="post" action="./participant">
+                  <td><button type="submit" name ="participant_id" value="${result.registration.user.id}" class="btn btn-outline-warning">More about him</button></td>
                 </form>
               </tr>
             </c:forEach>

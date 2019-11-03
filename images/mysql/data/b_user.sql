@@ -10,9 +10,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 USE sakila;
 
 SET AUTOCOMMIT=0;
-INSERT INTO user VALUES (1,'Lionel','Burgbacher','lionel.burgbacher@heig-vd.ch','d03eae2969f2036a14df1be75bb9b945cd9ef9836fde56e13d88ac7c16a6adeaaace4a626e58520deed44f27d3214f516d67e9c67f829eade42c87ee5f22b495','1989-03-05');
-INSERT INTO user VALUES (2,'Guillaume','Blanco','guillaume.blanco@heig-vd.ch','fd1862846a6539112654b775145ee53ca8606b67451b0cad24c75ea2f34248dd831751ab79ea940edf37a36abadafd0865c11ca4770a20d5cd39a236661c595b','1989-03-05');
-INSERT INTO user VALUES (3,'firstname','lastname','test','ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff','2019-10-10');
+INSERT INTO user VALUES (1,'Lionel','Burgbacher','lionel.burgbacher@heig-vd.ch','d03eae2969f2036a14df1be75bb9b945cd9ef9836fde56e13d88ac7c16a6adeaaace4a626e58520deed44f27d3214f516d67e9c67f829eade42c87ee5f22b495','1989-03-05',NULL);
+INSERT INTO user VALUES (2,'Guillaume','Blanco','guillaume.blanco@heig-vd.ch','fd1862846a6539112654b775145ee53ca8606b67451b0cad24c75ea2f34248dd831751ab79ea940edf37a36abadafd0865c11ca4770a20d5cd39a236661c595b','1989-03-05',NULL);
+INSERT INTO user VALUES (3,'firstname','lastname','test','ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff','2019-10-10',NULL);
 COMMIT;
 
 SET AUTOCOMMIT=0;

@@ -72,7 +72,7 @@
               <img src="./grayscale/img/pict.jpg" style="width:80%;" class="img-fluid" alt="">
             </div>
             <div class="text-white col-sm" style="padding-bottom: 40px;">
-              <form method="POST" action="./profile">
+              <form method="POST" action="./profile" enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="firstName">Firstname</label>
                   <input type="text" class="form-control" id="firstName" name="firstname" aria-describedby="emailHelp" value="${user.firstName}">
@@ -93,7 +93,11 @@
                   <label for="Passowrd">Password</label>
                   <input type="password" class="form-control" id="Passowrd" name="password" placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-outline-warning">Update</button>
+                <div>
+                    <label for="profilePicture">Modify your picture</label>
+                    <input type="file" class="form-control" id="profilePicture"name="profilePicture" accept="image/png, image/jpeg" >
+                </div>
+                <button type="submit" class="btn btn-outline-warning" value="updatePerson">Update</button>
               </form>
             </div>
 
