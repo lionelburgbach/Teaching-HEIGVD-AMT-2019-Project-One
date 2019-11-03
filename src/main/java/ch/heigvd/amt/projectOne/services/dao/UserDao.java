@@ -70,6 +70,31 @@ public class UserDao implements UsersDaoLocal {
         }
         return user;
     }
+    @Override
+    public User participant(long id){
+        User participant = null;
+
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM user WHERE id=?");
+            pstmt.setObject(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                String firstname = rs.getString("firstname");
+                String lastname = rs.getString("lastname");
+                String mail = rs.getString("email");
+                String password = rs.getString("password");
+                String date = rs.getString("date");
+                participant = new User(id, mail, password, firstname, lastname, date);
+            }
+            connection.close();
+        }catch (SQLException ex){
+
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return participant;
+
+    }
 
     //CREATE
     @Override
