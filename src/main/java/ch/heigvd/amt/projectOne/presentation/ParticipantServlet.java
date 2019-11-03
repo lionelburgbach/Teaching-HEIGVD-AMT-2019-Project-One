@@ -35,10 +35,6 @@ public class ParticipantServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         if (req.getSession().getAttribute("user") != null) {
-          /*  User participant = userDao.participant(Integer.parseInt(req.getParameter("participant_id")));
-            req.setAttribute("firstname",participant.getFirstName());
-            req.setAttribute("lastname",participant.getLastName());
-           */
             req.setAttribute("participant",userDao.participant(Integer.parseInt(req.getParameter("participant_id"))));
             req.getRequestDispatcher("/WEB-INF/pages/participant.jsp").forward(req, resp);
         }

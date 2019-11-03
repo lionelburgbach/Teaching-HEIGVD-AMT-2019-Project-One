@@ -4,11 +4,10 @@ import ch.heigvd.amt.projectOne.model.User;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.servlet.http.Part;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.InputStream;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,7 +60,8 @@ public class UserDao implements UsersDaoLocal {
                 String mail = rs.getString("email");
                 String password = rs.getString("password");
                 String date = rs.getString("date");
-                user = new User(id, mail, password, firstname, lastname, date);
+                InputStream profilePicture = rs.getBinaryStream("profile_picture");
+                user = new User(id, mail, password, firstname, lastname, date, profilePicture);
             }
             connection.close();
         }catch (SQLException ex){
@@ -74,18 +74,15 @@ public class UserDao implements UsersDaoLocal {
     public User participant(long id){
         User participant = null;
 
-        try{
+         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM user WHERE id=?");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT firstname, lastname FROM user WHERE id=?");
             pstmt.setObject(1, id);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
                 String firstname = rs.getString("firstname");
                 String lastname = rs.getString("lastname");
-                String mail = rs.getString("email");
-                String password = rs.getString("password");
-                String date = rs.getString("date");
-                participant = new User(id, mail, password, firstname, lastname, date);
+                participant = new User(id, null, null, firstname, lastname, null, null);
             }
             connection.close();
         }catch (SQLException ex){
@@ -93,7 +90,6 @@ public class UserDao implements UsersDaoLocal {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return participant;
-
     }
 
     //CREATE
@@ -122,19 +118,20 @@ public class UserDao implements UsersDaoLocal {
 
     //UPDATE
     @Override
-    public boolean updateUser(long id, String firstname, String lastname, String date, String email, String password) {
+    public boolean updateUser(long id, String firstname, String lastname, String date, String email, String password, InputStream profile_picture) {
 
         int rs = 0;
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("UPDATE user SET firstname=?, lastname=?, email=?, password=?, date=? WHERE id=?");
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE user SET firstname=?, lastname=?, email=?, password=?, date=?,profile_picture=? WHERE id=?");
             pstmt.setObject(1, firstname);
             pstmt.setObject(2, lastname);
             pstmt.setObject(3, email);
             pstmt.setObject(4, password);
             pstmt.setObject(5, date);
-            pstmt.setObject(6, id);
+            pstmt.setBlob(6, profile_picture);
+            pstmt.setObject(7, id);
             rs = pstmt.executeUpdate();
             connection.close();
         }catch (SQLException ex){
