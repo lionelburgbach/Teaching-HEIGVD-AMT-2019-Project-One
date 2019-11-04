@@ -1,3 +1,6 @@
+<%@ page import="ch.heigvd.amt.projectOne.model.Ranking" %>
+<%@ page import="ch.heigvd.amt.projectOne.model.Result" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,22 +34,28 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-        <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="home">Home</a>
+        <% if (session.getAttribute("user") != null){ %>
+        <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="${pageContext.request.contextPath}/user/home">Home</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars"></i>
         </button>
+        <% } else { %>
+        <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="login?action=login">Login</a>
+        <% } %>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="trail">Trails</a>
                 </li>
+                <% if (session.getAttribute("user") != null){ %>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="profile">Profile</a>
+                    <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="${pageContext.request.contextPath}/user/profile">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger"  style="color: #B33C12; font-size: 22px;" href="login?action=logout">Logout</a>
+                    <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="login?action=logout">Logout</a>
                 </li>
+                <% } %>
             </ul>
         </div>
     </div>
@@ -56,39 +65,30 @@
 <header class="masthead">
     <div class="container d-flex h-100 align-items-center">
         <div class="mx-auto text-center">
-            <h1 class="mx-auto my-0 text-uppercase" >Participant</h1>
-            <input type="image" src="./assets/paper_img/down.png" style="padding-top:20px; width:30%;" onClick="document.getElementById('profile').scrollIntoView();">
-        </div>
-    </div>
-</header>
-
-<!-- About Section -->
-<section id="profile" class="about-section text-center" style="min-height: 850px;">
-    <div class="container">
-        <div class="row">
             <div class="container">
                 <div class="row">
-                    <div class="text-white col-sm" style="padding-top: 30px;">
-                        <img src="./grayscale/img/pict.jpg" style="width:80%;" class="img-fluid" alt="">
-                    </div>
-                    <div class="text-white col-sm" style="padding-bottom: 40px;">
-                        <form method="POST" action="./profile">
-                            <div class="form-group">
-                                <label for="firstName">Firstname</label>
-                                <input type="text" class="form-control" id="firstName" name="firstname" aria-describedby="emailHelp" value="${participant.firstName}">
+                    <div class="container">
+                        <div class="row">
+                            <div class="text-white col-sm" style="padding-top: 30px;">
+                                <img src="./grayscale/img/pict.jpg" style="width:80%;" class="img-fluid" alt="">
                             </div>
-                            <div class="form-group">
-                                <label for="lastName">Lastname</label>
-                                <input type="text" class="form-control" id="lastName" name="lastname" value="${participant.lastName}">
+                            <div class="text-white col-sm" style="padding-bottom: 40px;">
+                                <div class="form-group">
+                                    <label for="firstName">Firstname</label>
+                                    <input type="text" class="form-control" id="firstName" name="firstname" aria-describedby="emailHelp" value="${trailer.firstName}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Lastname</label>
+                                    <input type="text" class="form-control" id="lastName" name="lastname" value="${trailer.lastName}" disabled>
+                                </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
-</section>
+</header>
 
 <!-- Footer -->
 <footer class="bg-black small text-center text-white-50">

@@ -12,9 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -142,7 +140,7 @@ public class RegistrationDao implements RegistrationDaoLocal {
 
             try {
                 Connection connection = dataSource.getConnection();
-                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO registration (category, date, id_user_fk, id_trail_fk)\n" +
+                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO registration (date, id_user_fk, id_trail_fk)\n" +
                         "VALUES (?, ?, ?);");
                 pstmt.setObject(1, date);
                 pstmt.setObject(2, id_user);

@@ -1,7 +1,8 @@
 package ch.heigvd.amt.projectOne.presentation;
 
 import ch.heigvd.amt.projectOne.model.User;
-import ch.heigvd.amt.projectOne.model.Utils;
+import ch.heigvd.amt.projectOne.utils.Consts;
+import ch.heigvd.amt.projectOne.utils.Crypto;
 import ch.heigvd.amt.projectOne.services.dao.RegistrationDaoLocal;
 import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
 
@@ -30,7 +31,7 @@ public class LoginServlet extends HttpServlet {
 
         if(action.equals("login")) {
 
-            req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
+            req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
         }
         else if(action.equals("logout")){
 
@@ -53,16 +54,16 @@ public class LoginServlet extends HttpServlet {
             String email = req.getParameter("email");
             String password = req.getParameter("password");
 
-            password = Utils.getCryptoHash(password);
+            password = Crypto.getCryptoHash(password);
             user = userDao.connect(email, password);
 
             if (user != null) {
                 session.setAttribute("user", user);
                 req.setAttribute("regs", regDao.allReg(user.getId()));
-                req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
+                req.getRequestDispatcher(Consts.JSP_HOME).forward(req, resp);
             } else {
                 req.getSession().removeAttribute("user");
-                req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
+                req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
             }
         }
         else if(action.equals("registration")){
@@ -73,7 +74,7 @@ public class LoginServlet extends HttpServlet {
             String e=req.getParameter("email");
             String p=req.getParameter("password");
 
-            p = Utils.getCryptoHash(p);
+            p = Crypto.getCryptoHash(p);
 
             String[] s = d.split("-");
             String day = s[0];
@@ -86,12 +87,12 @@ public class LoginServlet extends HttpServlet {
                 if (user != null) {
                     session.setAttribute("user", user);
                     req.setAttribute("regs", regDao.allReg(user.getId()));
-                    req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
+                    req.getRequestDispatcher(Consts.JSP_HOME).forward(req, resp);
                 }
             }
             else{
                 req.getSession().removeAttribute("user");
-                req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
+                req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
             }
         }
     }

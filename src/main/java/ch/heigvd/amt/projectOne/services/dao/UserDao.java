@@ -72,8 +72,8 @@ public class UserDao implements UsersDaoLocal {
     }
 
     @Override
-    public User participant(long id){
-        User participant = null;
+    public User dataUser(long id){
+        User user = null;
 
          try{
             Connection connection = dataSource.getConnection();
@@ -83,14 +83,14 @@ public class UserDao implements UsersDaoLocal {
             while(rs.next()){
                 String firstname = rs.getString("firstname");
                 String lastname = rs.getString("lastname");
-                participant = new User(id, null, null, firstname, lastname, null, null);
+                user = new User(id, null, null, firstname, lastname, null, null);
             }
             connection.close();
         }catch (SQLException ex){
 
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return participant;
+        return user;
     }
 
     //CREATE
@@ -133,6 +133,30 @@ public class UserDao implements UsersDaoLocal {
             pstmt.setObject(5, date);
             pstmt.setBlob(6, profile_picture);
             pstmt.setObject(7, id);
+            rs = pstmt.executeUpdate();
+            connection.close();
+        }catch (SQLException ex){
+
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return (rs == 1);
+    }
+
+    //UPDATE
+    @Override
+    public boolean updateUser(long id, String firstname, String lastname, String date, String email, String password) {
+
+        int rs = 0;
+
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE user SET firstname=?, lastname=?, email=?, password=?, date=? WHERE id=?");
+            pstmt.setObject(1, firstname);
+            pstmt.setObject(2, lastname);
+            pstmt.setObject(3, email);
+            pstmt.setObject(4, password);
+            pstmt.setObject(5, date);
+            pstmt.setObject(6, id);
             rs = pstmt.executeUpdate();
             connection.close();
         }catch (SQLException ex){

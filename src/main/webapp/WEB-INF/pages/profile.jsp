@@ -31,7 +31,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="home">Home</a>
+        <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="${pageContext.request.contextPath}/user/home">Home</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fas fa-bars"></i>
@@ -42,7 +42,7 @@
               <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="trail">Trails</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="profile">Profile</a>
+              <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="${pageContext.request.contextPath}/user/profile">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link js-scroll-trigger"  style="color: #B33C12; font-size: 22px;" href="login?action=logout">Logout</a>
@@ -56,56 +56,58 @@
   <header class="masthead">
     <div class="container d-flex h-100 align-items-center">
       <div class="mx-auto text-center">
-        <h1 class="mx-auto my-0 text-uppercase" >Profile</h1>
-        <input type="image" src="./assets/paper_img/down.png" style="padding-top:20px; width:30%;" onClick="document.getElementById('profile').scrollIntoView();">
-      </div>
-    </div>
-  </header>
-
-  <!-- About Section -->
-  <section id="profile" class="about-section text-center" style="min-height: 850px;">
-    <div class="container">
-      <div class="row">
         <div class="container">
           <div class="row">
-            <div class="text-white col-sm" style="padding-top: 30px;">
-              <img src="./grayscale/img/pict.jpg" style="width:80%;" class="img-fluid" alt="">
+            <div class="container">
+              <div class="row">
+                <div class="text-white col-sm" style="padding-top: 30px;">
+                  <div>
+                    <img src="./grayscale/img/pict.jpg" style="width:400px;" class="img-fluid" alt="">
+                  </div>
+                  <div style="padding-top: 20px;">
+                  <form method="post" action="" enctype="multipart/form-data">
+                    <div class="custom-file" style="width: 400px;">
+                      <input type="file" class="custom-file-input" id="customFile">
+                      <label class="custom-file-label" for="customFile">File</label>
+                      <button type="submit" class="btn btn-outline-warning" value="updatePerson">Update</button>
+                    </div>
+                  </form>
+                  </div>
+                </div>
+                <div class="text-white col-sm" style="padding-bottom: 40px; width: 400px;">
+                  <form method="post" action="${pageContext.request.contextPath}/user/profile">
+                    <div class="form-group">
+                      <label for="firstName">Firstname</label>
+                      <input type="text" class="form-control" id="firstName" name="firstname" aria-describedby="emailHelp" value="${user.firstName}">
+                    </div>
+                    <div class="form-group">
+                      <label for="lastName">Lastname</label>
+                      <input type="text" class="form-control" id="lastName" name="lastname" value="${user.lastName}">
+                    </div>
+                    <div class="form-group">
+                      <label for="dateOfBirth">Date of Birth</label>
+                      <input type="text" class="form-control" id="dateOfBirth" name="date" value="${user.dateOfBirth}">
+                    </div>
+                    <div class="form-group">
+                      <label for="Email">Email</label>
+                      <input type="email" class="form-control" id="Email" name="email" value="${user.email}">
+                    </div>
+                    <div class="form-group">
+                      <label for="Passowrd">Password</label>
+                      <input type="password" class="form-control" id="Passowrd" name="password" placeholder="Password">
+                    </div>
+                    <div style="padding-top: 20px;">
+                      <button type="submit" class="btn btn-outline-warning" value="updatePerson">Update</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-            <div class="text-white col-sm" style="padding-bottom: 40px;">
-              <form method="POST" action="./profile" enctype="multipart/form-data">
-                <div class="form-group">
-                  <label for="firstName">Firstname</label>
-                  <input type="text" class="form-control" id="firstName" name="firstname" aria-describedby="emailHelp" value="${user.firstName}">
-                </div>
-                <div class="form-group">
-                  <label for="lastName">Lastname</label>
-                  <input type="text" class="form-control" id="lastName" name="lastname" value="${user.lastName}">
-                </div>
-                <div class="form-group">
-                  <label for="dateOfBirth">Date of Birth</label>
-                  <input type="text" class="form-control" id="dateOfBirth" name="date" value="${user.dateOfBirth}">
-                </div>
-                <div class="form-group">
-                  <label for="Email">Email</label>
-                  <input type="email" class="form-control" id="Email" name="email" value="${user.email}">
-                </div>
-                <div class="form-group">
-                  <label for="Passowrd">Password</label>
-                  <input type="password" class="form-control" id="Passowrd" name="password" placeholder="Password">
-                </div>
-                <div>
-                    <label for="profilePicture">Modify your picture</label>
-                    <input type="file" class="form-control" id="profilePicture"name="profilePicture" accept="image/png, image/jpeg" >
-                </div>
-                <button type="submit" class="btn btn-outline-warning" value="updatePerson">Update</button>
-              </form>
-            </div>
-
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </header>
 
    <!-- Footer -->
   <footer class="bg-black small text-center text-white-50">
@@ -123,6 +125,14 @@
 
   <!-- Custom scripts for this template -->
   <script src="./grayscale/js/grayscale.min.js"></script>
+
+  <script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function() {
+      var fileName = $(this).val().split("\\").pop();
+      $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+  </script>
 
 </body>
 

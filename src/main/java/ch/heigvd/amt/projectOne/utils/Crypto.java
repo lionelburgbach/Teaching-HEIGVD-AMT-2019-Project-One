@@ -1,10 +1,10 @@
-package ch.heigvd.amt.projectOne.model;
+package ch.heigvd.amt.projectOne.utils;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Utils {
+public class Crypto {
 
     public static String getCryptoHash(String input) {
         try {
