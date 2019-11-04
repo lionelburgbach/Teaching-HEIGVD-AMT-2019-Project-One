@@ -118,7 +118,6 @@ public class TrailDao implements TrailDaoLocal {
         Date currentDate = new Date(System.currentTimeMillis());
         String s = formatter.format(currentDate);
 
-        //"SELECT DISTINCT * FROM registration AS reg INNER JOIN result AS res ON reg.id = res.id_reg_fk WHERE reg.id_user_fk=?;"
 
         List<Trail> trails = new ArrayList<>();
         try{

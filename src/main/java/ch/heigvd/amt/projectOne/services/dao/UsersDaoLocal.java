@@ -16,5 +16,4 @@ public interface UsersDaoLocal {
     boolean addUser(String firstname, String lastname, String date, String email, String password);
     boolean updateUser(long id, String firstname, String lastname, String date, String email, String password, InputStream profile_picture);
     boolean deleteUser(long id);
-
 }
