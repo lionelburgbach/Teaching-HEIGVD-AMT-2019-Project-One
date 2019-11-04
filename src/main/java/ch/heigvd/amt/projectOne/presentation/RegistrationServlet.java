@@ -40,7 +40,7 @@ public class RegistrationServlet extends HttpServlet {
                 Date date = new Date(System.currentTimeMillis());
                 String s = formatter.format(date);
                 Registration reg = new Registration(user, trail, s);
-                registrationDao.addReg(user.getId(), trail.getId(), reg.getCategory(), s);
+                registrationDao.addReg(user.getId(), trail.getId(), s);
                 req.setAttribute("regs", registrationDao.allReg(user.getId()));
                 req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
             }

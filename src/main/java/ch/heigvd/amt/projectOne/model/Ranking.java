@@ -23,43 +23,8 @@ public class Ranking {
         results.put(trail, result);
     }
 
-    public Map<Trail, List<Result>>  results(){
-
-        Map<Trail, List<Result>> resByRanking = new HashMap<>(results);
-        Iterator<Map.Entry<Trail, List<Result>>> it = resByRanking.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<Trail, List<Result>> pair = it.next();
-            Collections.sort(pair.getValue(), new SortbyTime());
-        }
-        return resByRanking;
-    }
 
     public Map<Trail, List<Result>> getRanking(){
         return results;
     }
-
-    /*
-    public List<Result> resultsByCategory(int category){
-
-        ArrayList<Result> resultsByCategory = new ArrayList<>();
-        for (Result res : results) {
-            if(res.getRegistration().getCategory() == category){
-                resultsByCategory.add(res);
-            }
-        }
-        Collections.sort(resultsByCategory,new SortbyTime() );
-        return  resultsByCategory;
-    }
-
-    public int resultUser(User user, int category){
-
-        List<Result> results = resultsByCategory(category);
-        for(int i = 0; i< results.size(); i++){
-            if(results.get(i).getRegistration().getUser() == user){
-                return  i+1;
-            }
-        }
-        return -1;
-    }
-     */
 }

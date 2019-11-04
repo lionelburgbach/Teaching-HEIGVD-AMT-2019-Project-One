@@ -12,6 +12,7 @@ public interface TrailDaoLocal {
     List<Trail> allTrail();
     List<Trail> allTrailToCome();
     List<Trail> allTrailDone();
+    List<Trail> allTrailToComeWithReg();
     boolean addTrail(String name, double distance, double upAndDown, String description, int capacity, String date);
     boolean updateTrail(long id, String name, double distance, double upAndDown, String description, int capacity, String date);
     boolean deleteTrail(long id);

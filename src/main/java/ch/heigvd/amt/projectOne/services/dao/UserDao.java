@@ -70,6 +70,7 @@ public class UserDao implements UsersDaoLocal {
         }
         return user;
     }
+
     @Override
     public User participant(long id){
         User participant = null;

@@ -16,7 +16,6 @@ public class User {
     private String lastName;
     private String dateOfBirth;
     private InputStream profilePicture;
-    //private String imagePath;
 
     public User(long id, String email, String password, String firstName, String lastName, String dateOfBirth, InputStream profilePicture){
         this.id = id;

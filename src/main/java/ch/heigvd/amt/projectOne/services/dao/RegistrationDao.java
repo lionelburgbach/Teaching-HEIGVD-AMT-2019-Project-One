@@ -134,7 +134,7 @@ public class RegistrationDao implements RegistrationDaoLocal {
 
     //CREATE
     @Override
-    public boolean addReg(long id_user, long id_trail, int category, String date) {
+    public boolean addReg(long id_user, long id_trail, String date) {
 
         int rs = 0;
 
@@ -143,11 +143,10 @@ public class RegistrationDao implements RegistrationDaoLocal {
             try {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement("INSERT INTO registration (category, date, id_user_fk, id_trail_fk)\n" +
-                        "VALUES (?, ?, ?, ?);");
-                pstmt.setObject(1, category);
-                pstmt.setObject(2, date);
-                pstmt.setObject(3, id_user);
-                pstmt.setObject(4, id_trail);
+                        "VALUES (?, ?, ?);");
+                pstmt.setObject(1, date);
+                pstmt.setObject(2, id_user);
+                pstmt.setObject(3, id_trail);
                 rs = pstmt.executeUpdate();
                 connection.close();
             } catch (SQLException ex) {

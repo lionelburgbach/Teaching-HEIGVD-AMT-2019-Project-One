@@ -112,6 +112,40 @@ public class TrailDao implements TrailDaoLocal {
 
     //READ
     @Override
+    public List<Trail> allTrailToComeWithReg() {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentDate = new Date(System.currentTimeMillis());
+        String s = formatter.format(currentDate);
+
+        //"SELECT DISTINCT * FROM registration AS reg INNER JOIN result AS res ON reg.id = res.id_reg_fk WHERE reg.id_user_fk=?;"
+
+        List<Trail> trails = new ArrayList<>();
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM trail INNER JOIN registration AS reg ON trail.id=reg.id_trail_fk WHERE date >?;");
+            pstmt.setObject(1, s);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                double distance = rs.getDouble("length");
+                double upAndDown = rs.getDouble("up_and_down");
+                String description = rs.getString("description");
+                int capacity = rs.getInt("capacity");
+                String date = rs.getString("date");
+                trails.add(new Trail(id, name, distance, upAndDown, description, capacity, date));
+            }
+            connection.close();
+        }catch (SQLException ex){
+
+            LOG.log(Level.SEVERE, null, ex);
+        }
+        return trails;
+    }
+
+    //READ
+    @Override
     public List<Trail> allTrailDone() {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

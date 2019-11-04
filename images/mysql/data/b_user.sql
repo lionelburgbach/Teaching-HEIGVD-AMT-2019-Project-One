@@ -29,16 +29,16 @@ INSERT INTO trail VALUES (10,'Ultra-Trail Mt. Fuji',168,9500,'The Ultra-Trail Mt
 COMMIT;
 
 SET AUTOCOMMIT=0;
-INSERT INTO registration VALUES (1,3,'2019-06-14',1,6);
-INSERT INTO registration VALUES (2,3,'2019-05-12',1,7);
-INSERT INTO registration VALUES (3,3,'2019-01-24',1,8);
-INSERT INTO registration VALUES (4,3,'2019-02-24',1,9);
-INSERT INTO registration VALUES (5,3,'2019-07-25',1,10);
-INSERT INTO registration VALUES (6,3,'2019-04-14',2,6);
-INSERT INTO registration VALUES (7,3,'2019-06-12',2,7);
-INSERT INTO registration VALUES (8,3,'2019-01-24',2,8);
-INSERT INTO registration VALUES (9,3,'2019-01-30',2,9);
-INSERT INTO registration VALUES (10,3,'2019-06-25',2,10);
+INSERT INTO registration VALUES (1,'2019-06-14',1,6);
+INSERT INTO registration VALUES (2,'2019-05-12',1,7);
+INSERT INTO registration VALUES (3,'2019-01-24',1,8);
+INSERT INTO registration VALUES (4,'2019-02-24',1,9);
+INSERT INTO registration VALUES (5,'2019-07-25',1,10);
+INSERT INTO registration VALUES (6,'2019-04-14',2,6);
+INSERT INTO registration VALUES (7,'2019-06-12',2,7);
+INSERT INTO registration VALUES (8,'2019-01-24',2,8);
+INSERT INTO registration VALUES (9,'2019-01-30',2,9);
+INSERT INTO registration VALUES (10,'2019-06-25',2,10);
 COMMIT;
 
 SET AUTOCOMMIT=0;
