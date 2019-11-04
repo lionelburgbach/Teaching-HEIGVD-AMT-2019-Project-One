@@ -3,7 +3,6 @@ package ch.heigvd.amt.projectOne.presentation;
 import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.utils.Consts;
 import ch.heigvd.amt.projectOne.utils.Crypto;
-import ch.heigvd.amt.projectOne.services.dao.RegistrationDaoLocal;
 import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
 
 import javax.ejb.EJB;
@@ -15,14 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/login")
+@WebServlet(urlPatterns = Consts.SERVLET_LOGIN)
 public class LoginServlet extends HttpServlet {
 
     @EJB
     UsersDaoLocal userDao;
-
-    @EJB
-    RegistrationDaoLocal regDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,7 +33,7 @@ public class LoginServlet extends HttpServlet {
 
             resp.setContentType("text/html;charset=UTF-8");
             req.getSession().invalidate();
-            req.getRequestDispatcher("/trail").forward(req, resp);
+            resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
         }
     }
 
@@ -59,8 +55,7 @@ public class LoginServlet extends HttpServlet {
 
             if (user != null) {
                 session.setAttribute("user", user);
-                req.setAttribute("regs", regDao.allReg(user.getId()));
-                req.getRequestDispatcher(Consts.JSP_HOME).forward(req, resp);
+                resp.sendRedirect(req.getContextPath()+Consts.SERVLET_HOME);
             } else {
                 req.getSession().removeAttribute("user");
                 req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
@@ -86,8 +81,7 @@ public class LoginServlet extends HttpServlet {
                 user = userDao.connect(e,p);
                 if (user != null) {
                     session.setAttribute("user", user);
-                    req.setAttribute("regs", regDao.allReg(user.getId()));
-                    req.getRequestDispatcher(Consts.JSP_HOME).forward(req, resp);
+                    resp.sendRedirect(req.getContextPath()+Consts.SERVLET_HOME);
                 }
             }
             else{

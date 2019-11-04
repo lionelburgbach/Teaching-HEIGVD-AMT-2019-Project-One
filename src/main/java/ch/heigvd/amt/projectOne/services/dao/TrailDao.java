@@ -89,7 +89,7 @@ public class TrailDao implements TrailDaoLocal {
         List<Trail> trails = new ArrayList<>();
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail WHERE date >?;");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail WHERE date > ?;");
             pstmt.setObject(1, s);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
@@ -114,16 +114,10 @@ public class TrailDao implements TrailDaoLocal {
     @Override
     public List<Trail> allTrailToComeWithReg() {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date currentDate = new Date(System.currentTimeMillis());
-        String s = formatter.format(currentDate);
-
-
         List<Trail> trails = new ArrayList<>();
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM trail INNER JOIN registration AS reg ON trail.id=reg.id_trail_fk WHERE date >?;");
-            pstmt.setObject(1, s);
+            PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM trail LEFT JOIN registration AS reg ON trail.id=reg.id_trail_fk;");
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
                 int id = rs.getInt("id");

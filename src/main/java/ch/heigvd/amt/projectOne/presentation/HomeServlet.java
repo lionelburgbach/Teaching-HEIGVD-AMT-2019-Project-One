@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/user/home")
+@WebServlet(urlPatterns = Consts.SERVLET_HOME)
 public class HomeServlet extends HttpServlet {
 
     @EJB

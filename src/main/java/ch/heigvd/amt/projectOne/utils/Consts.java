@@ -7,4 +7,10 @@ public class Consts {
     public static final String JSP_PROFILE ="/WEB-INF/pages/profile.jsp";
     public static final String JSP_TRAIL = "/WEB-INF/pages/trail.jsp";
     public static final String JSP_DATA = "/WEB-INF/pages/data.jsp";
+
+    public static final String SERVLET_HOME = "/user/home";
+    public static final String SERVLET_TRAIL = "/trail";
+    public static final String SERVLET_LOGIN = "/login";
+    public static final String SERVLET_PROFILE = "/user/profile";
+    public static final String SERVLET_REGISTRATION = "/user/registration";
 }

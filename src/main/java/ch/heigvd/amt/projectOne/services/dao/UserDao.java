@@ -119,31 +119,6 @@ public class UserDao implements UsersDaoLocal {
 
     //UPDATE
     @Override
-    public boolean updateUser(long id, String firstname, String lastname, String date, String email, String password, InputStream profile_picture) {
-
-        int rs = 0;
-
-        try{
-            Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("UPDATE user SET firstname=?, lastname=?, email=?, password=?, date=?,profile_picture=? WHERE id=?");
-            pstmt.setObject(1, firstname);
-            pstmt.setObject(2, lastname);
-            pstmt.setObject(3, email);
-            pstmt.setObject(4, password);
-            pstmt.setObject(5, date);
-            pstmt.setBlob(6, profile_picture);
-            pstmt.setObject(7, id);
-            rs = pstmt.executeUpdate();
-            connection.close();
-        }catch (SQLException ex){
-
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return (rs == 1);
-    }
-
-    //UPDATE
-    @Override
     public boolean updateUser(long id, String firstname, String lastname, String date, String email, String password) {
 
         int rs = 0;
@@ -164,6 +139,11 @@ public class UserDao implements UsersDaoLocal {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return (rs == 1);
+    }
+
+    @Override
+    public boolean updatePictureUser(long id, InputStream profile_picture) {
+        return false;
     }
 
     //DELETE

@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@WebServlet(urlPatterns = "/user/registration")
+@WebServlet(urlPatterns = Consts.SERVLET_REGISTRATION)
 public class RegistrationServlet extends HttpServlet {
 
     @EJB
@@ -41,7 +41,7 @@ public class RegistrationServlet extends HttpServlet {
             Registration reg = new Registration(user, trail, s);
             registrationDao.addReg(user.getId(), trail.getId(), s);
             req.setAttribute("regs", registrationDao.allReg(user.getId()));
-            req.getRequestDispatcher(Consts.JSP_HOME).forward(req, resp);
+            resp.sendRedirect(req.getContextPath()+Consts.SERVLET_HOME);
         }
         else if (action.equals("delReg")) {
 
@@ -49,7 +49,7 @@ public class RegistrationServlet extends HttpServlet {
             registrationDao.deleteReg(id);
             User user = (User) req.getSession().getAttribute("user");
             req.setAttribute("regs", registrationDao.allReg(user.getId()));
-            req.getRequestDispatcher(Consts.JSP_HOME).forward(req, resp);
+            resp.sendRedirect(req.getContextPath()+Consts.SERVLET_HOME);
         }
     }
 }

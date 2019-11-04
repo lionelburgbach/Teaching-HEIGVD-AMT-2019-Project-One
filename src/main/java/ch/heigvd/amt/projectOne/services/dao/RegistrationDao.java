@@ -140,8 +140,7 @@ public class RegistrationDao implements RegistrationDaoLocal {
 
             try {
                 Connection connection = dataSource.getConnection();
-                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO registration (date, id_user_fk, id_trail_fk)\n" +
-                        "VALUES (?, ?, ?);");
+                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO registration (date, id_user_fk, id_trail_fk) VALUES (?, ?, ?);");
                 pstmt.setObject(1, date);
                 pstmt.setObject(2, id_user);
                 pstmt.setObject(3, id_trail);

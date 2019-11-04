@@ -7,14 +7,12 @@ import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = "/user/profile")
+@WebServlet(urlPatterns = Consts.SERVLET_PROFILE)
 public class ProfileServlet extends HttpServlet {
 
     @EJB
@@ -42,8 +40,6 @@ public class ProfileServlet extends HttpServlet {
         } else {
             p = Crypto.getCryptoHash(p);
         }
-
-        //InputStream pp = req.getPart("profilePicture").getInputStream();
 
         String[] s = d.split("-");
         String year = s[0];

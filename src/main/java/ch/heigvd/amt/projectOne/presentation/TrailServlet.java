@@ -3,7 +3,6 @@ package ch.heigvd.amt.projectOne.presentation;
 import ch.heigvd.amt.projectOne.model.Ranking;
 import ch.heigvd.amt.projectOne.model.Result;
 import ch.heigvd.amt.projectOne.model.Trail;
-import ch.heigvd.amt.projectOne.services.dao.ResultDao;
 import ch.heigvd.amt.projectOne.services.dao.ResultDaoLocal;
 import ch.heigvd.amt.projectOne.services.dao.TrailDaoLocal;
 import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
@@ -16,12 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-@WebServlet(urlPatterns = "/trail")
+@WebServlet(urlPatterns = Consts.SERVLET_TRAIL)
 public class TrailServlet extends HttpServlet {
 
     @EJB
@@ -73,12 +69,10 @@ public class TrailServlet extends HttpServlet {
 
             if (trailManager.addTrail(name, distance, upAndDown, description, capacity, dates)) {
                 resp.setContentType("text/html;charset=UTF-8");
-                req.setAttribute("trails", trailManager.allTrail());
-                req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
+                resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
             }
         }
         else if (action.equals("data")) {
-
             req.setAttribute("trailer", userDao.dataUser(Integer.parseInt(req.getParameter("trailer_id"))));
             req.getRequestDispatcher(Consts.JSP_DATA).forward(req, resp);
         }
