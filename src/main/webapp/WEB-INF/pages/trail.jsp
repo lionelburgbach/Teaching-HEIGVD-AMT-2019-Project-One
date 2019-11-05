@@ -1,5 +1,3 @@
-<%@ page import="ch.heigvd.amt.projectOne.model.Ranking" %>
-<%@ page import="ch.heigvd.amt.projectOne.model.Result" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,51 +109,6 @@
           </c:forEach>
           </tbody>
         </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="about-section text-center">
-
-  <div class="container" style="color: white;">
-    <div class="row">
-      <div class="table-responsive-lg">
-
-          <c:forEach var="trail" items="${ranks}">
-          <table class="table table-dark">
-            <tbody>
-            <tr>
-              <th>Trail : ${trail.key.name}</th>
-              <th>Date : ${trail.key.date}</th>
-            </tr>
-            <tr>
-              <th>Firstname</th>
-              <th>Lastname</th>
-              <th>Time</th>
-              <th>Position</th>
-            </tr>
-            <c:set var="count" value="0" scope="page" />
-            <c:forEach var="result" items="${trail.value}">
-              <c:set var="count" value="${count + 1}" scope="page"/>
-              <tr>
-                <th>${result.registration.user.firstName}</th>
-                <th>${result.registration.user.lastName}</th>
-                <th>${result.time}</th>
-                <th>${count}</th>
-                <form method="post" action="${pageContext.request.contextPath}/trail?action=data">
-                  <td><button type="submit" name ="trailer_id" value="${result.registration.user.id}" class="btn btn-outline-warning">More about him</button></td>
-                </form>
-              </tr>
-            </c:forEach>
-            <tr>
-              <form method="post">
-                <td><button type="submit" name ="" value="" class="btn btn-outline-warning">More Results</button></td>
-              </form>
-            </tr>
-            </tbody>
-          </table>
-          </c:forEach>
       </div>
     </div>
   </div>

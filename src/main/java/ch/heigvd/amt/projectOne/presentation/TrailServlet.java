@@ -1,9 +1,6 @@
 package ch.heigvd.amt.projectOne.presentation;
 
-import ch.heigvd.amt.projectOne.model.Ranking;
-import ch.heigvd.amt.projectOne.model.Result;
 import ch.heigvd.amt.projectOne.model.Trail;
-import ch.heigvd.amt.projectOne.services.dao.ResultDaoLocal;
 import ch.heigvd.amt.projectOne.services.dao.TrailDaoLocal;
 import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
 import ch.heigvd.amt.projectOne.utils.Consts;
@@ -24,26 +21,14 @@ public class TrailServlet extends HttpServlet {
     TrailDaoLocal trailManager;
 
     @EJB
-    ResultDaoLocal resultDao;
-
-    @EJB
     UsersDaoLocal userDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("text/html;charset=UTF-8");
-        Ranking ranks = new Ranking();
         List<Trail> trails =  trailManager.allTrailToCome();
-        List<Trail> trailsDone= trailManager.allTrailDone();
-        for(int i = 0; i< trailsDone.size();i++){
-            List<Result> res = resultDao.resultTrail(trailsDone.get(i).getId());
-            if(res.size() != 0) {
-                ranks.add(trailsDone.get(i), res);
-            }
-        }
         req.setAttribute("trails", trails);
-        req.setAttribute("ranks", ranks.getRanking());
         req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
     }
 
@@ -68,11 +53,13 @@ public class TrailServlet extends HttpServlet {
             String dates = year + "/" + month + "/" + day;
 
             if (trailManager.addTrail(name, distance, upAndDown, description, capacity, dates)) {
+
                 resp.setContentType("text/html;charset=UTF-8");
                 resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
             }
         }
         else if (action.equals("data")) {
+
             req.setAttribute("trailer", userDao.dataUser(Integer.parseInt(req.getParameter("trailer_id"))));
             req.getRequestDispatcher(Consts.JSP_DATA).forward(req, resp);
         }

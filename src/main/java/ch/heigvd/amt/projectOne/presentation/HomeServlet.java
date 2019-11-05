@@ -2,7 +2,6 @@ package ch.heigvd.amt.projectOne.presentation;
 
 import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.services.dao.RegistrationDaoLocal;
-import ch.heigvd.amt.projectOne.services.dao.ResultDaoLocal;
 import ch.heigvd.amt.projectOne.utils.Consts;
 
 import javax.ejb.EJB;
@@ -19,15 +18,11 @@ public class HomeServlet extends HttpServlet {
     @EJB
     RegistrationDaoLocal regDao;
 
-    @EJB
-    ResultDaoLocal resultDao;
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         User user = (User)req.getSession().getAttribute("user");
         req.setAttribute("regs", regDao.allReg(user.getId()));
-        req.setAttribute("results", resultDao.allResultUser(user.getId()));
         req.getRequestDispatcher(Consts.JSP_HOME).forward(req, resp);
     }
 }

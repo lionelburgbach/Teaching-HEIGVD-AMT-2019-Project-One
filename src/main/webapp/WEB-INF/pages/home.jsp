@@ -54,27 +54,35 @@
 </nav>
 
 <!-- Header -->
-<header class="masthead">
+<header class="masthead" style="padding-top: 150px;">
   <div class="container d-flex h-100 align-items-center">
     <div class="mx-auto text-center">
       <div class="container" style="color: white;">
         <div class="row" style="text-align: center;">
-          <h2>Results</h2>
+          <h2>Coming Trails</h2>
           <div class="table-responsive-lg">
             <table class="table table-dark">
               <thead>
               <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Name</th>
-                <th scope="col">Time</th>
+                <th scope="col">Distance</th>
+                <th scope="col">Up and Down</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date</th>
+                <th scope="col">Delete Registration</th>
               </tr>
               </thead>
               <tbody>
-              <c:forEach items="${results}" var="res">
+              <c:forEach items="${regs}" var="reg">
                 <tr>
-                  <td>${res.id}</td>
-                  <td>${res.registration.trail.name}</td>
-                  <td>${res.time} M</td>
+                  <td>${reg.trail.name}</td>
+                  <td>${reg.trail.distance} KM</td>
+                  <td>${reg.trail.upAndDown} M</td>
+                  <td>${reg.trail.description}</td>
+                  <td>${reg.trail.date}</td>
+                  <form method="post" action="${pageContext.request.contextPath}/user/registration?action=delReg">
+                    <td><button type="submit" name ="reg_id" value="${reg.id}" class="btn btn-outline-danger">Delete</button></td>
+                  </form>
                 </tr>
               </c:forEach>
               </tbody>
@@ -85,43 +93,6 @@
     </div>
   </div>
 </header>
-
-<!-- Projects Section -->
-<section class="about-section text-center">
-  <div class="container" style="color: white;">
-    <div class="row" style="text-align: center;">
-      <h2>Coming Trails</h2>
-      <div class="table-responsive-lg">
-        <table class="table table-dark">
-          <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Distance</th>
-            <th scope="col">Up and Down</th>
-            <th scope="col">Description</th>
-            <th scope="col">Date</th>
-            <th scope="col">Delete Registration</th>
-          </tr>
-          </thead>
-          <tbody>
-          <c:forEach items="${regs}" var="reg">
-            <tr>
-              <td>${reg.trail.name}</td>
-              <td>${reg.trail.distance} KM</td>
-              <td>${reg.trail.upAndDown} M</td>
-              <td>${reg.trail.description}</td>
-              <td>${reg.trail.date}</td>
-              <form method="post" action="${pageContext.request.contextPath}/user/registration?action=delReg">
-                <td><button type="submit" name ="reg_id" value="${reg.id}" class="btn btn-outline-danger">Delete</button></td>
-              </form>
-            </tr>
-          </c:forEach>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- Projects Section -->
 <section class="about-section text-center">
