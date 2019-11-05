@@ -1,8 +1,8 @@
 package ch.heigvd.amt.projectOne.presentation;
 
 import ch.heigvd.amt.projectOne.model.User;
-import ch.heigvd.amt.projectOne.model.Utils;
-import ch.heigvd.amt.projectOne.services.dao.RegistrationDaoLocal;
+import ch.heigvd.amt.projectOne.utils.Consts;
+import ch.heigvd.amt.projectOne.utils.Crypto;
 import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
 
 import javax.ejb.EJB;
@@ -14,14 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/login")
+@WebServlet(urlPatterns = Consts.SERVLET_LOGIN)
 public class LoginServlet extends HttpServlet {
 
     @EJB
     UsersDaoLocal userDao;
-
-    @EJB
-    RegistrationDaoLocal regDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,13 +27,13 @@ public class LoginServlet extends HttpServlet {
 
         if(action.equals("login")) {
 
-            req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
+            req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
         }
         else if(action.equals("logout")){
 
             resp.setContentType("text/html;charset=UTF-8");
             req.getSession().invalidate();
-            req.getRequestDispatcher("/trail").forward(req, resp);
+            resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
         }
     }
 
@@ -53,16 +50,15 @@ public class LoginServlet extends HttpServlet {
             String email = req.getParameter("email");
             String password = req.getParameter("password");
 
-            password = Utils.getCryptoHash(password);
+            password = Crypto.getCryptoHash(password);
             user = userDao.connect(email, password);
 
             if (user != null) {
                 session.setAttribute("user", user);
-                req.setAttribute("regs", regDao.allReg(user.getId()));
-                req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
+                resp.sendRedirect(req.getContextPath()+Consts.SERVLET_HOME);
             } else {
                 req.getSession().removeAttribute("user");
-                req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
+                req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
             }
         }
         else if(action.equals("registration")){
@@ -73,7 +69,7 @@ public class LoginServlet extends HttpServlet {
             String e=req.getParameter("email");
             String p=req.getParameter("password");
 
-            p = Utils.getCryptoHash(p);
+            p = Crypto.getCryptoHash(p);
 
             String[] s = d.split("-");
             String day = s[0];
@@ -85,13 +81,12 @@ public class LoginServlet extends HttpServlet {
                 user = userDao.connect(e,p);
                 if (user != null) {
                     session.setAttribute("user", user);
-                    req.setAttribute("regs", regDao.allReg(user.getId()));
-                    req.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(req, resp);
+                    resp.sendRedirect(req.getContextPath()+Consts.SERVLET_HOME);
                 }
             }
             else{
                 req.getSession().removeAttribute("user");
-                req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
+                req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
             }
         }
     }

@@ -12,6 +12,6 @@ public interface RegistrationDaoLocal {
     List<Registration> allReg(long idUser);
     List<Registration> allRegWithResUser(long idUser);
     List<Registration> allRegWithResTrail(long idTrail);
-    boolean addReg(long id_user, long id_trail, int category, String date);
+    boolean addReg(long id_user, long id_trail, String date);
     boolean deleteReg(long id);
 }

@@ -1,5 +1,3 @@
-<%@ page import="ch.heigvd.amt.projectOne.model.Ranking" %>
-<%@ page import="ch.heigvd.amt.projectOne.model.Result" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +33,7 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
   <div class="container">
     <% if (session.getAttribute("user") != null){ %>
-    <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="home">Home</a>
+    <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="${pageContext.request.contextPath}/user/home">Home</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       Menu
       <i class="fas fa-bars"></i>
@@ -50,7 +48,7 @@
         </li>
         <% if (session.getAttribute("user") != null){ %>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="profile">Profile</a>
+          <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="${pageContext.request.contextPath}/user/profile">Profile</a>
         </li>
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" style="color: #B33C12; font-size: 22px;" href="login?action=logout">Logout</a>
@@ -104,58 +102,13 @@
               <td>${trail.description}</td>
               <td>${trail.date}</td>
               <td>${trail.capacity - trail.nbIn}</td>
-              <form method="post" action="./registration?action=enroll">
+              <form method="post" action="${pageContext.request.contextPath}/user/registration?action=enroll">
                 <td><button type="submit" name ="trail_id" value="${trail.id}" class="btn btn-outline-warning">Enroll Me</button></td>
               </form>
             </tr>
           </c:forEach>
           </tbody>
         </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="about-section text-center">
-
-  <div class="container" style="color: white;">
-    <div class="row">
-      <div class="table-responsive-lg">
-
-          <c:forEach var="trail" items="${ranks}">
-          <table class="table table-dark">
-            <tbody>
-            <tr>
-              <th>Trail : ${trail.key.name}</th>
-              <th>Date : ${trail.key.date}</th>
-            </tr>
-            <tr>
-              <th>Firstname</th>
-              <th>Lastname</th>
-              <th>Time</th>
-              <th>Position</th>
-            </tr>
-            <c:set var="count" value="0" scope="page" />
-            <c:forEach var="result" items="${trail.value}">
-              <c:set var="count" value="${count + 1}" scope="page"/>
-              <tr>
-                <th>${result.registration.user.firstName}</th>
-                <th>${result.registration.user.lastName}</th>
-                <th>${result.time}</th>
-                <th>${count}</th>
-                <form method="post" action="./participant">
-                  <td><button type="submit" name ="participant_id" value="${result.registration.user.id}" class="btn btn-outline-warning">More about him</button></td>
-                </form>
-              </tr>
-            </c:forEach>
-            <tr>
-              <form method="post">
-                <td><button type="submit" name ="" value="" class="btn btn-outline-warning">More Results</button></td>
-              </form>
-            </tr>
-            </tbody>
-          </table>
-          </c:forEach>
       </div>
     </div>
   </div>
@@ -181,7 +134,7 @@
 <script>
   function addTrail() {
     document.getElementById("addTrail").innerHTML ='<div class="container" style="color: white; max-width: 500px;">\n' +
-            '    <form method="post" action="./trail">\n' +
+            '    <form method="post" action="${pageContext.request.contextPath}/trail?action=addTrail">\n' +
             '      <div class="form-group">\n' +
             '        <label for="name">Name</label>\n' +
             '        <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>\n' +

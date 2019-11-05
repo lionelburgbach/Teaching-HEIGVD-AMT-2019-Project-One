@@ -1,21 +1,18 @@
 package ch.heigvd.amt.projectOne.presentation;
 
 import ch.heigvd.amt.projectOne.model.User;
-import ch.heigvd.amt.projectOne.model.Utils;
+import ch.heigvd.amt.projectOne.utils.Consts;
+import ch.heigvd.amt.projectOne.utils.Crypto;
 import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.sql.Blob;
 
-@WebServlet(urlPatterns = "/profile")
-@MultipartConfig(maxFileSize = 16177215)
+@WebServlet(urlPatterns = Consts.SERVLET_PROFILE)
 public class ProfileServlet extends HttpServlet {
 
     @EJB
@@ -24,55 +21,41 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        if (req.getSession().getAttribute("user") != null) {
-            req.getRequestDispatcher("/WEB-INF/pages/profile.jsp").forward(req, resp);
-        }
-        else {
-            req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
-        }
+        req.getRequestDispatcher(Consts.JSP_PROFILE).forward(req, resp);
     }
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        if (req.getSession().getAttribute("user") != null) {
+        HttpSession session = req.getSession();
 
-                HttpSession session = req.getSession();
-
-                User user = (User) req.getSession().getAttribute("user");
-                String f = req.getParameter("firstname");
-                String l = req.getParameter("lastname");
-                String d = req.getParameter("date");
-                String e = req.getParameter("email");
-                String p = req.getParameter("password");
-                if (p.equals("")) {
-                    p = user.getPassword();
-                } else {
-                    p = Utils.getCryptoHash(p);
-                }
-
-                InputStream pp = req.getPart("profilePicture").getInputStream();
-
-                String[] s = d.split("-");
-                String year = s[0];
-                String month = s[1];
-                String day = s[2];
-                String date = year + "/" + month + "/" + day;
-
-                if (userDao.updateUser(user.getId(), f, l, date, e, p, pp)) {
-                    session.setAttribute("user", userDao.user(user.getId()));
-                    req.getRequestDispatcher("/WEB-INF/pages/profile.jsp").forward(req, resp);
-                } else {
-                    PrintWriter pw = resp.getWriter();
-                    pw.println("<script type=\"text/javascript\">");
-                    pw.println("alert('Fail to Update');");
-                    pw.println("</script>");
-                    req.getRequestDispatcher("/WEB-INF/pages/profile.jsp").forward(req, resp);
-                }
-
+        User user = (User) req.getSession().getAttribute("user");
+        String f = req.getParameter("firstname");
+        String l = req.getParameter("lastname");
+        String d = req.getParameter("date");
+        String e = req.getParameter("email");
+        String p = req.getParameter("password");
+        if (p.equals("")) {
+            p = user.getPassword();
+        } else {
+            p = Crypto.getCryptoHash(p);
         }
-        else{
-            req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
+
+        String[] s = d.split("-");
+        String year = s[0];
+        String month = s[1];
+        String day = s[2];
+        String date = year + "/" + month + "/" + day;
+
+        if (userDao.updateUser(user.getId(), f, l, date, e, p)) {
+            session.setAttribute("user", userDao.user(user.getId()));
+            req.getRequestDispatcher(Consts.JSP_PROFILE).forward(req, resp);
+        } else {
+            PrintWriter pw = resp.getWriter();
+            pw.println("<script type=\"text/javascript\">");
+            pw.println("alert('Fail to Update');");
+            pw.println("</script>");
+            req.getRequestDispatcher(Consts.JSP_PROFILE).forward(req, resp);
         }
     }
 }
