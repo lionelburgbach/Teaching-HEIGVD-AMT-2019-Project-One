@@ -9,8 +9,8 @@
 <header class="masthead">
     <div class="container d-flex h-100 align-items-center">
         <div class="mx-auto text-center">
-            <h1 class="mx-auto my-0 text-uppercase" >${trail.name}</h1>
-            <input type="image" src="./assets/paper_img/down.png" style="padding-top:20px; width:30%;" onClick="document.getElementById('trailer').scrollIntoView();">
+            <h1 class="mx-auto my-0 text-uppercase" style="font-size: 60px;" >${trail.name}</h1>
+            <input type="image" src="./assets/paper_img/down.png"  style="padding-top:20px; width:100px; height: auto;" onClick="document.getElementById('trailer').scrollIntoView();">
         </div>
     </div>
 </header>

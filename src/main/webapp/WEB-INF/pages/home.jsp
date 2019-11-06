@@ -10,8 +10,8 @@
 <header class="masthead">
   <div class="container d-flex h-100 align-items-center">
     <div class="mx-auto text-center">
-      <h1 class="mx-auto my-0 text-uppercase">Home</h1>
-      <input type="image" src="./assets/paper_img/down.png" style="padding-top:20px; width:30%;" onClick="document.getElementById('trail').scrollIntoView();">
+      <h1 class="mx-auto my-0 text-uppercase" style="font-size: 60px;">Home</h1>
+      <input type="image" src="./assets/paper_img/down.png"  style="padding-top:20px; width:100px; height: auto;" onClick="document.getElementById('trail').scrollIntoView();">
     </div>
   </div>
 </header>
