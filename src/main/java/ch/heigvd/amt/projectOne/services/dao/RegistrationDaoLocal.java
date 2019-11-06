@@ -9,9 +9,8 @@ import java.util.List;
 public interface RegistrationDaoLocal {
 
     Registration registration(long idUser, long idTrail);
-    List<Registration> allReg(long idUser);
-    List<Registration> allRegWithResUser(long idUser);
-    List<Registration> allRegWithResTrail(long idTrail);
-    boolean addReg(long id_user, long id_trail, String date);
+    List<Registration> allRegUser(long idUser);
+    List<Registration> allRegTrail(long idTrail);
+    boolean addReg(long idUser, long idTrail, String date);
     boolean deleteReg(long id);
 }

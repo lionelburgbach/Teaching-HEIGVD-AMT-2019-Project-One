@@ -3,9 +3,7 @@ package ch.heigvd.amt.projectOne.services.dao;
 import ch.heigvd.amt.projectOne.model.User;
 
 import javax.ejb.Local;
-import javax.servlet.http.Part;
 import java.io.InputStream;
-import java.sql.Blob;
 
 @Local
 public interface UsersDaoLocal {

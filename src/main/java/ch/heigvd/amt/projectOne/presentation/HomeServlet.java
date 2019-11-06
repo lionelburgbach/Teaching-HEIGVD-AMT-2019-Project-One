@@ -22,7 +22,7 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         User user = (User)req.getSession().getAttribute("user");
-        req.setAttribute("regs", regDao.allReg(user.getId()));
+        req.setAttribute("regs", regDao.allRegUser(user.getId()));
         req.getRequestDispatcher(Consts.JSP_HOME).forward(req, resp);
     }
 }

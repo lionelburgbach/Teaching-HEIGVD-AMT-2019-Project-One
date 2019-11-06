@@ -4,7 +4,6 @@ import ch.heigvd.amt.projectOne.model.User;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
-import javax.servlet.http.Part;
 import javax.sql.DataSource;
 import java.io.InputStream;
 import java.sql.*;
@@ -16,6 +15,8 @@ public class UserDao implements UsersDaoLocal {
 
     @Resource(lookup = "java:/jdbc/sakila")
     private DataSource dataSource;
+
+    private static final Logger LOG = Logger.getLogger(UserDao.class.getName());
 
     @Override
     public User connect(String email, String password) {
@@ -40,7 +41,7 @@ public class UserDao implements UsersDaoLocal {
             connection.close();
         }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return user;
     }
@@ -66,7 +67,7 @@ public class UserDao implements UsersDaoLocal {
             connection.close();
         }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return user;
     }
@@ -75,7 +76,7 @@ public class UserDao implements UsersDaoLocal {
     public User dataUser(long id){
         User user = null;
 
-         try{
+        try{
             Connection connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT firstname, lastname FROM user WHERE id=?");
             pstmt.setObject(1, id);
@@ -88,7 +89,7 @@ public class UserDao implements UsersDaoLocal {
             connection.close();
         }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return user;
     }
@@ -112,7 +113,7 @@ public class UserDao implements UsersDaoLocal {
             connection.close();
         }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return (rs == 1);
     }
@@ -136,7 +137,7 @@ public class UserDao implements UsersDaoLocal {
             connection.close();
         }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return (rs == 1);
     }
@@ -160,7 +161,7 @@ public class UserDao implements UsersDaoLocal {
             connection.close();
         }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return (rs == 1);
     }
