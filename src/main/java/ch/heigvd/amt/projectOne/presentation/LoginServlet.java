@@ -55,9 +55,10 @@ public class LoginServlet extends HttpServlet {
 
             if (user != null) {
                 session.setAttribute("user", user);
-                resp.sendRedirect(req.getContextPath()+Consts.SERVLET_HOME);
+                resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
             } else {
                 req.getSession().removeAttribute("user");
+                //session.setAttribute("error", "Wrong password or email");
                 req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
             }
         }
@@ -81,7 +82,7 @@ public class LoginServlet extends HttpServlet {
                 user = userDao.connect(e,p);
                 if (user != null) {
                     session.setAttribute("user", user);
-                    resp.sendRedirect(req.getContextPath()+Consts.SERVLET_HOME);
+                    resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
                 }
             }
             else{

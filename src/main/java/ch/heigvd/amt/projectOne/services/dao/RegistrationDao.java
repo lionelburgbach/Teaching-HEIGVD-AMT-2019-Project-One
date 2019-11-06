@@ -28,7 +28,7 @@ public class RegistrationDao implements RegistrationDaoLocal {
     @EJB
     UsersDaoLocal userDao;
 
-    private static final Logger LOG = Logger.getLogger(TrailDao.class.getName());
+    private static final Logger LOG = Logger.getLogger(Registration.class.getName());
 
     @Override
     public Registration registration(long idUser, long idTrail) {
@@ -44,24 +44,23 @@ public class RegistrationDao implements RegistrationDaoLocal {
                 long id = rs.getLong("id");
                 User user = userDao.user(idUser);
                 Trail trail = trailDao.trail(idTrail);
-                String date = rs.getString("date");
-                reg = new Registration(id, user, trail, date);
+                reg = new Registration(id, user, trail);
             }
             connection.close();
         }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return reg;
     }
 
     @Override
-    public List<Registration> allReg(long idUser) {
+    public List<Registration> allRegUser(long idUser) {
 
         List<Registration> regs = new ArrayList<>();
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM registration WHERE id_user_fk=?");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM registration AS reg INNER JOIN trail ON trail.id=reg.id_trail_fk WHERE id_user_fk=? ORDER BY trail.date");
             pstmt.setObject(1, idUser);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
@@ -69,86 +68,59 @@ public class RegistrationDao implements RegistrationDaoLocal {
                 User user = userDao.user(idUser);
                 long idTrail = rs.getInt("id_trail_fk");
                 Trail trail = trailDao.trail(idTrail);
-                String date = rs.getString("date");
-                regs.add(new Registration(id, user, trail, date));
+                regs.add(new Registration(id, user, trail));
             }
             connection.close();
         }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return regs;
     }
 
     @Override
-    public List<Registration> allRegWithResUser(long idUser) {
+    public List<Registration> allRegTrail(long idTrail) {
 
         List<Registration> regs = new ArrayList<>();
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM registration AS reg INNER JOIN result AS res ON reg.id = res.id_reg_fk WHERE reg.id_user_fk=?;");
-            pstmt.setObject(1, idUser);
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()){
-                long id = rs.getLong("id");
-                User user = userDao.user(idUser);
-                long idTrail = rs.getInt("id_trail_fk");
-                Trail trail = trailDao.trail(idTrail);
-                String date = rs.getString("date");
-                regs.add(new Registration(id, user, trail, date));
-            }
-            connection.close();
-        }catch (SQLException ex){
-
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return regs;
-    }
-
-    @Override
-    public List<Registration> allRegWithResTrail(long idTrail) {
-
-        List<Registration> regs = new ArrayList<>();
-        try{
-            Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM registration AS reg INNER JOIN result AS res ON reg.id = res.id_reg_fk WHERE reg.id_traiL_fk=? ORDER BY res.time;");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM registration WHERE id_trail_fk=?");
             pstmt.setObject(1, idTrail);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
                 long id = rs.getLong("id");
-                long idUser = rs.getInt("id_user_fk");
-                User user = userDao.user(idUser);
+                long idU = rs.getInt("id_user_fk");
+                User user = userDao.user(idU);
                 Trail trail = trailDao.trail(idTrail);
-                String date = rs.getString("date");
-                regs.add(new Registration(id, user, trail, date));
+                regs.add(new Registration(id, user, trail));
             }
             connection.close();
         }catch (SQLException ex){
 
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return regs;
     }
 
     //CREATE
     @Override
-    public boolean addReg(long id_user, long id_trail, String date) {
+    public boolean addReg(long idUser, long idTrail, String date) {
 
         int rs = 0;
 
-        if(this.registration(id_user, id_trail) == null){
+        if(this.registration(idUser, idTrail) == null){
 
             try {
                 Connection connection = dataSource.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement("INSERT INTO registration (date, id_user_fk, id_trail_fk) VALUES (?, ?, ?);");
                 pstmt.setObject(1, date);
-                pstmt.setObject(2, id_user);
-                pstmt.setObject(3, id_trail);
+                pstmt.setObject(2, idUser);
+                pstmt.setObject(3, idTrail);
                 rs = pstmt.executeUpdate();
                 connection.close();
             } catch (SQLException ex) {
 
-                Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+                LOG.log(Level.SEVERE, null, ex);
             }
         }
         else{
