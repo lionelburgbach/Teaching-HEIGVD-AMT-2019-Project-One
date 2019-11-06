@@ -35,7 +35,7 @@
                             <td>${reg.user.firstName}</td>
                             <td>${reg.user.lastName}</td>
                             <td>${reg.user.dateOfBirth}</td>
-                            <form method="post" action="${pageContext.request.contextPath}/data?action=user">
+                            <form method="post" action="${pageContext.request.contextPath}/user/data?action=user">
                                 <td><button type="submit" name ="user_id" value="${reg.user.id}" class="btn btn-outline-warning">See More</button></td>
                             </form>
                         </tr>

@@ -38,14 +38,13 @@ public class DataServlet extends HttpServlet {
 
             req.setAttribute("trail", trailDao.trail(id));
             List<Registration> reg = registrationDao.allRegTrail(id);
-            if(reg != null) {
+            if(reg.size() != 0) {
                 req.setAttribute("regs", registrationDao.allRegTrail(id));
                 req.getRequestDispatcher(Consts.JSP_DATA).forward(req, resp);
             }
             else{
-                //TODO if there is no registration
                 req.setAttribute("error", "No register for this Trail");
-                resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
+                req.getRequestDispatcher(Consts.JSP_DATA).forward(req, resp);
             }
         }
         else if (action.equals("user")) {

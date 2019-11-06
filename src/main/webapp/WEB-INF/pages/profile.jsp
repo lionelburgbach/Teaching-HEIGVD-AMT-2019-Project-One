@@ -40,7 +40,7 @@
               </div>
               <div class="form-group">
                 <label for="Email">Email</label>
-                <input type="email" class="form-control" id="Email" name="email" value="${user.email}">
+                <input type="email" class="form-control" id="Email" name="email" value="${user.email}" disabled>
               </div>
               <div class="form-group">
                 <label for="Passowrd">Password</label>

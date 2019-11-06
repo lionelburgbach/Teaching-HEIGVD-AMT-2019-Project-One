@@ -28,10 +28,6 @@
                                 <label for="dateOfBirth">Date of Birth</label>
                                 <input type="text" class="form-control" id="dateOfBirth" name="date" value="${user.dateOfBirth}" disabled>
                             </div>
-                            <div class="form-group">
-                                <label for="Email">Email</label>
-                                <input type="email" class="form-control" id="Email" name="email" value="${user.email}" disabled>
-                            </div>
                             <div style="font-size: large;"><p>And More if you Scroll!</p></div>
                     </div>
                 </div>
