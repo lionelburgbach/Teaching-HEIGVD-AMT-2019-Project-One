@@ -24,6 +24,7 @@ import static org.mockito.Mockito.*;
 
 class DataServletTest {
 
+    /*
     @Mock
     HttpServletRequest req;
 
@@ -56,4 +57,6 @@ class DataServletTest {
         servlet.doPost(req, res);
         verify(registrationDao, atLeastOnce()).allRegUser(any());
     }
+
+     */
 }

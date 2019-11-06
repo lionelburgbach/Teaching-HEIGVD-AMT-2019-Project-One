@@ -26,4 +26,13 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.profilePicture = profilePicture;
     }
+
+    public User(long id, String email, String password, String firstName, String lastName, String dateOfBirth){
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+    }
 }
