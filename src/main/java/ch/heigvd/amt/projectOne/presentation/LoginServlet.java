@@ -58,7 +58,7 @@ public class LoginServlet extends HttpServlet {
                 resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
             } else {
                 req.getSession().removeAttribute("user");
-                //session.setAttribute("error", "Wrong password or email");
+                req.setAttribute("error", "Wrong password or email!");
                 req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
             }
         }

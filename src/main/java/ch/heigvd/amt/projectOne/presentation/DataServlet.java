@@ -43,7 +43,7 @@ public class DataServlet extends HttpServlet {
                 req.getRequestDispatcher(Consts.JSP_DATA).forward(req, resp);
             }
             else{
-                req.setAttribute("error", "No register for this Trail");
+                req.setAttribute("error", "No register yet for this Trail!");
                 req.getRequestDispatcher(Consts.JSP_DATA).forward(req, resp);
             }
         }

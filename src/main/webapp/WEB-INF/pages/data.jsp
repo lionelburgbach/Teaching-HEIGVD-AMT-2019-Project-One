@@ -15,37 +15,49 @@
     </div>
 </header>
 
-<!-- About Section -->
+<c:choose>
+    <c:when test="${not empty error}">
 <section id="trailer" class="about-section text-center">
     <div class="container" style="color: white;">
         <div class="row">
-            <div class="table-responsive">
-                <table class="table table-dark">
-                    <thead>
-                    <tr>
-                        <th scope="col">Firstname</th>
-                        <th scope="col">Lastname</th>
-                        <th scope="col">Date of birth</th>
-                        <th scope="col">More About Him/Her</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="reg" items="${regs}">
-                        <tr>
-                            <td>${reg.user.firstName}</td>
-                            <td>${reg.user.lastName}</td>
-                            <td>${reg.user.dateOfBirth}</td>
-                            <form method="post" action="${pageContext.request.contextPath}/user/data?action=user">
-                                <td><button type="submit" name ="user_id" value="${reg.user.id}" class="btn btn-outline-warning">See More</button></td>
-                            </form>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-            </div>
+            <p style="font-size: 50px;">${error}</p>
         </div>
     </div>
 </section>
+    </c:when>
+    <c:otherwise>
+        <section id="trailer" class="about-section text-center">
+        <div class="container" style="color: white;">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-dark">
+                        <thead>
+                        <tr>
+                            <th scope="col">Firstname</th>
+                            <th scope="col">Lastname</th>
+                            <th scope="col">Date of birth</th>
+                            <th scope="col">More About Him/Her</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="reg" items="${regs}">
+                            <tr>
+                                <td>${reg.user.firstName}</td>
+                                <td>${reg.user.lastName}</td>
+                                <td>${reg.user.dateOfBirth}</td>
+                                <form method="post" action="${pageContext.request.contextPath}/user/data?action=user">
+                                    <td><button type="submit" name ="user_id" value="${reg.user.id}" class="btn btn-outline-warning">See More</button></td>
+                                </form>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    </c:otherwise>
+</c:choose>
 
 <jsp:include page="include/footer.jsp" />
 
