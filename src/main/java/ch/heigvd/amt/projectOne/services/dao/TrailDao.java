@@ -9,9 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,7 +56,7 @@ public class TrailDao implements TrailDaoLocal {
         List<Trail> trails = new ArrayList<>();
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail;");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail ORDER BY date;");
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
                 int id = rs.getInt("id");
@@ -80,76 +78,13 @@ public class TrailDao implements TrailDaoLocal {
 
     //READ
     @Override
-    public List<Trail> allTrailToCome() {
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date currentDate = new Date(System.currentTimeMillis());
-        String s = formatter.format(currentDate);
+    public List<Trail> allTrailToComeWithNoReg(long idUser) {
 
         List<Trail> trails = new ArrayList<>();
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail WHERE date > ?;");
-            pstmt.setObject(1, s);
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()){
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                double distance = rs.getDouble("length");
-                double upAndDown = rs.getDouble("up_and_down");
-                String description = rs.getString("description");
-                int capacity = rs.getInt("capacity");
-                String date = rs.getString("date");
-                trails.add(new Trail(id, name, distance, upAndDown, description, capacity, date));
-            }
-            connection.close();
-        }catch (SQLException ex){
-
-            LOG.log(Level.SEVERE, null, ex);
-        }
-        return trails;
-    }
-
-    //READ
-    @Override
-    public List<Trail> allTrailToComeWithReg() {
-
-        List<Trail> trails = new ArrayList<>();
-        try{
-            Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM trail LEFT JOIN registration AS reg ON trail.id=reg.id_trail_fk;");
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()){
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                double distance = rs.getDouble("length");
-                double upAndDown = rs.getDouble("up_and_down");
-                String description = rs.getString("description");
-                int capacity = rs.getInt("capacity");
-                String date = rs.getString("date");
-                trails.add(new Trail(id, name, distance, upAndDown, description, capacity, date));
-            }
-            connection.close();
-        }catch (SQLException ex){
-
-            LOG.log(Level.SEVERE, null, ex);
-        }
-        return trails;
-    }
-
-    //READ
-    @Override
-    public List<Trail> allTrailDone() {
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date currentDate = new Date(System.currentTimeMillis());
-        String s = formatter.format(currentDate);
-
-        List<Trail> trails = new ArrayList<>();
-        try{
-            Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail WHERE date < ?;");
-            pstmt.setObject(1, s);
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail WHERE id NOT IN (SELECT id_trail_fk FROM registration WHERE id_user_fk=?);");
+            pstmt.setObject(1, idUser);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
                 int id = rs.getInt("id");

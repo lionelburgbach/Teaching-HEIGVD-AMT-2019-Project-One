@@ -1,6 +1,7 @@
 package ch.heigvd.amt.projectOne.presentation;
 
 import ch.heigvd.amt.projectOne.model.Trail;
+import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.services.dao.TrailDaoLocal;
 import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
 import ch.heigvd.amt.projectOne.utils.Consts;
@@ -11,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,10 +28,21 @@ public class TrailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        HttpSession session = req.getSession();
         resp.setContentType("text/html;charset=UTF-8");
-        List<Trail> trails =  trailManager.allTrailToCome();
-        req.setAttribute("trails", trails);
-        req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
+
+        if (session.getAttribute("user") != null) {
+            User user = (User) req.getSession().getAttribute("user");
+            List<Trail> trails = trailManager.allTrailToComeWithNoReg(user.getId());
+            req.setAttribute("trails", trails);
+            req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
+        }
+        else {
+
+            List<Trail> trails = trailManager.allTrail();
+            req.setAttribute("trails", trails);
+            req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
+        }
     }
 
     @Override

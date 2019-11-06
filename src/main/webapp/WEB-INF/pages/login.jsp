@@ -1,5 +1,20 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
+
+<c:choose>
+    <c:when test="${not empty error}">
+        <c:set var="e" value="${error}" />
+        <script type="text/javascript">
+            foo();
+            function foo() {
+                var value = "${e}";
+                alert(value);
+            }
+        </script>
+    </c:when>
+</c:choose>
+
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -73,7 +88,6 @@
     </div>      
 
 </body>
-
 
 <script>
     function getRegister()

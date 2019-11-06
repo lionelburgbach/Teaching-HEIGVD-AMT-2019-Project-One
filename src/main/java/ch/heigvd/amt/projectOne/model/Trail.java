@@ -14,7 +14,7 @@ public class Trail {
     private int nbIn;
     private String date;
 
-    public Trail(long id, String name, double length, double upAndDown, String description, int capacity, String date){
+    public Trail(long id, String name, double length, double upAndDown, String description, int capacity,String date){
         this.id = id;
         this.name = name;
         this.distance = length;
