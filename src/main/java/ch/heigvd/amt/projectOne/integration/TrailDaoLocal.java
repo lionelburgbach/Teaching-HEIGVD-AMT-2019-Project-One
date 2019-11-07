@@ -14,4 +14,6 @@ public interface TrailDaoLocal {
     boolean addTrail(Trail trail);
     boolean updateTrail(Trail trail);
     boolean deleteTrail(long id);
+    int getNumberOfTrails();
+    List<Trail> findTrail(int currentPage, int trailPerPage);
 }

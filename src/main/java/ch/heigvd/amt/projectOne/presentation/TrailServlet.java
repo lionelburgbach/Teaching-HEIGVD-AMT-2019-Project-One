@@ -39,7 +39,30 @@ public class TrailServlet extends HttpServlet {
         }
         else {
 
-            List<Trail> trails = trailManager.allTrail();
+            //PAGINTAION
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+
+            int currentPage = 1;
+            if(req.getParameter("currentPage") != null){
+                currentPage = Integer.valueOf(req.getParameter("currentPage"));
+            }
+
+            List<Trail> trails = trailManager.findTrail(currentPage, Consts.TrailPerPage);
+
+            int rows = trailManager.getNumberOfTrails();
+
+            int numberOfPages = rows / Consts.TrailPerPage;
+
+            if (numberOfPages % Consts.TrailPerPage > 0) {
+                numberOfPages++;
+            }
+
+            req.setAttribute("noOfPages", numberOfPages);
+            req.setAttribute("currentPage", currentPage);
+            req.setAttribute("trailPerPage", Consts.TrailPerPage);
+            //////////////////////////////////////////////////////////////////////////////////////////////
+
+            //List<Trail> trails = trailManager.allTrail();
             req.setAttribute("trails", trails);
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
         }

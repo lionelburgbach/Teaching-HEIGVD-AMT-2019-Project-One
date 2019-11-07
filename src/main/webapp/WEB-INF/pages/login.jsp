@@ -2,19 +2,6 @@
 <!doctype html>
 <html lang="en">
 
-<c:choose>
-    <c:when test="${not empty error}">
-        <c:set var="e" value="${error}" />
-        <script type="text/javascript">
-            foo();
-            function foo() {
-                var value = "${e}";
-                alert(value);
-            }
-        </script>
-    </c:when>
-</c:choose>
-
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -53,12 +40,20 @@
           </div>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-->
-    </nav> 
-    
+    </nav>
+
     <div class="wrapper" id="test">
         <div class="register-background"> 
             <div class="filter-black"></div>
                 <div class="container">
+                    <c:choose>
+                        <c:when test="${not empty error}">
+                            <c:set var="e" value="${error}" />
+                            <div style="font-size: 20px; color: red; text-align: center">
+                            <p>Wrong email or password!</p>
+                            </div>
+                        </c:when>
+                    </c:choose>
                     <div class="row">
                         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 ">
                             <div class="register-card">

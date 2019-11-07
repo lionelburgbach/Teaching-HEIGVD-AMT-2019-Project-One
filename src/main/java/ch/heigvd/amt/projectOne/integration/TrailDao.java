@@ -176,4 +176,56 @@ public class TrailDao implements TrailDaoLocal {
         }
         return (rs == 1);
     }
+
+    @Override
+    public int getNumberOfTrails() {
+
+        int numOfRows = 0;
+
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS total FROM trail;");
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next())
+                numOfRows=rs.getInt("total");
+            connection.close();
+        }catch (SQLException ex){
+
+            LOG.log(Level.SEVERE, null, ex);
+        }
+
+        return numOfRows;
+    }
+
+    @Override
+    public List<Trail> findTrail(int currentPage, int trailPerPage)  {
+
+        List<Trail> trails = new ArrayList<>();
+
+        int start = currentPage * trailPerPage - trailPerPage;
+
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail ORDER BY date ASC LIMIT ?,?;");
+            pstmt.setObject(1, start);
+            pstmt.setObject(2, trailPerPage);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                double distance = rs.getDouble("length");
+                double upAndDown = rs.getDouble("up_and_down");
+                String description = rs.getString("description");
+                int capacity = rs.getInt("capacity");
+                String date = rs.getString("date");
+                trails.add(new Trail(id, name, distance, upAndDown, description, capacity, DateFormat.mysqlToJava(date)));
+            }
+            connection.close();
+        }catch (SQLException ex){
+
+            LOG.log(Level.SEVERE, null, ex);
+        }
+
+        return trails;
+    }
 }
