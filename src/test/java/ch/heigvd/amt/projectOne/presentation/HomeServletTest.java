@@ -1,7 +1,7 @@
 package ch.heigvd.amt.projectOne.presentation;
 
 import ch.heigvd.amt.projectOne.model.User;
-import ch.heigvd.amt.projectOne.services.dao.RegistrationDao;
+import ch.heigvd.amt.projectOne.integration.RegistrationDao;
 import ch.heigvd.amt.projectOne.utils.Consts;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class HomeServletTest {
 
-    User lio = new User(1, "amt@amt.ch", "amt", "lionel", "Burgbacher", "05-03-1989", null);
+    User lio = new User(1, "lionel", "Burgbacher", "05-03-1989", null, "amt@amt.ch", "lionel");
 
     @Mock
     HttpServletRequest req;
