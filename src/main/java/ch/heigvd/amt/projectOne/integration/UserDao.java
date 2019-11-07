@@ -1,6 +1,7 @@
-package ch.heigvd.amt.projectOne.services.dao;
+package ch.heigvd.amt.projectOne.integration;
 
 import ch.heigvd.amt.projectOne.model.User;
+import ch.heigvd.amt.projectOne.utils.DateFormat;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -33,10 +34,10 @@ public class UserDao implements UsersDaoLocal {
                 long id = rs.getLong("id");
                 String firstname = rs.getString("firstname");
                 String lastname = rs.getString("lastname");
+                String date = rs.getString("date");
                 String emailUser = rs.getString("email");
                 String passwordUser = rs.getString("password");
-                String date = rs.getString("date");
-                user = new User(id, emailUser, passwordUser, firstname, lastname, date, null);
+                user = new User(id, firstname, lastname, DateFormat.mysqlToJava(date), null, emailUser, passwordUser);
             }
             connection.close();
         }catch (SQLException ex){
@@ -58,33 +59,11 @@ public class UserDao implements UsersDaoLocal {
             while(rs.next()){
                 String firstname = rs.getString("firstname");
                 String lastname = rs.getString("lastname");
-                String mail = rs.getString("email");
-                String password = rs.getString("password");
                 String date = rs.getString("date");
                 InputStream profilePicture = rs.getBinaryStream("profile_picture");
-                user = new User(id, mail, password, firstname, lastname, date, profilePicture);
-            }
-            connection.close();
-        }catch (SQLException ex){
-
-            LOG.log(Level.SEVERE, null, ex);
-        }
-        return user;
-    }
-
-    @Override
-    public User dataUser(long id){
-        User user = null;
-
-        try{
-            Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT firstname, lastname FROM user WHERE id=?");
-            pstmt.setObject(1, id);
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()){
-                String firstname = rs.getString("firstname");
-                String lastname = rs.getString("lastname");
-                user = new User(id, null, null, firstname, lastname, null, null);
+                String mail = rs.getString("email");
+                String password = rs.getString("password");
+                user = new User(id, firstname, lastname, DateFormat.mysqlToJava(date), profilePicture, mail, password);
             }
             connection.close();
         }catch (SQLException ex){
@@ -96,19 +75,20 @@ public class UserDao implements UsersDaoLocal {
 
     //CREATE
     @Override
-    public boolean addUser(String firstname, String lastname, String date, String email, String password) {
-
+    public boolean addUser(User user) {
         int rs = 0;
+
+        String date = DateFormat.javaToMysql(user.getDateOfBirth());
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO user (firstname, lastname, email, password, date)\n" +
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO user (firstname, lastname, date, email, password)\n" +
                     "VALUES (?, ?, ?, ?, ?);");
-            pstmt.setObject(1, firstname);
-            pstmt.setObject(2, lastname);
-            pstmt.setObject(3, email);
-            pstmt.setObject(4, password);
-            pstmt.setObject(5, date);
+            pstmt.setObject(1, user.getFirstName());
+            pstmt.setObject(2, user.getLastName());
+            pstmt.setObject(3, date);
+            pstmt.setObject(4, user.getEmail());
+            pstmt.setObject(5, user.getPassword());
             rs = pstmt.executeUpdate();
             connection.close();
         }catch (SQLException ex){
@@ -118,21 +98,24 @@ public class UserDao implements UsersDaoLocal {
         return (rs == 1);
     }
 
-    //UPDATE
+
+    //Update
     @Override
-    public boolean updateUser(long id, String firstname, String lastname, String date, String email, String password) {
+    public boolean updateUser(User user) {
+
+        String date = DateFormat.javaToMysql(user.getDateOfBirth());
 
         int rs = 0;
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("UPDATE user SET firstname=?, lastname=?, email=?, password=?, date=? WHERE id=?");
-            pstmt.setObject(1, firstname);
-            pstmt.setObject(2, lastname);
-            pstmt.setObject(3, email);
-            pstmt.setObject(4, password);
-            pstmt.setObject(5, date);
-            pstmt.setObject(6, id);
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE user SET firstname=?, lastname=?, date=?, email=?, password=? WHERE id=?;");
+            pstmt.setObject(1, user.getFirstName());
+            pstmt.setObject(2, user.getLastName());
+            pstmt.setObject(3, date);
+            pstmt.setObject(4, user.getEmail());
+            pstmt.setObject(5, user.getPassword());
+            pstmt.setObject(6, user.getId());
             rs = pstmt.executeUpdate();
             connection.close();
         }catch (SQLException ex){
