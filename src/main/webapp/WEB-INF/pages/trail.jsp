@@ -149,7 +149,7 @@
 <script>
   function addTrail() {
     document.getElementById("addTrail").innerHTML ='<div class="container" style="color: white; max-width: 500px;">\n' +
-            '    <form method="post" action="${pageContext.request.contextPath}/trail?action=addTrail">\n' +
+            '    <form method="post" action="${pageContext.request.contextPath}/trail">\n' +
             '      <div class="form-group">\n' +
             '        <label for="name">Name</label>\n' +
             '        <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>\n' +

@@ -25,7 +25,7 @@
         <c:otherwise>
             <div class="container" style="color: white; padding-bottom: 20px;">
                 <div class="table-responsive">
-                    <table class="table table-dark">
+                    <table class="table table-dark" style="text-align: center;">
                         <thead>
                         <tr>
                             <th scope="col">Firstname</th>

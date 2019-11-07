@@ -16,5 +16,5 @@ public class Consts {
     public static final String SERVLET_PROFILE = "/user/profile";
     public static final String SERVLET_REGISTRATION = "/user/registration";
 
-    public static final int ELEMENT_PER_PAGE = 25;
+    public static final int ELEMENT_PER_PAGE = 40;
 }

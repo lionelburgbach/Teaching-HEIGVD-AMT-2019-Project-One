@@ -3,7 +3,6 @@ package ch.heigvd.amt.projectOne.presentation;
 import ch.heigvd.amt.projectOne.model.Trail;
 import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.integration.TrailDaoLocal;
-import ch.heigvd.amt.projectOne.integration.UsersDaoLocal;
 import ch.heigvd.amt.projectOne.utils.Consts;
 
 import javax.ejb.EJB;
@@ -21,9 +20,6 @@ public class TrailServlet extends HttpServlet {
 
     @EJB
     TrailDaoLocal trailManager;
-
-    @EJB
-    UsersDaoLocal userDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -102,27 +98,17 @@ public class TrailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String action = req.getParameter("action");
+        String name = req.getParameter("name");
+        double distance = Double.parseDouble(req.getParameter("distance"));
+        double upAndDown = Double.parseDouble(req.getParameter("upAndDown"));
+        String description = req.getParameter("description");
+        int capacity = Integer.parseInt(req.getParameter("capacity"));
+        String date = req.getParameter("date");
 
-        if (action.equals("addTrail")) {
+        if (trailManager.addTrail(new Trail(name, distance, upAndDown, description, capacity, date))) {
 
-            String name = req.getParameter("name");
-            double distance = Double.parseDouble(req.getParameter("distance"));
-            double upAndDown = Double.parseDouble(req.getParameter("upAndDown"));
-            String description = req.getParameter("description");
-            int capacity = Integer.parseInt(req.getParameter("capacity"));
-            String date = req.getParameter("date");
-
-            if (trailManager.addTrail(new Trail(name, distance, upAndDown, description, capacity, date))) {
-
-                resp.setContentType("text/html;charset=UTF-8");
-                resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
-            }
-        }
-        else if (action.equals("data")) {
-
-            req.setAttribute("trailer", userDao.user(Integer.parseInt(req.getParameter("trailer_id"))));
-            req.getRequestDispatcher(Consts.JSP_DATA).forward(req, resp);
+            resp.setContentType("text/html;charset=UTF-8");
+            resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
         }
     }
 }
