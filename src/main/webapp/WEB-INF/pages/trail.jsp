@@ -60,30 +60,72 @@
         </tbody>
       </table>
     </div>
+
     <!-- PAGINATION -->
-    <div class="text-center" style="padding-bottom: 20px;">
+    <div id="pagination" class="text-center" style="padding-bottom: 20px;">
       <nav aria-label="Navigation for Trail" style="padding-top: 20px;">
         <ul class="pagination justify-content-center pagination-sm">
           <c:if test="${currentPage != 1}">
-            <li class="page-item"><a class="page-link" href="trail?currentPage=${currentPage-1}">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/trail?currentPage=${1}">Begin</a></li>
+          </c:if>
+          <c:if test="${currentPage != 1}">
+            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/trail?currentPage=${currentPage-1}">Previous</a></li>
           </c:if>
 
-          <c:forEach begin="1" end="${noOfPages}" var="i">
-            <c:choose>
-              <c:when test="${currentPage eq i}">
-                <li class="page-item active"><a class="page-link">
-                    ${i} <span class="sr-only">(current)</span></a>
-                </li>
-              </c:when>
-              <c:otherwise>
-                <li class="page-item"><a class="page-link" href="trail?currentPage=${i}">${i}</a>
-                </li>
-              </c:otherwise>
-            </c:choose>
-          </c:forEach>
+          <c:choose>
+            <c:when test="${noOfPages lt 10}">
+
+              <c:forEach begin="1" end="${noOfPages}" var="i">
+                <c:choose>
+                  <c:when test="${currentPage eq i}">
+                    <li class="page-item active"><a class="page-link">
+                        ${i} <span class="sr-only">(current)</span></a>
+                    </li>
+                  </c:when>
+                  <c:otherwise>
+                    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/trail?currentPage=${i}">${i}</a>
+                    </li>
+                  </c:otherwise>
+                </c:choose>
+              </c:forEach>
+
+            </c:when>
+            <c:otherwise>
+
+              <c:forEach begin="1" end="${noOfPages}" var="i">
+                <c:choose>
+                  <c:when test="${currentPage eq i}">
+                    <li class="page-item active"><a class="page-link">
+                        ${i} <span class="sr-only">(current)</span></a>
+                    </li>
+                  </c:when>
+                  <c:otherwise>
+
+                    <!-- NAVIGATION PAGES PAS OUF DU TOUT -->
+                    <c:choose>
+                      <c:when test="${i gt currentPage && i lt currentPage+5}">
+                        <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/trail?currentPage=${i}">${i}</a>
+                        </li>
+                      </c:when>
+                      <c:when test="${i eq currentPage+5}">
+                        <li class="page-item"><a class="page-link" style="color: #0f0f0f">...</a>
+                        </li>
+                      </c:when>
+                      <c:when test="${i gt noOfPages-5}">
+                        <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/trail?currentPage=${i}">${i}</a>
+                        </li>
+                      </c:when>
+                    </c:choose>
+                    <!-- NAVIGATION PAGES PAS OUF DU TOUT -->
+
+                  </c:otherwise>
+                </c:choose>
+              </c:forEach>
+            </c:otherwise>
+          </c:choose>
 
           <c:if test="${currentPage lt noOfPages}">
-            <li class="page-item"><a class="page-link" href="trail?currentPage=${currentPage+1}">Next</a>
+            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/trail?currentPage=${currentPage+1}">Next</a>
             </li>
           </c:if>
         </ul>

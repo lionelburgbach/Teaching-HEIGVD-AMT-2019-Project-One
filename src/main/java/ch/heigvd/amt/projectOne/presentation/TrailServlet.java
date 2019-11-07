@@ -32,8 +32,35 @@ public class TrailServlet extends HttpServlet {
         resp.setContentType("text/html;charset=UTF-8");
 
         if (session.getAttribute("user") != null) {
+
             User user = (User) req.getSession().getAttribute("user");
-            List<Trail> trails = trailManager.allTrailToComeWithNoReg(user.getId());
+
+            //PAGINTAION
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+
+            int currentPage = 1;
+            if(req.getParameter("currentPage") != null){
+                currentPage = Integer.valueOf(req.getParameter("currentPage"));
+            }
+
+            //WITH PAGINATION
+            List<Trail> trails = trailManager.allTrailToComeWithNoRegPagination(user.getId(), currentPage, Consts.ELEMENT_PER_PAGE);
+
+            int rows = trailManager.getNumberOfTrailsToComeWithNoReg(user.getId());
+
+            int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
+
+            if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
+                numberOfPages++;
+            }
+
+            req.setAttribute("noOfPages", numberOfPages);
+            req.setAttribute("currentPage", currentPage);
+            req.setAttribute("trailPerPage", Consts.ELEMENT_PER_PAGE);
+            //////////////////////////////////////////////////////////////////////////////////////////////
+
+            //WITHOUT PAGINATION
+            //List<Trail> trails = trailManager.allTrailToComeWithNoReg(user.getId());
             req.setAttribute("trails", trails);
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
         }
@@ -47,22 +74,26 @@ public class TrailServlet extends HttpServlet {
                 currentPage = Integer.valueOf(req.getParameter("currentPage"));
             }
 
-            List<Trail> trails = trailManager.findTrail(currentPage, Consts.TrailPerPage);
+            //WITH PAGINATION
+            List<Trail> trails = trailManager.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
+
 
             int rows = trailManager.getNumberOfTrails();
 
-            int numberOfPages = rows / Consts.TrailPerPage;
+            int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
 
-            if (numberOfPages % Consts.TrailPerPage > 0) {
+            if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
                 numberOfPages++;
             }
 
             req.setAttribute("noOfPages", numberOfPages);
             req.setAttribute("currentPage", currentPage);
-            req.setAttribute("trailPerPage", Consts.TrailPerPage);
+            req.setAttribute("trailPerPage", Consts.ELEMENT_PER_PAGE);
             //////////////////////////////////////////////////////////////////////////////////////////////
 
+            //WITHOUT PAGINATION
             //List<Trail> trails = trailManager.allTrail();
+
             req.setAttribute("trails", trails);
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
         }
