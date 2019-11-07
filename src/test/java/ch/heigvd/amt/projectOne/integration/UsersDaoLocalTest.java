@@ -1,4 +1,4 @@
-package ch.heigvd.amt.projectOne.services.dao;
+package ch.heigvd.amt.projectOne.integration;
 
 import ch.heigvd.amt.projectOne.model.User;
 import org.arquillian.container.chameleon.deployment.api.DeploymentParameters;
@@ -14,10 +14,6 @@ import javax.ejb.EJB;
 import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(Arquillian.class)
 @MavenBuild
@@ -32,18 +28,17 @@ public class UsersDaoLocalTest {
     @Transactional(TransactionMode.COMMIT)
     public void itShouldBePossibleToCreateAUser() throws DuplicateKeyException, SQLException {
 
-        usersDao.addUser( "amt@amt.ch", "lionel", "lionel","burgbacher", "05-03-1989");
+        User lio = new User(0,"lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
+        usersDao.addUser(lio);
     }
 
-    /*
     @Test
     @Transactional(TransactionMode.COMMIT)
     public void itShouldBePossibleToCreateAndRetrieveAUserViaTheUsersDAO() throws DuplicateKeyException {
 
-        User lio = new User(0, "amt@amt.ch", "lionel", "lionel","burgbacher", "05-03-1989");
-        usersDao.addUser( "lionel", "burgbacher", "05-03-1989","amt@amt.ch", "lionel");
+        User lio = new User("lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
+        usersDao.addUser(lio);
         User lioLoaded = usersDao.connect("amt@amt.ch", "lionel");
-        assertSame(lio, lioLoaded);
+        assertEquals(lio.getEmail(), lioLoaded.getEmail());
     }
-     */
 }

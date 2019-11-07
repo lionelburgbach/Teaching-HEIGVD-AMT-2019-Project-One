@@ -25,6 +25,16 @@ public class Trail {
         this.nbIn = 0;
     }
 
+    public Trail(String name, double length, double upAndDown, String description, int capacity,String date){
+        this.name = name;
+        this.distance = length;
+        this.upAndDown = upAndDown;
+        this.description = description;
+        this.capacity = capacity;
+        this.date = date;
+        this.nbIn = 0;
+    }
+
     public boolean addTrailer(){
 
         if(nbIn < capacity){

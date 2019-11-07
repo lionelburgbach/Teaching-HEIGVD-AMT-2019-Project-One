@@ -1,4 +1,4 @@
-package ch.heigvd.amt.projectOne.services.dao;
+package ch.heigvd.amt.projectOne.integration;
 
 import ch.heigvd.amt.projectOne.model.Registration;
 import ch.heigvd.amt.projectOne.model.Trail;
@@ -104,18 +104,17 @@ public class RegistrationDao implements RegistrationDaoLocal {
 
     //CREATE
     @Override
-    public boolean addReg(long idUser, long idTrail, String date) {
+    public boolean addReg(Registration reg) {
 
         int rs = 0;
 
-        if(this.registration(idUser, idTrail) == null){
+        if(this.registration(reg.getUser().getId(), reg.getTrail().getId()) == null){
 
             try {
                 Connection connection = dataSource.getConnection();
-                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO registration (date, id_user_fk, id_trail_fk) VALUES (?, ?, ?);");
-                pstmt.setObject(1, date);
-                pstmt.setObject(2, idUser);
-                pstmt.setObject(3, idTrail);
+                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO registration (id_user_fk, id_trail_fk) VALUES (?, ?);");
+                pstmt.setObject(1, reg.getUser().getId());
+                pstmt.setObject(2, reg.getTrail().getId());
                 rs = pstmt.executeUpdate();
                 connection.close();
             } catch (SQLException ex) {

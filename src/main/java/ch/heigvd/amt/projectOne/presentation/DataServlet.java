@@ -1,9 +1,9 @@
 package ch.heigvd.amt.projectOne.presentation;
 
 import ch.heigvd.amt.projectOne.model.Registration;
-import ch.heigvd.amt.projectOne.services.dao.RegistrationDaoLocal;
-import ch.heigvd.amt.projectOne.services.dao.TrailDaoLocal;
-import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
+import ch.heigvd.amt.projectOne.integration.RegistrationDaoLocal;
+import ch.heigvd.amt.projectOne.integration.TrailDaoLocal;
+import ch.heigvd.amt.projectOne.integration.UsersDaoLocal;
 import ch.heigvd.amt.projectOne.utils.Consts;
 
 import javax.ejb.EJB;
