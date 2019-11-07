@@ -18,41 +18,39 @@
 
 
 <!-- About Section -->
-<section id="trail" class="about-section text-center">
+<section id="trail" class="about-section">
   <div class="container" style="color: white;">
-    <div class="row">
-      <div class="table-responsive-lg">
-        <table class="table table-dark">
-          <thead>
+    <div class="table-responsive">
+      <table class="table table-dark">
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Distance</th>
+          <th scope="col">Up and Down</th>
+          <th scope="col">Description</th>
+          <th scope="col">Date</th>
+          <th scope="col">Delete Registration</th>
+          <th scope="col">Who is in?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${regs}" var="reg">
           <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Distance</th>
-            <th scope="col">Up and Down</th>
-            <th scope="col">Description</th>
-            <th scope="col">Date</th>
-            <th scope="col">Delete Registration</th>
-            <th scope="col">Who is in?</th>
+            <td>${reg.trail.name}</td>
+            <td>${reg.trail.distance} KM</td>
+            <td style="white-space: nowrap;">${reg.trail.upAndDown} M</td>
+            <td>${reg.trail.description}</td>
+            <td style="white-space: nowrap;">${reg.trail.date}</td>
+            <form method="post" action="${pageContext.request.contextPath}/user/registration?action=delReg">
+              <td><button type="submit" name ="reg_id" value="${reg.id}" class="btn btn-outline-danger">Delete</button></td>
+            </form>
+            <form method="post" action="${pageContext.request.contextPath}/user/data?action=registers">
+              <td><button type="submit" name ="trail_id" value="${reg.trail.id}" class="btn btn-outline-warning">Show Registers</button></td>
+            </form>
           </tr>
-          </thead>
-          <tbody>
-          <c:forEach items="${regs}" var="reg">
-            <tr>
-              <td>${reg.trail.name}</td>
-              <td>${reg.trail.distance} KM</td>
-              <td style="white-space: nowrap;">${reg.trail.upAndDown} M</td>
-              <td>${reg.trail.description}</td>
-              <td style="white-space: nowrap;">${reg.trail.date}</td>
-              <form method="post" action="${pageContext.request.contextPath}/user/registration?action=delReg">
-                <td><button type="submit" name ="reg_id" value="${reg.id}" class="btn btn-outline-danger">Delete</button></td>
-              </form>
-              <form method="post" action="${pageContext.request.contextPath}/user/data?action=registers">
-                <td><button type="submit" name ="trail_id" value="${reg.trail.id}" class="btn btn-outline-warning">Show Registers</button></td>
-              </form>
-            </tr>
-          </c:forEach>
-          </tbody>
-        </table>
-      </div>
+        </c:forEach>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>

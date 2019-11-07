@@ -1,4 +1,4 @@
-package ch.heigvd.amt.projectOne.services.dao;
+package ch.heigvd.amt.projectOne.integration;
 
 import ch.heigvd.amt.projectOne.model.User;
 
@@ -10,9 +10,8 @@ public interface UsersDaoLocal {
 
     User connect(String email, String password);
     User user(long id);
-    User dataUser(long id);
-    boolean addUser(String firstname, String lastname, String date, String email, String password);
-    boolean updateUser(long id, String firstname, String lastname, String date, String email, String password);
+    boolean addUser(User user);
+    boolean updateUser(User user);
     boolean updatePictureUser(long id, InputStream profile_picture);
     boolean deleteUser(long id);
 }

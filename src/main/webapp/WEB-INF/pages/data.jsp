@@ -15,20 +15,15 @@
     </div>
 </header>
 
-<c:choose>
-    <c:when test="${not empty error}">
-<section id="trailer" class="about-section text-center">
-    <div class="container" style="color: white;">
-        <div class="row">
-            <p style="font-size: 50px;">${error}</p>
-        </div>
-    </div>
-</section>
-    </c:when>
-    <c:otherwise>
-        <section id="trailer" class="about-section text-center">
-        <div class="container" style="color: white;">
-            <div class="row">
+<section id="trailer" class="about-section">
+    <c:choose>
+        <c:when test="${not empty error}">
+            <div class="container" style="color: white; text-align: center; padding-bottom: 20px;">
+                <p style="font-size: 50px;">${error}</p>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div class="container" style="color: white; padding-bottom: 20px;">
                 <div class="table-responsive">
                     <table class="table table-dark">
                         <thead>
@@ -54,10 +49,9 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </section>
-    </c:otherwise>
-</c:choose>
+        </c:otherwise>
+    </c:choose>
+</section>
 
 <jsp:include page="include/footer.jsp" />
 

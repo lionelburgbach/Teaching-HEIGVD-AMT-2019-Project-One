@@ -2,8 +2,8 @@ package ch.heigvd.amt.projectOne.presentation;
 
 import ch.heigvd.amt.projectOne.model.Trail;
 import ch.heigvd.amt.projectOne.model.User;
-import ch.heigvd.amt.projectOne.services.dao.TrailDaoLocal;
-import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
+import ch.heigvd.amt.projectOne.integration.TrailDaoLocal;
+import ch.heigvd.amt.projectOne.integration.UsersDaoLocal;
 import ch.heigvd.amt.projectOne.utils.Consts;
 
 import javax.ejb.EJB;
@@ -39,7 +39,30 @@ public class TrailServlet extends HttpServlet {
         }
         else {
 
-            List<Trail> trails = trailManager.allTrail();
+            //PAGINTAION
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+
+            int currentPage = 1;
+            if(req.getParameter("currentPage") != null){
+                currentPage = Integer.valueOf(req.getParameter("currentPage"));
+            }
+
+            List<Trail> trails = trailManager.findTrail(currentPage, Consts.TrailPerPage);
+
+            int rows = trailManager.getNumberOfTrails();
+
+            int numberOfPages = rows / Consts.TrailPerPage;
+
+            if (numberOfPages % Consts.TrailPerPage > 0) {
+                numberOfPages++;
+            }
+
+            req.setAttribute("noOfPages", numberOfPages);
+            req.setAttribute("currentPage", currentPage);
+            req.setAttribute("trailPerPage", Consts.TrailPerPage);
+            //////////////////////////////////////////////////////////////////////////////////////////////
+
+            //List<Trail> trails = trailManager.allTrail();
             req.setAttribute("trails", trails);
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
         }
@@ -59,13 +82,7 @@ public class TrailServlet extends HttpServlet {
             int capacity = Integer.parseInt(req.getParameter("capacity"));
             String date = req.getParameter("date");
 
-            String[] s = date.split("-");
-            String day = s[0];
-            String month = s[1];
-            String year = s[2];
-            String dates = year + "/" + month + "/" + day;
-
-            if (trailManager.addTrail(name, distance, upAndDown, description, capacity, dates)) {
+            if (trailManager.addTrail(new Trail(name, distance, upAndDown, description, capacity, date))) {
 
                 resp.setContentType("text/html;charset=UTF-8");
                 resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
@@ -73,7 +90,7 @@ public class TrailServlet extends HttpServlet {
         }
         else if (action.equals("data")) {
 
-            req.setAttribute("trailer", userDao.dataUser(Integer.parseInt(req.getParameter("trailer_id"))));
+            req.setAttribute("trailer", userDao.user(Integer.parseInt(req.getParameter("trailer_id"))));
             req.getRequestDispatcher(Consts.JSP_DATA).forward(req, resp);
         }
     }

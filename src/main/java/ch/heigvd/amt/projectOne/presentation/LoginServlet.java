@@ -3,7 +3,7 @@ package ch.heigvd.amt.projectOne.presentation;
 import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.utils.Consts;
 import ch.heigvd.amt.projectOne.utils.Crypto;
-import ch.heigvd.amt.projectOne.services.dao.UsersDaoLocal;
+import ch.heigvd.amt.projectOne.integration.UsersDaoLocal;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -64,22 +64,18 @@ public class LoginServlet extends HttpServlet {
         }
         else if(action.equals("registration")){
 
-            String f=req.getParameter("firstname");
-            String l=req.getParameter("lastname");
-            String d=req.getParameter("date");
-            String e=req.getParameter("email");
-            String p=req.getParameter("password");
+            String firstName = req.getParameter("firstname");
+            String lastName = req.getParameter("lastname");
+            String date = req.getParameter("date");
+            String email = req.getParameter("email");
+            String password = req.getParameter("password");
 
-            p = Crypto.getCryptoHash(p);
+            password = Crypto.getCryptoHash(password);
 
-            String[] s = d.split("-");
-            String day = s[0];
-            String month = s[1];
-            String year = s[2];
-            String date = year+"/"+month+"/"+day;
+            User newUser = new User(firstName, lastName, date, email, password);
 
-            if(userDao.addUser(f, l, date, e, p)){
-                user = userDao.connect(e,p);
+            if(userDao.addUser(newUser)){
+                user = userDao.connect(email, password);
                 if (user != null) {
                     session.setAttribute("user", user);
                     resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
