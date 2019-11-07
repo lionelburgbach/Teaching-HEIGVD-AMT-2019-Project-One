@@ -51,6 +51,7 @@ public class UsersDaoLocalTest {
         User gui = new User("Guillaume", "Blanco", "19-06-1994", "gui@amt.ch", "guillaume");
         usersDao.addUser(gui);
         User connectUser = usersDao.connect("gui@amt.ch","guillaume");
+        assertNotNull(usersDao.user(connectUser.getId()));
         usersDao.deleteUser(connectUser.getId());
         assertNull(usersDao.user(connectUser.getId()));
     }
