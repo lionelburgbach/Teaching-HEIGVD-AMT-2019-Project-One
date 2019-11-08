@@ -75,9 +75,10 @@ public class LoginServlet extends HttpServlet {
             User newUser = new User(firstName, lastName, date, email, password);
 
             long id = userDao.addUser(newUser);
-            user = userDao.user(id);
 
-            if(user != null){
+            //TODO FAIRE MIEUX
+            if(id != -1){
+                user = userDao.user(id);
                 session.setAttribute("user", user);
                 resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
             }

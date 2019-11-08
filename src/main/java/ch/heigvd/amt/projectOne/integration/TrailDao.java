@@ -6,10 +6,7 @@ import ch.heigvd.amt.projectOne.utils.DateFormat;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -182,11 +179,14 @@ public class TrailDao implements TrailDaoLocal {
     public List<Trail> allTrailToComeWithNoRegPagination(long idUser, int currentPage, int elementPerPage) {
 
         List<Trail> trails = new ArrayList<>();
+
+        int start = currentPage * elementPerPage - elementPerPage;
+
         try{
             Connection connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail WHERE id NOT IN (SELECT id_trail_fk FROM registration WHERE id_user_fk=?) ORDER BY date ASC LIMIT ?,?;");
             pstmt.setObject(1, idUser);
-            pstmt.setObject(2, currentPage);
+            pstmt.setObject(2, start);
             pstmt.setObject(3, elementPerPage);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
@@ -209,28 +209,33 @@ public class TrailDao implements TrailDaoLocal {
 
     //CREATE
     @Override
-    public boolean addTrail(Trail trail) {
-        int rs = 0;
+    public long addTrail(Trail trail) {
+
+        long id = -1;
 
         String date = DateFormat.javaToMysql(trail.getDate());
 
         try{
             Connection connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO trail (name, length, up_and_down, description, capacity, date)\n" +
-                    "VALUES (?, ?, ?, ?, ?,?);");
+                    "VALUES (?, ?, ?, ?, ?,?);", Statement.RETURN_GENERATED_KEYS);
             pstmt.setObject(1, trail.getName());
             pstmt.setObject(2, trail.getDistance());
             pstmt.setObject(3, trail.getUpAndDown());
             pstmt.setObject(4, trail.getDescription());
             pstmt.setObject(5, trail.getCapacity());
             pstmt.setObject(6, date);
-            rs = pstmt.executeUpdate();
+            pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if(rs.next()) {
+                id = rs.getLong(1);
+            }
             connection.close();
         }catch (SQLException ex){
 
             LOG.log(Level.SEVERE, null, ex);
         }
-        return (rs == 1);
+        return id;
     }
 
 

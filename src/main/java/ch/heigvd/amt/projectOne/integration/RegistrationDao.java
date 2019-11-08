@@ -100,11 +100,14 @@ public class RegistrationDao implements RegistrationDaoLocal {
     public List<Registration> allRegUserPagination(long idUser, int currentPage, int elementPerPage) {
 
         List<Registration> regs = new ArrayList<>();
+
+        int start = currentPage * elementPerPage - elementPerPage;
+
         try{
             Connection connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM registration AS reg INNER JOIN trail ON trail.id=reg.id_trail_fk WHERE id_user_fk=? ORDER BY trail.date ASC LIMIT ?,?;");
             pstmt.setObject(1, idUser);
-            pstmt.setObject(2, currentPage);
+            pstmt.setObject(2, start);
             pstmt.setObject(3, elementPerPage);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
@@ -171,11 +174,14 @@ public class RegistrationDao implements RegistrationDaoLocal {
     public List<Registration> allRegTrailPagination(long idTrail, int currentPage, int elementPerPage) {
 
         List<Registration> regs = new ArrayList<>();
+
+        int start = currentPage * elementPerPage - elementPerPage;
+
         try{
             Connection connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM registration AS reg INNER JOIN trail ON trail.id=reg.id_trail_fk WHERE id_trail_fk=? ORDER BY trail.date ASC LIMIT ?,?;");
             pstmt.setObject(1, idTrail);
-            pstmt.setObject(2, currentPage);
+            pstmt.setObject(2, start);
             pstmt.setObject(3, elementPerPage);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
@@ -199,29 +205,32 @@ public class RegistrationDao implements RegistrationDaoLocal {
 
         long id = -1;
 
-        if(this.registration(reg.getUser().getId(), reg.getTrail().getId()) == null){
+        //TODO
+        //if(this.registration(reg.getUser().getId(), reg.getTrail().getId()) == null){
 
-            try {
-                Connection connection = dataSource.getConnection();
-                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO registration (id_user_fk, id_trail_fk) VALUES (?, ?);", Statement.RETURN_GENERATED_KEYS);
-                pstmt.setObject(1, reg.getUser().getId());
-                pstmt.setObject(2, reg.getTrail().getId());
-                pstmt.executeUpdate();
-                ResultSet rs = pstmt.getGeneratedKeys();
-                if(rs.next()) {
-                    id = rs.getLong(1);
-                }
-                connection.close();
-            } catch (SQLException ex) {
-
-                LOG.log(Level.SEVERE, null, ex);
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO registration (id_user_fk, id_trail_fk) VALUES (?, ?);", Statement.RETURN_GENERATED_KEYS);
+            pstmt.setObject(1, reg.getUser().getId());
+            pstmt.setObject(2, reg.getTrail().getId());
+            pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if(rs.next()) {
+                id = rs.getLong(1);
             }
+            connection.close();
+        } catch (SQLException ex) {
+
+            LOG.log(Level.SEVERE, null, ex);
+        }
+            /*
         }
         else{
 
             //TODO if the registration already exist
             return -1;
         }
+             */
         return id;
     }
 
