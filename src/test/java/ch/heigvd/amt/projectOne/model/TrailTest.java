@@ -7,16 +7,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class TrailTest {
 
     @Test
-    void itShouldBePossibleToHave100Trailers() {
+    void itShouldBeNotPossibleToCreateATrailWithUpAndDownLessThanZero() {
 
-        //Trail trail = new Trail(1, "GR", 43, 2359, "Best trail ever", 100, "05-11-2019");
-        //assertEquals(trail.getCapacity(), 100);
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Trail(1, "GR", 43, -234, "Best trail ever", "05-11-2019");
+        });
     }
 
     @Test
-    void failToAddNewTrailer() {
+    void itShouldBeNotPossibleToCreateATrailWithDistanceLessThanZero() {
 
-
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Trail(1, "GR", -1043, 100, "Best trail ever", "05-11-2019");
+        });
     }
-
 }
