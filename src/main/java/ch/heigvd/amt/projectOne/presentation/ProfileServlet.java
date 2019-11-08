@@ -4,6 +4,7 @@ import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.utils.Consts;
 import ch.heigvd.amt.projectOne.utils.Crypto;
 import ch.heigvd.amt.projectOne.integration.UsersDaoLocal;
+import ch.heigvd.amt.projectOne.utils.DateFormat;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -32,6 +33,8 @@ public class ProfileServlet extends HttpServlet {
         String firstName = req.getParameter("firstname");
         String lastName = req.getParameter("lastname");
         String date = req.getParameter("date");
+        //TODO USE THIS METHOD
+        DateFormat.correctFormatDate(date);
         String email = user.getEmail();
         String password = req.getParameter("password");
 

@@ -105,6 +105,8 @@ public class TrailServlet extends HttpServlet {
         String description = req.getParameter("description");
         String date = req.getParameter("date");
 
+        //TODO DATE
+
         if (trailManager.addTrail(new Trail(name, distance, upAndDown, description, date)) != -1) {
 
             resp.setContentType("text/html;charset=UTF-8");

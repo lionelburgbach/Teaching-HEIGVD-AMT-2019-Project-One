@@ -67,6 +67,9 @@ public class LoginServlet extends HttpServlet {
             String firstName = req.getParameter("firstname");
             String lastName = req.getParameter("lastname");
             String date = req.getParameter("date");
+
+            //TODO DATE
+
             String email = req.getParameter("email");
             String password = req.getParameter("password");
 
