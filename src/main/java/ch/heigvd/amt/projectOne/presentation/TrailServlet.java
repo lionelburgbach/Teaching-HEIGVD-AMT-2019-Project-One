@@ -9,10 +9,7 @@ import ch.heigvd.amt.projectOne.utils.DateFormat;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
@@ -115,14 +112,17 @@ public class TrailServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        if(d){
-            req.setAttribute("error", "Wrong Date Format");
+        if(!d){
+            req.setAttribute("errorDate", "Wrong Date Format");
+            req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
         }
+        else {
 
-        if (trailManager.addTrail(new Trail(name, distance, upAndDown, description, date)) != -1) {
+            if (trailManager.addTrail(new Trail(name, distance, upAndDown, description, date)) != -1) {
 
-            resp.setContentType("text/html;charset=UTF-8");
-            resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
+                resp.setContentType("text/html;charset=UTF-8");
+                resp.sendRedirect(req.getContextPath() + Consts.SERVLET_TRAIL);
+            }
         }
     }
 }

@@ -24,17 +24,17 @@
               <img src="./grayscale/img/pict.jpg" style="width:400px;" class="img-fluid" alt="">
             </div>
             <div style="padding-top: 20px;">
-              <form method="post" action="" enctype="multipart/form-data">
+              <form method="post" action="${pageContext.request.contextPath}/user/profile?action=picture" enctype="multipart/form-data">
                 <div class="custom-file" style="width: 400px;">
                   <input type="file" class="custom-file-input" id="customFile">
                   <label class="custom-file-label" for="customFile">File</label>
-                  <button type="submit" class="btn btn-outline-warning" value="updatePerson">Update</button>
+                  <button type="submit" class="btn btn-outline-warning" value="profile_picture">Update</button>
                 </div>
               </form>
             </div>
           </div>
           <div class="text-white col-sm" style="padding-bottom: 40px; width: 400px;">
-            <form method="post" action="${pageContext.request.contextPath}/user/profile">
+            <form method="post" action="${pageContext.request.contextPath}/user/profile?action=user">
               <div class="form-group">
                 <label for="firstName">Firstname</label>
                 <input type="text" class="form-control" id="firstName" name="firstname" aria-describedby="emailHelp" value="${user.firstName}">

@@ -19,6 +19,14 @@
 <!-- About Section -->
 <section id="trail" class="about-section text-center">
 
+  <c:choose>
+    <c:when test="${not empty errorDate}">
+      <c:set var="e" value="${error}" />
+      <div style="font-size: 20px; color: red; text-align: center">
+        <p>Wrong Date Format!</p>
+      </div>
+    </c:when>
+  </c:choose>
   <% if (session.getAttribute("user") != null){ %>
   <div class="wrapper" id="addTrail" style="padding-bottom: 50px;">
     <button onclick="addTrail()" class="btn btn-outline-warning">Add Trail</button>
