@@ -4,6 +4,7 @@ import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.utils.Consts;
 import ch.heigvd.amt.projectOne.utils.Crypto;
 import ch.heigvd.amt.projectOne.integration.UsersDaoLocal;
+import ch.heigvd.amt.projectOne.utils.DateFormat;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
 
 @WebServlet(urlPatterns = Consts.SERVLET_LOGIN)
 public class LoginServlet extends HttpServlet {
@@ -68,7 +70,10 @@ public class LoginServlet extends HttpServlet {
             String lastName = req.getParameter("lastname");
             String date = req.getParameter("date");
 
-            //TODO DATE
+            boolean d = DateFormat.correctFormatDate(date);
+            if(d){
+                req.setAttribute("error", "Wrong Date Format");
+            }
 
             String email = req.getParameter("email");
             String password = req.getParameter("password");
@@ -79,7 +84,6 @@ public class LoginServlet extends HttpServlet {
 
             long id = userDao.addUser(newUser);
 
-            //TODO FAIRE MIEUX
             if(id != -1){
                 user = userDao.user(id);
                 session.setAttribute("user", user);

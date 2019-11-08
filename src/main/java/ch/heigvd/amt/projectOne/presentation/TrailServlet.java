@@ -4,6 +4,7 @@ import ch.heigvd.amt.projectOne.model.Trail;
 import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.integration.TrailDaoLocal;
 import ch.heigvd.amt.projectOne.utils.Consts;
+import ch.heigvd.amt.projectOne.utils.DateFormat;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 @WebServlet(urlPatterns = Consts.SERVLET_TRAIL)
@@ -105,7 +107,17 @@ public class TrailServlet extends HttpServlet {
         String description = req.getParameter("description");
         String date = req.getParameter("date");
 
-        //TODO DATE
+        boolean d = DateFormat.correctFormatDate(date);
+        //TODO controle
+        try {
+            d = DateFormat.possibleDate(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if(d){
+            req.setAttribute("error", "Wrong Date Format");
+        }
 
         if (trailManager.addTrail(new Trail(name, distance, upAndDown, description, date)) != -1) {
 

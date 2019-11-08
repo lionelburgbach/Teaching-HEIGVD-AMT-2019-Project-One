@@ -1,11 +1,28 @@
 package ch.heigvd.amt.projectOne.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class DateFormat {
 
 
     public static boolean correctFormatDate(String date){
 
         return date.matches("^[0-9]{2}-[0-9]{2}-[0-9]{4}$");
+    }
+
+    public static boolean possibleDate(String date) throws ParseException {
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Date now = Calendar.getInstance().getTime();
+        String dateS = format.format(now);
+
+        Date date1 = format.parse(date);
+        Date date2 = format.parse(dateS);
+
+        return date1.compareTo(date2) > 0;
     }
 
 
