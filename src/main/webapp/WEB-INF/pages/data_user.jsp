@@ -68,10 +68,10 @@
             <nav aria-label="Navigation for Trail" style="padding-top: 20px;">
                 <ul class="pagination justify-content-center pagination-sm">
                     <c:if test="${currentPage != 1}">
-                        <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=user&currentPage=${1}">Begin</a></li>
+                        <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=user&id_user=${user.id}&currentPage=${1}">Begin</a></li>
                     </c:if>
                     <c:if test="${currentPage != 1}">
-                        <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=user&currentPage=${currentPage-1}">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=user&id_user=${user.id}&currentPage=${currentPage-1}">Previous</a></li>
                     </c:if>
 
                     <c:choose>
@@ -85,7 +85,7 @@
                                         </li>
                                     </c:when>
                                     <c:otherwise>
-                                        <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=user&currentPage=${i}">${i}</a>
+                                        <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=user&id_user=${user.id}&currentPage=${i}">${i}</a>
                                         </li>
                                     </c:otherwise>
                                 </c:choose>
@@ -106,7 +106,7 @@
                                         <!-- NAVIGATION PAGES PAS OUF -->
                                         <c:choose>
                                             <c:when test="${i gt currentPage && i lt currentPage+5}">
-                                                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=user&currentPage=${i}">${i}</a>
+                                                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=user&id_user=${user.id}&currentPage=${i}">${i}</a>
                                                 </li>
                                             </c:when>
                                             <c:when test="${i eq currentPage+5}">
@@ -114,7 +114,7 @@
                                                 </li>
                                             </c:when>
                                             <c:when test="${i gt noOfPages-5}">
-                                                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=user&currentPage=${i}">${i}</a>
+                                                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=user&id_user=${user.id}&currentPage=${i}">${i}</a>
                                                 </li>
                                             </c:when>
                                         </c:choose>
@@ -127,7 +127,7 @@
                     </c:choose>
 
                     <c:if test="${currentPage lt noOfPages}">
-                        <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=user&currentPage=${currentPage+1}">Next</a>
+                        <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=user&id_user=${user.id}&currentPage=${currentPage+1}">Next</a>
                         </li>
                     </c:if>
                 </ul>

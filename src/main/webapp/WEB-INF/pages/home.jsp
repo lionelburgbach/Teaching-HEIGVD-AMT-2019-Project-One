@@ -44,9 +44,7 @@
             <form method="post" action="${pageContext.request.contextPath}/user/registration?action=delReg">
               <td><button type="submit" name ="reg_id" value="${reg.id}" class="btn btn-outline-danger">Delete</button></td>
             </form>
-            <form method="post" action="${pageContext.request.contextPath}/user/data?action=registers">
-              <td><button type="submit" name ="trail_id" value="${reg.trail.id}" class="btn btn-outline-warning">Show Registers</button></td>
-            </form>
+            <td><a class="btn btn-outline-warning" href="${pageContext.request.contextPath}/user/data?action=registers&id_trail=${reg.trail.id}">See Registers</a></td>
           </tr>
         </c:forEach>
         </tbody>

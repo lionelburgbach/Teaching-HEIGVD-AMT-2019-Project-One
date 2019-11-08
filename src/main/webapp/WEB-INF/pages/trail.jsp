@@ -52,9 +52,7 @@
             <form method="post" action="${pageContext.request.contextPath}/user/registration?action=enroll">
               <td><button type="submit" name ="trail_id" value="${trail.id}" class="btn btn-outline-warning">Enroll Me</button></td>
             </form>
-            <form method="post" action="${pageContext.request.contextPath}/user/data?action=registers">
-              <td><button type="submit" name ="trail_id" value="${trail.id}" class="btn btn-outline-warning">Show Registers</button></td>
-            </form>
+            <td><a class="btn btn-outline-warning" href="${pageContext.request.contextPath}/user/data?action=registers&id_trail=${trail.id}">See More</a></td>
           </tr>
         </c:forEach>
         </tbody>
