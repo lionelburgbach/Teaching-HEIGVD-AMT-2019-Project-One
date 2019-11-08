@@ -75,27 +75,32 @@ public class UserDao implements UsersDaoLocal {
 
     //CREATE
     @Override
-    public boolean addUser(User user) {
-        int rs = 0;
+    public long addUser(User user) {
+
+        long id = -1;
 
         String date = DateFormat.javaToMysql(user.getDateOfBirth());
 
         try{
             Connection connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO user (firstname, lastname, date, email, password)\n" +
-                    "VALUES (?, ?, ?, ?, ?);");
+                    "VALUES (?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             pstmt.setObject(1, user.getFirstName());
             pstmt.setObject(2, user.getLastName());
             pstmt.setObject(3, date);
             pstmt.setObject(4, user.getEmail());
             pstmt.setObject(5, user.getPassword());
-            rs = pstmt.executeUpdate();
+            pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if(rs.next()) {
+                id = rs.getLong(1);
+            }
             connection.close();
         }catch (SQLException ex){
 
             LOG.log(Level.SEVERE, null, ex);
         }
-        return (rs == 1);
+        return id;
     }
 
 

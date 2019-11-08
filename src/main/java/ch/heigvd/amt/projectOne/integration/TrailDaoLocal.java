@@ -18,7 +18,7 @@ public interface TrailDaoLocal {
     int getNumberOfTrailsToComeWithNoReg(long idUser);
     List<Trail> allTrailToComeWithNoRegPagination(long idUser, int currentPage, int elementPerPage);
 
-    boolean addTrail(Trail trail);
+    long addTrail(Trail trail);
     boolean updateTrail(Trail trail);
     boolean deleteTrail(long id);
 }

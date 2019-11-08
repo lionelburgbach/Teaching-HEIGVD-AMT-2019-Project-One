@@ -63,7 +63,7 @@
           </c:if>
 
           <c:choose>
-            <c:when test="${noOfPages lt 10}">
+            <c:when test="${noOfPages le 30}">
 
               <c:forEach begin="1" end="${noOfPages}" var="i">
                 <c:choose>

@@ -18,6 +18,6 @@ public interface RegistrationDaoLocal {
     int getNumberOfRegsTrail(long idTrail);
     List<Registration> allRegTrailPagination(long idTrail, int currentPage, int elementPerPage);
 
-    boolean addReg(Registration reg);
+    long addReg(Registration reg);
     boolean deleteReg(long id);
 }

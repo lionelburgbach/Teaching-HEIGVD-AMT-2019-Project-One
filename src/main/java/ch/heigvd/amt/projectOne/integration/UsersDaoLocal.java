@@ -10,7 +10,7 @@ public interface UsersDaoLocal {
 
     User connect(String email, String password);
     User user(long id);
-    boolean addUser(User user);
+    long addUser(User user);
     boolean updateUser(User user);
     boolean updatePictureUser(long id, InputStream profile_picture);
     boolean deleteUser(long id);
