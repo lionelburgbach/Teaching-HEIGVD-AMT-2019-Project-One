@@ -8,10 +8,7 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -198,18 +195,22 @@ public class RegistrationDao implements RegistrationDaoLocal {
 
     //CREATE
     @Override
-    public boolean addReg(Registration reg) {
+    public long addReg(Registration reg) {
 
-        int rs = 0;
+        long id = -1;
 
         if(this.registration(reg.getUser().getId(), reg.getTrail().getId()) == null){
 
             try {
                 Connection connection = dataSource.getConnection();
-                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO registration (id_user_fk, id_trail_fk) VALUES (?, ?);");
+                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO registration (id_user_fk, id_trail_fk) VALUES (?, ?);", Statement.RETURN_GENERATED_KEYS);
                 pstmt.setObject(1, reg.getUser().getId());
                 pstmt.setObject(2, reg.getTrail().getId());
-                rs = pstmt.executeUpdate();
+                pstmt.executeUpdate();
+                ResultSet rs = pstmt.getGeneratedKeys();
+                if(rs.next()) {
+                    id = rs.getLong(1);
+                }
                 connection.close();
             } catch (SQLException ex) {
 
@@ -219,9 +220,9 @@ public class RegistrationDao implements RegistrationDaoLocal {
         else{
 
             //TODO if the registration already exist
-            return false;
+            return -1;
         }
-        return (rs == 1);
+        return id;
     }
 
     //DELETE

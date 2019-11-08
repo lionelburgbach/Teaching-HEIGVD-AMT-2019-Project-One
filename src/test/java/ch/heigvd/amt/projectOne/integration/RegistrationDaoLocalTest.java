@@ -115,7 +115,7 @@ public class RegistrationDaoLocalTest {
     }
 
     @Test
-   // @Transactional(TransactionMode.ROLLBACK)
+    //@Transactional(TransactionMode.ROLLBACK)
     public void itShouldBePossibleToDeleteARegistration() throws DuplicateKeyException, SQLException {
         User lio = new User(0,"lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
         userDao.addUser(lio);
@@ -132,5 +132,4 @@ public class RegistrationDaoLocalTest {
         regDao.deleteReg(retrReg.getId());
         assertNull(retrReg);
     }
-
 }
