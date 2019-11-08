@@ -69,29 +69,30 @@ public class LoginServlet extends HttpServlet {
             String firstName = req.getParameter("firstname");
             String lastName = req.getParameter("lastname");
             String date = req.getParameter("date");
-
-            boolean d = DateFormat.correctFormatDate(date);
-            if(d){
-                req.setAttribute("error", "Wrong Date Format");
-            }
-
             String email = req.getParameter("email");
             String password = req.getParameter("password");
 
             password = Crypto.getCryptoHash(password);
 
-            User newUser = new User(firstName, lastName, date, email, password);
-
-            long id = userDao.addUser(newUser);
-
-            if(id != -1){
-                user = userDao.user(id);
-                session.setAttribute("user", user);
-                resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
-            }
-            else{
-                req.getSession().removeAttribute("user");
+            boolean d = DateFormat.correctFormatDate(date);
+            if(!d){
+                req.setAttribute("errorDate", "Wrong Date Format");
                 req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
+            }
+            else {
+
+                User newUser = new User(firstName, lastName, date, email, password);
+
+                long id = userDao.addUser(newUser);
+
+                if (id != -1) {
+                    user = userDao.user(id);
+                    session.setAttribute("user", user);
+                    resp.sendRedirect(req.getContextPath() + Consts.SERVLET_TRAIL);
+                } else {
+                    req.getSession().removeAttribute("user");
+                    req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
+                }
             }
         }
     }

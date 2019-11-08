@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.text.ParseException;
 
 @WebServlet(urlPatterns = Consts.SERVLET_PROFILE)
 public class ProfileServlet extends HttpServlet {
@@ -33,22 +34,37 @@ public class ProfileServlet extends HttpServlet {
         String firstName = req.getParameter("firstname");
         String lastName = req.getParameter("lastname");
         String date = req.getParameter("date");
-        //TODO USE THIS METHOD
-        DateFormat.correctFormatDate(date);
         String email = user.getEmail();
         String password = req.getParameter("password");
 
         if (password.equals("")) {
             password = user.getPassword();
-        } else {
+        }
+        else {
             password = Crypto.getCryptoHash(password);
         }
 
-        if (userDao.updateUser(new User(user.getId(), firstName, lastName, date, email, password))) {
-            session.setAttribute("user", userDao.user(user.getId()));
-            req.getRequestDispatcher(Consts.JSP_PROFILE).forward(req, resp);
-        } else {
-            //TODO fail to update
+        //TODO
+        boolean b = DateFormat.correctFormatDate(date);
+        try {
+           b = DateFormat.possibleDate(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if(b) {
+
+            if (userDao.updateUser(new User(user.getId(), firstName, lastName, date, email, password))) {
+                session.setAttribute("user", userDao.user(user.getId()));
+                req.getRequestDispatcher(Consts.JSP_PROFILE).forward(req, resp);
+            }
+            else {
+                //TODO fail to update
+                req.getRequestDispatcher(Consts.JSP_PROFILE).forward(req, resp);
+            }
+        }
+        else {
+            req.setAttribute("errorDate", "Wrong Date Format");
             req.getRequestDispatcher(Consts.JSP_PROFILE).forward(req, resp);
         }
     }

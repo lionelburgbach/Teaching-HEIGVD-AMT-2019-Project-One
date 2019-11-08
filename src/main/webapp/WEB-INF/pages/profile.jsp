@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="include/head.jsp" />
 
 <body id="page-top">
@@ -9,6 +10,14 @@
   <div class="container d-flex h-100 align-items-center">
     <div class="mx-auto text-center">
       <div class="container">
+        <c:choose>
+          <c:when test="${not empty errorDate}">
+            <c:set var="e" value="${error}" />
+            <div style="font-size: 20px; color: red; text-align: center">
+              <p>Wrong Date Format!</p>
+            </div>
+          </c:when>
+        </c:choose>
         <div class="row">
           <div class="text-white col-sm" style="padding-top: 30px;">
             <div>

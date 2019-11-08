@@ -46,11 +46,18 @@
         <div class="register-background"> 
             <div class="filter-black"></div>
                 <div class="container">
+                    <!--TODO BETTER IF WE HAVE TIME -->
                     <c:choose>
                         <c:when test="${not empty error}">
                             <c:set var="e" value="${error}" />
                             <div style="font-size: 20px; color: red; text-align: center">
                             <p>Wrong email or password!</p>
+                            </div>
+                        </c:when>
+                        <c:when test="${not empty errorDate}">
+                            <c:set var="e" value="${error}" />
+                            <div style="font-size: 20px; color: red; text-align: center">
+                                <p>Wrong Date Format!</p>
                             </div>
                         </c:when>
                     </c:choose>
@@ -67,11 +74,6 @@
                                 </form>
 
                                 <button onclick="getRegister()" class="btn btn-danger btn-block">Register</button>
-
-                                <div class="forgot">
-                                    <a href="#" class="btn btn-simple btn-danger">Forgot password?</a>
-                                </div>
-
                             </div>
                         </div>
                     </div>
