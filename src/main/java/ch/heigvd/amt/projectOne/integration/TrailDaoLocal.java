@@ -9,8 +9,15 @@ import java.util.List;
 public interface TrailDaoLocal {
 
     Trail trail(long id);
+
     List<Trail> allTrail();
+    int getNumberOfTrails();
+    List<Trail> allTrailPagination(int currentPage, int elementPerPage);
+
     List<Trail> allTrailToComeWithNoReg(long idUser);
+    int getNumberOfTrailsToComeWithNoReg(long idUser);
+    List<Trail> allTrailToComeWithNoRegPagination(long idUser, int currentPage, int elementPerPage);
+
     boolean addTrail(Trail trail);
     boolean updateTrail(Trail trail);
     boolean deleteTrail(long id);

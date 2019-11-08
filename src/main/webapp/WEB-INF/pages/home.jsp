@@ -18,41 +18,108 @@
 
 
 <!-- About Section -->
-<section id="trail" class="about-section text-center">
+<section id="trail" class="about-section">
   <div class="container" style="color: white;">
-    <div class="row">
-      <div class="table-responsive-lg">
-        <table class="table table-dark">
-          <thead>
+    <div class="table-responsive">
+      <table class="table table-dark">
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Distance</th>
+          <th scope="col">Up and Down</th>
+          <th scope="col">Description</th>
+          <th scope="col">Date</th>
+          <th scope="col">Delete Registration</th>
+          <th scope="col">Who is in?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${regs}" var="reg">
           <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Distance</th>
-            <th scope="col">Up and Down</th>
-            <th scope="col">Description</th>
-            <th scope="col">Date</th>
-            <th scope="col">Delete Registration</th>
-            <th scope="col">Who is in?</th>
+            <td>${reg.trail.name}</td>
+            <td>${reg.trail.distance} KM</td>
+            <td style="white-space: nowrap;">${reg.trail.upAndDown} M</td>
+            <td>${reg.trail.description}</td>
+            <td style="white-space: nowrap;">${reg.trail.date}</td>
+            <form method="post" action="${pageContext.request.contextPath}/user/registration?action=delReg">
+              <td><button type="submit" name ="reg_id" value="${reg.id}" class="btn btn-outline-danger">Delete</button></td>
+            </form>
+            <td><a class="btn btn-outline-warning" href="${pageContext.request.contextPath}/user/data?action=registers&id_trail=${reg.trail.id}">See Registers</a></td>
           </tr>
-          </thead>
-          <tbody>
-          <c:forEach items="${regs}" var="reg">
-            <tr>
-              <td>${reg.trail.name}</td>
-              <td>${reg.trail.distance} KM</td>
-              <td style="white-space: nowrap;">${reg.trail.upAndDown} M</td>
-              <td>${reg.trail.description}</td>
-              <td style="white-space: nowrap;">${reg.trail.date}</td>
-              <form method="post" action="${pageContext.request.contextPath}/user/registration?action=delReg">
-                <td><button type="submit" name ="reg_id" value="${reg.id}" class="btn btn-outline-danger">Delete</button></td>
-              </form>
-              <form method="post" action="${pageContext.request.contextPath}/user/data?action=registers">
-                <td><button type="submit" name ="trail_id" value="${reg.trail.id}" class="btn btn-outline-warning">Show Registers</button></td>
-              </form>
-            </tr>
-          </c:forEach>
-          </tbody>
-        </table>
-      </div>
+        </c:forEach>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PAGINATION -->
+    <div id="pagination" class="text-center" style="padding-bottom: 20px;">
+      <nav aria-label="Navigation for Trail" style="padding-top: 20px;">
+        <ul class="pagination justify-content-center pagination-sm">
+          <c:if test="${currentPage != 1}">
+            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/home?currentPage=${1}">Begin</a></li>
+          </c:if>
+          <c:if test="${currentPage != 1}">
+            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/home?currentPage=${currentPage-1}">Previous</a></li>
+          </c:if>
+
+          <c:choose>
+            <c:when test="${noOfPages lt 10}">
+
+              <c:forEach begin="1" end="${noOfPages}" var="i">
+                <c:choose>
+                  <c:when test="${currentPage eq i}">
+                    <li class="page-item active"><a class="page-link">
+                        ${i} <span class="sr-only">(current)</span></a>
+                    </li>
+                  </c:when>
+                  <c:otherwise>
+                    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/home?currentPage=${i}">${i}</a>
+                    </li>
+                  </c:otherwise>
+                </c:choose>
+              </c:forEach>
+
+            </c:when>
+            <c:otherwise>
+
+              <c:forEach begin="1" end="${noOfPages}" var="i">
+                <c:choose>
+                  <c:when test="${currentPage eq i}">
+                    <li class="page-item active"><a class="page-link">
+                        ${i} <span class="sr-only">(current)</span></a>
+                    </li>
+                  </c:when>
+                  <c:otherwise>
+
+                    <!-- NAVIGATION PAGES PAS OUF -->
+                    <c:choose>
+                      <c:when test="${i gt currentPage && i lt currentPage+5}">
+                        <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/home?currentPage=${i}">${i}</a>
+                        </li>
+                      </c:when>
+                      <c:when test="${i eq currentPage+5}">
+                        <li class="page-item"><a class="page-link" style="color: #0f0f0f">...</a>
+                        </li>
+                      </c:when>
+                      <c:when test="${i gt noOfPages-5}">
+                        <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/home?currentPage=${i}">${i}</a>
+                        </li>
+                      </c:when>
+                    </c:choose>
+                    <!-- NAVIGATION PAGES PAS OUF -->
+
+                  </c:otherwise>
+                </c:choose>
+              </c:forEach>
+            </c:otherwise>
+          </c:choose>
+
+          <c:if test="${currentPage lt noOfPages}">
+            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/home?currentPage=${currentPage+1}">Next</a>
+            </li>
+          </c:if>
+        </ul>
+      </nav>
     </div>
   </div>
 </section>

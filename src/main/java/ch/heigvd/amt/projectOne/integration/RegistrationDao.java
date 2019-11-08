@@ -60,8 +60,55 @@ public class RegistrationDao implements RegistrationDaoLocal {
         List<Registration> regs = new ArrayList<>();
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM registration AS reg INNER JOIN trail ON trail.id=reg.id_trail_fk WHERE id_user_fk=? ORDER BY trail.date");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM registration AS reg INNER JOIN trail ON trail.id=reg.id_trail_fk WHERE id_user_fk=? ORDER BY trail.date;");
             pstmt.setObject(1, idUser);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                long id = rs.getLong("id");
+                User user = userDao.user(idUser);
+                long idTrail = rs.getInt("id_trail_fk");
+                Trail trail = trailDao.trail(idTrail);
+                regs.add(new Registration(id, user, trail));
+            }
+            connection.close();
+        }catch (SQLException ex){
+
+            LOG.log(Level.SEVERE, null, ex);
+        }
+        return regs;
+    }
+
+    @Override
+    public int getNumberOfRegsUser(long idUser) {
+
+        int numOfRows = 0;
+
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS total FROM registration AS reg INNER JOIN trail ON trail.id=reg.id_trail_fk WHERE id_user_fk=?;");
+            pstmt.setObject(1, idUser);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next())
+                numOfRows=rs.getInt("total");
+            connection.close();
+        }catch (SQLException ex){
+
+            LOG.log(Level.SEVERE, null, ex);
+        }
+
+        return numOfRows;
+    }
+
+    @Override
+    public List<Registration> allRegUserPagination(long idUser, int currentPage, int elementPerPage) {
+
+        List<Registration> regs = new ArrayList<>();
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM registration AS reg INNER JOIN trail ON trail.id=reg.id_trail_fk WHERE id_user_fk=? ORDER BY trail.date ASC LIMIT ?,?;");
+            pstmt.setObject(1, idUser);
+            pstmt.setObject(2, currentPage);
+            pstmt.setObject(3, elementPerPage);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
                 long id = rs.getLong("id");
@@ -91,6 +138,53 @@ public class RegistrationDao implements RegistrationDaoLocal {
                 long id = rs.getLong("id");
                 long idU = rs.getInt("id_user_fk");
                 User user = userDao.user(idU);
+                Trail trail = trailDao.trail(idTrail);
+                regs.add(new Registration(id, user, trail));
+            }
+            connection.close();
+        }catch (SQLException ex){
+
+            LOG.log(Level.SEVERE, null, ex);
+        }
+        return regs;
+    }
+
+    @Override
+    public int getNumberOfRegsTrail(long idTrail) {
+
+        int numOfRows = 0;
+
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS total FROM registration AS reg INNER JOIN trail ON trail.id=reg.id_trail_fk WHERE id_trail_fk=?;");
+            pstmt.setObject(1, idTrail);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next())
+                numOfRows=rs.getInt("total");
+            connection.close();
+        }catch (SQLException ex){
+
+            LOG.log(Level.SEVERE, null, ex);
+        }
+
+        return numOfRows;
+    }
+
+    @Override
+    public List<Registration> allRegTrailPagination(long idTrail, int currentPage, int elementPerPage) {
+
+        List<Registration> regs = new ArrayList<>();
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT DISTINCT * FROM registration AS reg INNER JOIN trail ON trail.id=reg.id_trail_fk WHERE id_trail_fk=? ORDER BY trail.date ASC LIMIT ?,?;");
+            pstmt.setObject(1, idTrail);
+            pstmt.setObject(2, currentPage);
+            pstmt.setObject(3, elementPerPage);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                long id = rs.getLong("id");
+                long idUser = rs.getInt("id_user_fk");
+                User user = userDao.user(idUser);
                 Trail trail = trailDao.trail(idTrail);
                 regs.add(new Registration(id, user, trail));
             }

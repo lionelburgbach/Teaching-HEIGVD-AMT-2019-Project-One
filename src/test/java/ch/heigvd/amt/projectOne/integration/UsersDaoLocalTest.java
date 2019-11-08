@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(Arquillian.class)
 @MavenBuild
@@ -40,5 +41,18 @@ public class UsersDaoLocalTest {
         usersDao.addUser(lio);
         User lioLoaded = usersDao.connect("amt@amt.ch", "lionel");
         assertEquals(lio.getEmail(), lioLoaded.getEmail());
+    }
+
+    @Test
+    public void itShouldBePossibleToUpdateAUser() throws DuplicateKeyException {
+
+        User lio = new User("lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
+        usersDao.addUser(lio);
+        User lioLoaded = usersDao.connect("amt@amt.ch", "lionel");
+        User newLio = new User(lioLoaded.getId(),"lio",lioLoaded.getLastName(), lioLoaded.getDateOfBirth(), lioLoaded.getEmail(), lioLoaded.getPassword());
+        usersDao.updateUser(newLio);
+        User lioModified = usersDao.user(lioLoaded.getId());
+        assertEquals(lio.getEmail(), lioModified.getEmail());
+        assertNotEquals(lio.getFirstName(), lioModified.getFirstName());
     }
 }

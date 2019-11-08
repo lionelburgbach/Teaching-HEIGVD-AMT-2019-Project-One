@@ -28,18 +28,43 @@ public class DataServlet extends HttpServlet {
     UsersDaoLocal usersDao;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String action = req.getParameter("action");
 
         if (action.equals("registers")) {
 
-            long id = Integer.parseInt(req.getParameter("trail_id"));
-
+            long id = Integer.parseInt(req.getParameter("id_trail"));
             req.setAttribute("trail", trailDao.trail(id));
+
             List<Registration> reg = registrationDao.allRegTrail(id);
             if(reg.size() != 0) {
-                req.setAttribute("regs", registrationDao.allRegTrail(id));
+
+                //PAGINTAION
+                ///////////////////////////////////////////////////////////////////////////////////////////////
+
+                int currentPage = 1;
+                if(req.getParameter("currentPage") != null){
+                    currentPage = Integer.valueOf(req.getParameter("currentPage"));
+                }
+
+                //WITH PAGINATION
+                List<Registration> regs = registrationDao.allRegTrailPagination(id, currentPage, Consts.ELEMENT_PER_PAGE);
+
+                int rows = registrationDao.getNumberOfRegsTrail(id);
+
+                int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
+
+                if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
+                    numberOfPages++;
+                }
+
+                req.setAttribute("noOfPages", numberOfPages);
+                req.setAttribute("currentPage", currentPage);
+                req.setAttribute("trailPerPage", Consts.ELEMENT_PER_PAGE);
+                //////////////////////////////////////////////////////////////////////////////////////////////
+
+                req.setAttribute("regs", regs);
                 req.getRequestDispatcher(Consts.JSP_DATA).forward(req, resp);
             }
             else{
@@ -49,10 +74,38 @@ public class DataServlet extends HttpServlet {
         }
         else if (action.equals("user")) {
 
-            long id = Integer.parseInt(req.getParameter("user_id"));
+            long id = Integer.parseInt(req.getParameter("id_user"));
             req.setAttribute("user", usersDao.user(id));
-            req.setAttribute("regs", registrationDao.allRegUser(id));
+
+            //PAGINTAION
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+
+            int currentPage = 1;
+            if(req.getParameter("currentPage") != null){
+                currentPage = Integer.valueOf(req.getParameter("currentPage"));
+            }
+
+            //WITH PAHINATION
+            List<Registration> regs = registrationDao.allRegUserPagination(id, currentPage, Consts.ELEMENT_PER_PAGE);
+
+
+            int rows = registrationDao.getNumberOfRegsUser(id);
+
+            int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
+
+            if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
+                numberOfPages++;
+            }
+
+            req.setAttribute("noOfPages", numberOfPages);
+            req.setAttribute("currentPage", currentPage);
+            req.setAttribute("trailPerPage", Consts.ELEMENT_PER_PAGE);
+            //////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            req.setAttribute("regs", regs);
             req.getRequestDispatcher(Consts.JSP_DATA_USER).forward(req, resp);
         }
+
     }
 }

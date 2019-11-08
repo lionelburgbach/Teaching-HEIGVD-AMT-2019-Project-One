@@ -15,22 +15,17 @@
     </div>
 </header>
 
-<c:choose>
-    <c:when test="${not empty error}">
-<section id="trailer" class="about-section text-center">
-    <div class="container" style="color: white;">
-        <div class="row">
-            <p style="font-size: 50px;">${error}</p>
-        </div>
-    </div>
-</section>
-    </c:when>
-    <c:otherwise>
-        <section id="trailer" class="about-section text-center">
-        <div class="container" style="color: white;">
-            <div class="row">
+<section id="trailer" class="about-section">
+    <c:choose>
+        <c:when test="${not empty error}">
+            <div class="container" style="color: white; text-align: center; padding-bottom: 20px;">
+                <p style="font-size: 50px;">${error}</p>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div class="container" style="color: white; padding-bottom: 20px;">
                 <div class="table-responsive">
-                    <table class="table table-dark">
+                    <table class="table table-dark" style="text-align: center;">
                         <thead>
                         <tr>
                             <th scope="col">Firstname</th>
@@ -45,19 +40,86 @@
                                 <td>${reg.user.firstName}</td>
                                 <td>${reg.user.lastName}</td>
                                 <td>${reg.user.dateOfBirth}</td>
-                                <form method="post" action="${pageContext.request.contextPath}/user/data?action=user">
-                                    <td><button type="submit" name ="user_id" value="${reg.user.id}" class="btn btn-outline-warning">See More</button></td>
-                                </form>
+                                <td><a class="btn btn-outline-warning" href="${pageContext.request.contextPath}/user/data?action=user&id_user=${reg.user.id}">See More</a></td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div>
-    </section>
-    </c:otherwise>
-</c:choose>
+            <!-- PAGINATION -->
+            <div id="pagination" class="text-center" style="padding-bottom: 20px;">
+                <nav aria-label="Navigation for Trail" style="padding-top: 20px;">
+                    <ul class="pagination justify-content-center pagination-sm">
+                        <c:if test="${currentPage != 1}">
+                            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=registers&id_trail=${trail.id}&currentPage=${1}">Begin</a></li>
+                        </c:if>
+                        <c:if test="${currentPage != 1}">
+                            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=registers&id_trail=${trail.id}&currentPage=${currentPage-1}">Previous</a></li>
+                        </c:if>
+
+                        <c:choose>
+                            <c:when test="${noOfPages lt 10}">
+
+                                <c:forEach begin="1" end="${noOfPages}" var="i">
+                                    <c:choose>
+                                        <c:when test="${currentPage eq i}">
+                                            <li class="page-item active"><a class="page-link">
+                                                    ${i} <span class="sr-only">(current)</span></a>
+                                            </li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=registers&id_trail=${trail.id}&currentPage=${i}">${i}</a>
+                                            </li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+
+                            </c:when>
+                            <c:otherwise>
+
+                                <c:forEach begin="1" end="${noOfPages}" var="i">
+                                    <c:choose>
+                                        <c:when test="${currentPage eq i}">
+                                            <li class="page-item active"><a class="page-link">
+                                                    ${i} <span class="sr-only">(current)</span></a>
+                                            </li>
+                                        </c:when>
+                                        <c:otherwise>
+
+                                            <!-- NAVIGATION PAGES PAS OUF -->
+                                            <c:choose>
+                                                <c:when test="${i gt currentPage && i lt currentPage+5}">
+                                                    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=registers&id_trail=${trail.id}&currentPage=${i}">${i}</a>
+                                                    </li>
+                                                </c:when>
+                                                <c:when test="${i eq currentPage+5}">
+                                                    <li class="page-item"><a class="page-link" style="color: #0f0f0f">...</a>
+                                                    </li>
+                                                </c:when>
+                                                <c:when test="${i gt noOfPages-5}">
+                                                    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=registers&id_trail=${trail.id}&currentPage=${i}">${i}</a>
+                                                    </li>
+                                                </c:when>
+                                            </c:choose>
+                                            <!-- NAVIGATION PAGES PAS OUF -->
+
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <c:if test="${currentPage lt noOfPages}">
+                            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/user/data?action=registers&id_trail=${trail.id}&currentPage=${currentPage+1}">Next</a>
+                            </li>
+                        </c:if>
+                    </ul>
+                </nav>
+            </div>
+        </c:otherwise>
+    </c:choose>
+</section>
 
 <jsp:include page="include/footer.jsp" />
 
