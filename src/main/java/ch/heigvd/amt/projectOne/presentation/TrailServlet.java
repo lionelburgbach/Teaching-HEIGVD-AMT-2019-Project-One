@@ -103,10 +103,9 @@ public class TrailServlet extends HttpServlet {
         double distance = Double.parseDouble(req.getParameter("distance"));
         double upAndDown = Double.parseDouble(req.getParameter("upAndDown"));
         String description = req.getParameter("description");
-        int capacity = Integer.parseInt(req.getParameter("capacity"));
         String date = req.getParameter("date");
 
-        if (trailManager.addTrail(new Trail(name, distance, upAndDown, description, capacity, date)) != -1) {
+        if (trailManager.addTrail(new Trail(name, distance, upAndDown, description, date)) != -1) {
 
             resp.setContentType("text/html;charset=UTF-8");
             resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);

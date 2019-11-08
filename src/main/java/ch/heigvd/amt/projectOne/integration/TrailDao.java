@@ -35,9 +35,8 @@ public class TrailDao implements TrailDaoLocal {
                 double distance = rs.getDouble("length");
                 double upAndDown = rs.getDouble("up_and_down");
                 String description = rs.getString("description");
-                int capacity = rs.getInt("capacity");
                 String date = rs.getString("date");
-                trail = new Trail(id, name, distance, upAndDown, description, capacity, DateFormat.mysqlToJava(date));
+                trail = new Trail(id, name, distance, upAndDown, description, DateFormat.mysqlToJava(date));
             }
             connection.close();
         }catch (SQLException ex){
@@ -62,9 +61,8 @@ public class TrailDao implements TrailDaoLocal {
                 double distance = rs.getDouble("length");
                 double upAndDown = rs.getDouble("up_and_down");
                 String description = rs.getString("description");
-                int capacity = rs.getInt("capacity");
                 String date = rs.getString("date");
-                trails.add(new Trail(id, name, distance, upAndDown, description, capacity, DateFormat.mysqlToJava(date)));
+                trails.add(new Trail(id, name, distance, upAndDown, description, DateFormat.mysqlToJava(date)));
             }
             connection.close();
         }catch (SQLException ex){
@@ -113,9 +111,8 @@ public class TrailDao implements TrailDaoLocal {
                 double distance = rs.getDouble("length");
                 double upAndDown = rs.getDouble("up_and_down");
                 String description = rs.getString("description");
-                int capacity = rs.getInt("capacity");
                 String date = rs.getString("date");
-                trails.add(new Trail(id, name, distance, upAndDown, description, capacity, DateFormat.mysqlToJava(date)));
+                trails.add(new Trail(id, name, distance, upAndDown, description, DateFormat.mysqlToJava(date)));
             }
             connection.close();
         }catch (SQLException ex){
@@ -142,9 +139,8 @@ public class TrailDao implements TrailDaoLocal {
                 double distance = rs.getDouble("length");
                 double upAndDown = rs.getDouble("up_and_down");
                 String description = rs.getString("description");
-                int capacity = rs.getInt("capacity");
                 String date = rs.getString("date");
-                trails.add(new Trail(id, name, distance, upAndDown, description, capacity, DateFormat.mysqlToJava(date)));
+                trails.add(new Trail(id, name, distance, upAndDown, description, DateFormat.mysqlToJava(date)));
             }
             connection.close();
         }catch (SQLException ex){
@@ -165,7 +161,7 @@ public class TrailDao implements TrailDaoLocal {
             pstmt.setObject(1, idUser);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next())
-                numOfRows=rs.getInt("total");
+                numOfRows = rs.getInt("total");
             connection.close();
         }catch (SQLException ex){
 
@@ -195,9 +191,8 @@ public class TrailDao implements TrailDaoLocal {
                 double distance = rs.getDouble("length");
                 double upAndDown = rs.getDouble("up_and_down");
                 String description = rs.getString("description");
-                int capacity = rs.getInt("capacity");
                 String date = rs.getString("date");
-                trails.add(new Trail(id, name, distance, upAndDown, description, capacity, DateFormat.mysqlToJava(date)));
+                trails.add(new Trail(id, name, distance, upAndDown, description, DateFormat.mysqlToJava(date)));
             }
             connection.close();
         }catch (SQLException ex){
@@ -217,14 +212,13 @@ public class TrailDao implements TrailDaoLocal {
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO trail (name, length, up_and_down, description, capacity, date)\n" +
-                    "VALUES (?, ?, ?, ?, ?,?);", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO trail (name, length, up_and_down, description, date)\n" +
+                    "VALUES (?, ?, ?, ?,?);", Statement.RETURN_GENERATED_KEYS);
             pstmt.setObject(1, trail.getName());
             pstmt.setObject(2, trail.getDistance());
             pstmt.setObject(3, trail.getUpAndDown());
             pstmt.setObject(4, trail.getDescription());
-            pstmt.setObject(5, trail.getCapacity());
-            pstmt.setObject(6, date);
+            pstmt.setObject(5, date);
             pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
             if(rs.next()) {
@@ -248,14 +242,13 @@ public class TrailDao implements TrailDaoLocal {
 
         try{
             Connection connection = dataSource.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("UPDATE trail SET name=?, length=?, up_and_down=?, description=?, capacity=?, date=? WHERE id=?;");
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE trail SET name=?, length=?, up_and_down=?, description=?, date=? WHERE id=?;");
             pstmt.setObject(1, trail.getName());
             pstmt.setObject(2, trail.getDistance());
             pstmt.setObject(3, trail.getUpAndDown());
             pstmt.setObject(4, trail.getDescription());
-            pstmt.setObject(5, trail.getCapacity());
-            pstmt.setObject(6, date);
-            pstmt.setObject(7, trail.getId());
+            pstmt.setObject(5, date);
+            pstmt.setObject(6, trail.getId());
             rs = pstmt.executeUpdate();
             connection.close();
         }catch (SQLException ex){

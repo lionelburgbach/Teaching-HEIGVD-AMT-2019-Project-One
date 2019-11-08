@@ -29,7 +29,7 @@ public class TrailDaoLocalTest {
     @Test
     @Transactional(TransactionMode.ROLLBACK)
     public void itShouldBePossibleToCreateATrail() throws DuplicateKeyException, SQLException {
-        Trail newTrail = new Trail("name",200,300, "description",20, "20-11-2020");
+        Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail);
         List<Trail> lTrail = trailDao.allTrail();
         assertEquals(newTrail.getName(), lTrail.get(0).getName());
@@ -38,9 +38,9 @@ public class TrailDaoLocalTest {
     @Test
     @Transactional(TransactionMode.ROLLBACK)
     public void itShouldBePossibleToRetreiveSomeTrails() throws DuplicateKeyException, SQLException {
-        Trail newTrail = new Trail("name",200,300, "description",20, "20-11-2020");
+        Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail);
-        Trail newTrail2 = new Trail("name2",200,300, "description",20, "20-11-2020");
+        Trail newTrail2 = new Trail("name2",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail2);
         List<Trail> lTrail = trailDao.allTrail();
         assertEquals(newTrail.getName(), lTrail.get(0).getName());
@@ -60,7 +60,7 @@ public class TrailDaoLocalTest {
     @Test
     @Transactional(TransactionMode.ROLLBACK)
     public void itShouldBePossibleToRetrieveATrail() throws DuplicateKeyException, SQLException {
-        Trail newTrail = new Trail("name",200,300, "description",20, "20-11-2020");
+        Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail);
         List<Trail> lTrail = trailDao.allTrail();
         Trail retrieveTrail = trailDao.trail(lTrail.get(0).getId());
@@ -70,9 +70,9 @@ public class TrailDaoLocalTest {
     @Test
     @Transactional(TransactionMode.ROLLBACK)
     public void itShouldBePossibleToCountTrail() throws DuplicateKeyException, SQLException {
-        Trail newTrail = new Trail("name",200,300, "description",20, "20-11-2020");
+        Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail);
-        Trail newTrail2 = new Trail("name2",200,300, "description",20, "20-11-2020");
+        Trail newTrail2 = new Trail("name2",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail2);
         assertEquals(2,trailDao.getNumberOfTrails());
     }
@@ -80,11 +80,11 @@ public class TrailDaoLocalTest {
     @Test
     @Transactional(TransactionMode.ROLLBACK)
     public void itShouldBePossibleToUpdateATrail() throws DuplicateKeyException, SQLException {
-        Trail newTrail = new Trail("name",200,300, "description",20, "20-11-2020");
+        Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail);
         List<Trail> lTrail = trailDao.allTrail();
         long id = lTrail.get(0).getId();
-        Trail updateTrail = new Trail(id,"name2",newTrail.getDistance(),newTrail.getUpAndDown(),newTrail.getDescription(),newTrail.getCapacity(), newTrail.getDate());
+        Trail updateTrail = new Trail(id,"name2",newTrail.getDistance(),newTrail.getUpAndDown(),newTrail.getDescription(), newTrail.getDate());
         trailDao.updateTrail(updateTrail);
         String nameUpdate = trailDao.trail(id).getName();
         assertEquals("name2",nameUpdate);
@@ -93,7 +93,7 @@ public class TrailDaoLocalTest {
     @Test
     @Transactional(TransactionMode.ROLLBACK)
     public void itShouldBePossibleToDeleteATrail() throws DuplicateKeyException, SQLException {
-        Trail newTrail = new Trail("name",200,300, "description",20, "20-11-2020");
+        Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail);
         List<Trail> lTrail = trailDao.allTrail();
         long id = lTrail.get(0).getId();

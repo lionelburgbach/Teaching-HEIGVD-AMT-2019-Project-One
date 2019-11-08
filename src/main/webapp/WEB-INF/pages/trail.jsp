@@ -35,7 +35,6 @@
           <th scope="col">Up and Down</th>
           <th scope="col">Description</th>
           <th scope="col">Date</th>
-          <th scope="col">Places Left</th>
           <th scope="col">Registration</th>
           <th scope="col">Who is in?</th>
         </tr>
@@ -48,7 +47,6 @@
             <td style="white-space: nowrap;">${trail.upAndDown} M</td>
             <td>${trail.description}</td>
             <td style="white-space: nowrap;">${trail.date}</td>
-            <td>${trail.capacity - trail.nbIn}</td>
             <form method="post" action="${pageContext.request.contextPath}/user/registration?action=enroll">
               <td><button type="submit" name ="trail_id" value="${trail.id}" class="btn btn-outline-warning">Enroll Me</button></td>
             </form>
@@ -167,10 +165,6 @@
             '      <div class="form-group">\n' +
             '        <label for="date">Date</label>\n' +
             '        <input type="text" class="form-control" name="date" id="date" placeholder="Date" required>\n' +
-            '      </div>\n' +
-            '      <div class="form-group">\n' +
-            '        <label for="capacity">Capacity</label>\n' +
-            '        <input type="text" class="form-control" name="capacity" id="capacity" placeholder="Capacity" required>\n' +
             '      </div>\n' +
             '      <button type="submit" class="btn btn-outline-warning">Add Trail</button>\n' +
             '    </form>\n' +

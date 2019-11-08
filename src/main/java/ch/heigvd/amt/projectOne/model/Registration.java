@@ -13,17 +13,11 @@ public class Registration {
         this.id = id;
         this.user = user;
         this.trail = trail;
-        if(!trail.addTrailer()){
-            throw new IllegalArgumentException("No more place");
-        }
     }
 
     public Registration(User user, Trail trail){
         this.user = user;
         this.trail = trail;
-        if(!trail.addTrailer()){
-            throw new IllegalArgumentException("No more place");
-        }
     }
 
 }
