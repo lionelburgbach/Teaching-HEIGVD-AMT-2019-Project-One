@@ -57,6 +57,7 @@ public class TrailServlet extends HttpServlet {
 
             //WITHOUT PAGINATION
             //List<Trail> trails = trailManager.allTrailToComeWithNoReg(user.getId());
+
             req.setAttribute("trails", trails);
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
         }
