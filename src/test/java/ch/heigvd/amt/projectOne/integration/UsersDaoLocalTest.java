@@ -19,10 +19,8 @@ import static org.junit.Assert.*;
 @DeploymentParameters(testable = true)
 public class UsersDaoLocalTest {
 
-
     @EJB
     UsersDaoLocal usersDao;
-
 
     @Test
     @Transactional(TransactionMode.ROLLBACK)
@@ -34,9 +32,8 @@ public class UsersDaoLocalTest {
         assertEquals(lio.getEmail(), lioRetrieve.getEmail());
     }
 
-
-  @Test
-  @Transactional(TransactionMode.COMMIT)
+    @Test
+    @Transactional(TransactionMode.COMMIT)
     public void itShouldBePossibleToDeleteAUser() throws DuplicateKeyException{
         User gui = new User("Guillaume", "Blanco", "19-06-1994", "gui@amt.ch", "guillaume");
         long idGui = usersDao.addUser(gui);
@@ -55,7 +52,6 @@ public class UsersDaoLocalTest {
         assertEquals("Guillaume",connectUser.getFirstName());
     }
 
-
     @Test
     @Transactional(TransactionMode.ROLLBACK)
     public void itShouldBePossibleToUpdateAUser() throws DuplicateKeyException {
@@ -68,6 +64,4 @@ public class UsersDaoLocalTest {
         assertEquals(lio.getEmail(), lioModified.getEmail());
         assertNotEquals(lio.getFirstName(), lioModified.getFirstName());
     }
-
-
 }
