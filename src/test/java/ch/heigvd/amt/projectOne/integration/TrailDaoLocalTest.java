@@ -1,11 +1,14 @@
 package ch.heigvd.amt.projectOne.integration;
 
+import ch.heigvd.amt.projectOne.model.Registration;
 import ch.heigvd.amt.projectOne.model.Trail;
+import ch.heigvd.amt.projectOne.model.User;
 import org.arquillian.container.chameleon.deployment.api.DeploymentParameters;
 import org.arquillian.container.chameleon.deployment.maven.MavenBuild;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.transaction.api.annotation.TransactionMode;
 import org.jboss.arquillian.transaction.api.annotation.Transactional;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -25,14 +28,20 @@ public class TrailDaoLocalTest {
     @EJB
     TrailDaoLocal trailDao;
 
+    @EJB
+    UsersDaoLocal userDao;
+
+    @EJB
+    RegistrationDaoLocal regDao;
+
 
     @Test
     @Transactional(TransactionMode.ROLLBACK)
-    public void itShouldBePossibleToCreateATrail() throws DuplicateKeyException, SQLException {
+    public void itShouldBePossibleToCreateAndRetrieveASpecificTrail() throws DuplicateKeyException, SQLException {
         Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
-        trailDao.addTrail(newTrail);
-        List<Trail> lTrail = trailDao.allTrail();
-        assertEquals(newTrail.getName(), lTrail.get(0).getName());
+        long idTrail = trailDao.addTrail(newTrail);
+        Trail trailRetrieve = trailDao.trail(idTrail);
+        assertEquals(newTrail.getName(), trailRetrieve.getName());
     }
 
     @Test
@@ -47,29 +56,72 @@ public class TrailDaoLocalTest {
         assertEquals(newTrail2.getName(), lTrail.get(1).getName());
     }
 
-    // TODO Ajouter un avec registration pour comparer
-  /*  @Test
+    @Test
     @Transactional(TransactionMode.ROLLBACK)
-    public void itShouldBePossibleToRetreiveTrailWithoutRegistration() throws DuplicateKeyException, SQLException {
-        Trail newTrail = new Trail("name",200,300, "description",20, "20-11-2020");
-        trailDao.addTrail(newTrail);
-        List<Trail> lTrail = trailDao.allTrailToComeWithNoReg(0);
-        assertEquals(newTrail.getName(), lTrail.get(0).getName());
-    }*/
+    public void itShouldBePossibleToRetriveTrailWithPagination() throws DuplicateKeyException, SQLException {
+        String name = "name";
+        for(int i = 1; i < 6; i++) {
+            name += i;
+            Trail newTrail = new Trail(name, 200, 300, "description", "20-11-2020");
+            trailDao.addTrail(newTrail);
+            name = name.substring(0,4);
+        }
+        List<Trail> lTrail = trailDao.allTrailPagination(1,2);
+        assertEquals(lTrail.get(0).getName(),"name1");
+        assertEquals(lTrail.get(1).getName(),"name2");
+        List<Trail> lTrail2 = trailDao.allTrailPagination(2,2);
+        assertEquals(lTrail2.get(0).getName(),"name3");
+        assertEquals(lTrail2.get(1).getName(),"name4");
+    }
+
 
     @Test
     @Transactional(TransactionMode.ROLLBACK)
-    public void itShouldBePossibleToRetrieveATrail() throws DuplicateKeyException, SQLException {
+    public void itShouldBePossibleToRetreiveAndCountTrailWithoutRegistration() throws DuplicateKeyException, SQLException {
         Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail);
-        List<Trail> lTrail = trailDao.allTrail();
-        Trail retrieveTrail = trailDao.trail(lTrail.get(0).getId());
-        assertEquals(newTrail.getName(), retrieveTrail.getName());
+        Trail newTrail2 = new Trail("name2",200,300, "description", "20-11-2020");
+        long idTrail2 = trailDao.addTrail(newTrail2);
+        User lio = new User("lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
+        long idUser = userDao.addUser(lio);
+        Registration reg = new Registration(userDao.user(idUser), trailDao.trail(idTrail2));
+        regDao.addReg(reg);
+        List<Trail> lTrail = trailDao.allTrailToComeWithNoReg(idUser);
+        assertEquals(newTrail.getName(), lTrail.get(0).getName());
+        assertEquals(lTrail.size(),1);
+        assertEquals(trailDao.getNumberOfTrailsToComeWithNoReg(idUser),1);
     }
 
     @Test
     @Transactional(TransactionMode.ROLLBACK)
-    public void itShouldBePossibleToCountTrail() throws DuplicateKeyException, SQLException {
+    public void itShouldBePossibleToRetriveTrailWithPaginationAndWithoutRegistration() throws DuplicateKeyException, SQLException {
+        Trail TrailWithReg = new Trail("name",200,300, "description", "20-11-2020");
+        long idTrailWithReg = trailDao.addTrail(TrailWithReg);
+        String name = "name";
+        for(int i = 1; i < 6; i++) {
+            name += i;
+            Trail newTrail = new Trail(name, 200, 300, "description", "20-11-2020");
+            trailDao.addTrail(newTrail);
+            name = name.substring(0,4);
+        }
+        User lio = new User("lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
+        long idUser = userDao.addUser(lio);
+        Registration reg = new Registration(userDao.user(idUser), trailDao.trail(idTrailWithReg));
+        regDao.addReg(reg);
+
+        // We can see that we don't take the first create trail because he has a registration
+        List<Trail> lTrail = trailDao.allTrailToComeWithNoRegPagination(idUser,1,5);
+        assertEquals(lTrail.get(0).getName(),"name1");
+        assertEquals(lTrail.get(1).getName(),"name2");
+        assertEquals(lTrail.get(2).getName(),"name3");
+        assertEquals(lTrail.get(3).getName(),"name4");
+        assertEquals(lTrail.get(4).getName(),"name5");
+        assertEquals(lTrail.size(),5);
+    }
+
+    @Test
+    @Transactional(TransactionMode.ROLLBACK)
+    public void itShouldBePossibleToCountTrails() throws DuplicateKeyException, SQLException {
         Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail);
         Trail newTrail2 = new Trail("name2",200,300, "description", "20-11-2020");
@@ -81,29 +133,21 @@ public class TrailDaoLocalTest {
     @Transactional(TransactionMode.ROLLBACK)
     public void itShouldBePossibleToUpdateATrail() throws DuplicateKeyException, SQLException {
         Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
-        trailDao.addTrail(newTrail);
-        List<Trail> lTrail = trailDao.allTrail();
-        long id = lTrail.get(0).getId();
-        Trail updateTrail = new Trail(id,"name2",newTrail.getDistance(),newTrail.getUpAndDown(),newTrail.getDescription(), newTrail.getDate());
+        long idTrail = trailDao.addTrail(newTrail);
+        Trail updateTrail = new Trail(idTrail,"name2",newTrail.getDistance(),newTrail.getUpAndDown(),newTrail.getDescription(), newTrail.getDate());
         trailDao.updateTrail(updateTrail);
-        String nameUpdate = trailDao.trail(id).getName();
-        assertEquals("name2",nameUpdate);
+        assertEquals("name2",trailDao.trail(idTrail).getName());
     }
 
     @Test
-    @Transactional(TransactionMode.ROLLBACK)
+    @Transactional(TransactionMode.COMMIT)
     public void itShouldBePossibleToDeleteATrail() throws DuplicateKeyException, SQLException {
         Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
-        trailDao.addTrail(newTrail);
-        List<Trail> lTrail = trailDao.allTrail();
-        long id = lTrail.get(0).getId();
-        assertNotNull(trailDao.trail(id));
-        trailDao.deleteTrail(id);
-        assertNull(trailDao.trail(id));
+        long idTrail = trailDao.addTrail(newTrail);
+        assertNotNull(trailDao.trail(idTrail));
+        trailDao.deleteTrail(idTrail);
+        assertNull(trailDao.trail(idTrail));
     }
 
-
-
-    // TODO TESTER findTrail Demander Lio
 
 }

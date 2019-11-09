@@ -26,22 +26,15 @@ public class UsersDaoLocalTest {
     @EJB
     UsersDaoLocal usersDao;
 
-    @Test
-    @Transactional(TransactionMode.ROLLBACK)
-    public void itShouldBePossibleToCreateAUser() throws DuplicateKeyException, SQLException {
-
-        User lio = new User(0,"lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
-        usersDao.addUser(lio);
-    }
 
     @Test
     @Transactional(TransactionMode.ROLLBACK)
     public void itShouldBePossibleToCreateAndRetrieveAUserViaTheUsersDAO() throws DuplicateKeyException {
 
         User lio = new User("lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
-        usersDao.addUser(lio);
-        User lioLoaded = usersDao.connect("amt@amt.ch", "lionel");
-        assertEquals(lio.getEmail(), lioLoaded.getEmail());
+        long idLio = usersDao.addUser(lio);
+        User lioRetrieve = usersDao.user(idLio);
+        assertEquals(lio.getEmail(), lioRetrieve.getEmail());
     }
 
 
@@ -49,11 +42,10 @@ public class UsersDaoLocalTest {
   @Transactional(TransactionMode.COMMIT)
     public void itShouldBePossibleToDeleteAUser() throws DuplicateKeyException{
         User gui = new User("Guillaume", "Blanco", "19-06-1994", "gui@amt.ch", "guillaume");
-        usersDao.addUser(gui);
-        User connectUser = usersDao.connect("gui@amt.ch","guillaume");
-        assertNotNull(usersDao.user(connectUser.getId()));
-        usersDao.deleteUser(connectUser.getId());
-        assertNull(usersDao.user(connectUser.getId()));
+        long idGui = usersDao.addUser(gui);
+        assertNotNull(usersDao.user(idGui));
+        usersDao.deleteUser(idGui);
+        assertNull(usersDao.user(idGui));
     }
 
     @Test
@@ -61,8 +53,7 @@ public class UsersDaoLocalTest {
     public void itShouldBePossibleToConnectAUser() throws DuplicateKeyException{
         User gui = new User("Guillaume", "Blanco", "19-06-1994", "gui@co.ch", "guillaume");
         usersDao.addUser(gui);
-        User connectUser;
-        connectUser = usersDao.connect("gui@co.ch","guillaume");
+        User connectUser = usersDao.connect("gui@co.ch","guillaume");
         assertNotNull(usersDao.user(connectUser.getId()));
         assertEquals("Guillaume",connectUser.getFirstName());
     }
@@ -73,11 +64,10 @@ public class UsersDaoLocalTest {
     public void itShouldBePossibleToUpdateAUser() throws DuplicateKeyException {
 
         User lio = new User("lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
-        usersDao.addUser(lio);
-        User lioLoaded = usersDao.connect("amt@amt.ch", "lionel");
-        User newLio = new User(lioLoaded.getId(),"lio",lioLoaded.getLastName(), lioLoaded.getDateOfBirth(), lioLoaded.getEmail(), lioLoaded.getPassword());
+        long idLio = usersDao.addUser(lio);
+        User newLio = new User(idLio,"lio",lio.getLastName(), lio.getDateOfBirth(), lio.getEmail(), lio.getPassword());
         usersDao.updateUser(newLio);
-        User lioModified = usersDao.user(lioLoaded.getId());
+        User lioModified = usersDao.user(idLio);
         assertEquals(lio.getEmail(), lioModified.getEmail());
         assertNotEquals(lio.getFirstName(), lioModified.getFirstName());
     }

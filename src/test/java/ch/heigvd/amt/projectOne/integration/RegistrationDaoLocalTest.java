@@ -35,29 +35,12 @@ public class RegistrationDaoLocalTest {
 
     @Test
     @Transactional(TransactionMode.ROLLBACK)
-    public void itShouldBePossibleToCreateARegistration() throws DuplicateKeyException, SQLException {
-        User lio = new User(0,"lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
-        userDao.addUser(lio);
-        Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
-        trailDao.addTrail(newTrail);
-        List<Trail> lTrail = trailDao.allTrail();
-        User lioLoaded = userDao.connect("amt@amt.ch", "lionel");
-        Registration reg = new Registration(lioLoaded,lTrail.get(0));
-        regDao.addReg(reg);
-    }
-
-    @Test
-    @Transactional(TransactionMode.ROLLBACK)
     public void itShouldBePossibleToCreateAndRetrieveARegistration() throws DuplicateKeyException, SQLException {
         User lio = new User(0,"lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
-        userDao.addUser(lio);
+        long idUser = userDao.addUser(lio);
         Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
-        trailDao.addTrail(newTrail);
-        List<Trail> lTrail = trailDao.allTrail();
-        User lioLoaded = userDao.connect("amt@amt.ch", "lionel");
-        long idTrail = lTrail.get(0).getId();
-        long idUser = lioLoaded.getId();
-        Registration reg = new Registration(lioLoaded,lTrail.get(0));
+        long idTrail = trailDao.addTrail(newTrail);
+        Registration reg = new Registration(userDao.user(idUser),trailDao.trail(idTrail));
         regDao.addReg(reg);
         Registration retrReg = regDao.registration(idUser,idTrail);
         assertEquals(retrReg.getUser().getFirstName(),lio.getFirstName());
@@ -65,25 +48,71 @@ public class RegistrationDaoLocalTest {
 
     @Test
     @Transactional(TransactionMode.ROLLBACK)
-    public void itShouldBePossibleToRetrieveAllRegOfOneUser() throws DuplicateKeyException, SQLException {
+    public void itShouldBePossibleToRetrieveAndCountAllRegOfOneUser() throws DuplicateKeyException, SQLException {
         User lio = new User(0,"lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
-        userDao.addUser(lio);
+        long idLio = userDao.addUser(lio);
         User gui = new User(0,"lionel","burgbacher", "05-03-1989", "gui@amt.ch", "lionel");
-        userDao.addUser(gui);
+        long idGui = userDao.addUser(gui);
         Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
-        trailDao.addTrail(newTrail);
+        long idTrail1 = trailDao.addTrail(newTrail);
         Trail newTrail2 = new Trail("name2",200,300, "description", "20-11-2020");
-        trailDao.addTrail(newTrail2);
-        List<Trail> lTrail = trailDao.allTrail();
-        User lioLoaded = userDao.connect("amt@amt.ch", "lionel");
-        User guiLoaded = userDao.connect("gui@amt.ch", "lionel");
-        Registration reg = new Registration(lioLoaded,lTrail.get(0));
-        Registration reg2 = new Registration(lioLoaded,lTrail.get(1));
-        Registration reg3 = new Registration(guiLoaded,lTrail.get(1));
+        long idTrail2 = trailDao.addTrail(newTrail2);
+        Registration reg = new Registration(userDao.user(idLio),trailDao.trail(idTrail1));
+        Registration reg2 = new Registration(userDao.user(idLio),trailDao.trail(idTrail2));
+        Registration reg3 = new Registration(userDao.user(idGui),trailDao.trail(idTrail2));
         regDao.addReg(reg);
         regDao.addReg(reg2);
         regDao.addReg(reg3);
-        List<Registration> lReg = regDao.allRegUser(lioLoaded.getId());
+        List<Registration> lReg = regDao.allRegUser(idLio);
+        assertEquals(lReg.get(0).getUser().getFirstName(),lio.getFirstName());
+        assertEquals(lReg.get(1).getUser().getFirstName(),lio.getFirstName());
+        assertEquals(lReg.size(),2);
+        assertEquals(regDao.getNumberOfRegsUser(idLio),2);
+        assertEquals(regDao.getNumberOfRegsUser(idGui),1);
+    }
+
+    @Test
+    @Transactional(TransactionMode.ROLLBACK)
+    public void itShouldBePossibleToRetrieveAndCountAllRegOfOneTrail() throws DuplicateKeyException, SQLException {
+        User lio = new User(0,"lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
+        long idLio = userDao.addUser(lio);
+        User gui = new User(0,"lionel","burgbacher", "05-03-1989", "gui@amt.ch", "lionel");
+        long idGui = userDao.addUser(gui);
+        Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
+        long idTrail1 = trailDao.addTrail(newTrail);
+        Trail newTrail2 = new Trail("name2",200,300, "description", "20-11-2020");
+        long idTrail2 = trailDao.addTrail(newTrail2);
+        Registration reg = new Registration(userDao.user(idLio),trailDao.trail(idTrail1));
+        Registration reg2 = new Registration(userDao.user(idLio),trailDao.trail(idTrail2));
+        Registration reg3 = new Registration(userDao.user(idGui),trailDao.trail(idTrail2));
+        regDao.addReg(reg);
+        regDao.addReg(reg2);
+        regDao.addReg(reg3);
+        List<Registration> lReg = regDao.allRegTrail(idTrail1);
+        assertEquals(lReg.get(0).getTrail().getName(),newTrail.getName());
+        assertEquals(lReg.size(),1);
+        assertEquals(regDao.getNumberOfRegsTrail(idTrail1),1);
+        assertEquals(regDao.getNumberOfRegsTrail(idTrail2),2);
+    }
+
+    @Test
+    @Transactional(TransactionMode.ROLLBACK)
+    public void itShouldBePossibleToRetrieveAllRegOfOneUserWithPagination() throws DuplicateKeyException, SQLException {
+        User lio = new User(0,"lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
+        long idLio = userDao.addUser(lio);
+        User gui = new User(0,"lionel","burgbacher", "05-03-1989", "gui@amt.ch", "lionel");
+        long idGui = userDao.addUser(gui);
+        Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
+        long idTrail1 = trailDao.addTrail(newTrail);
+        Trail newTrail2 = new Trail("name2",200,300, "description", "20-11-2020");
+        long idTrail2 = trailDao.addTrail(newTrail2);
+        Registration reg = new Registration(userDao.user(idLio),trailDao.trail(idTrail1));
+        Registration reg2 = new Registration(userDao.user(idLio),trailDao.trail(idTrail2));
+        Registration reg3 = new Registration(userDao.user(idGui),trailDao.trail(idTrail2));
+        regDao.addReg(reg);
+        regDao.addReg(reg3);
+        regDao.addReg(reg2);
+        List<Registration> lReg = regDao.allRegUserPagination(idLio,1,2);
         assertEquals(lReg.get(0).getUser().getFirstName(),lio.getFirstName());
         assertEquals(lReg.get(1).getUser().getFirstName(),lio.getFirstName());
         assertEquals(lReg.size(),2);
@@ -91,45 +120,37 @@ public class RegistrationDaoLocalTest {
 
     @Test
     @Transactional(TransactionMode.ROLLBACK)
-    public void itShouldBePossibleToRetrieveAllRegOfOneTrail() throws DuplicateKeyException, SQLException {
+    public void itShouldBePossibleToRetrieveAllRegOfOneTrailWithPagination() throws DuplicateKeyException, SQLException {
         User lio = new User(0,"lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
-        userDao.addUser(lio);
+        long idLio = userDao.addUser(lio);
         User gui = new User(0,"lionel","burgbacher", "05-03-1989", "gui@amt.ch", "lionel");
-        userDao.addUser(gui);
+        long idGui = userDao.addUser(gui);
         Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
-        trailDao.addTrail(newTrail);
+        long idTrail1 = trailDao.addTrail(newTrail);
         Trail newTrail2 = new Trail("name2",200,300, "description", "20-11-2020");
-        trailDao.addTrail(newTrail2);
-        List<Trail> lTrail = trailDao.allTrail();
-        User lioLoaded = userDao.connect("amt@amt.ch", "lionel");
-        User guiLoaded = userDao.connect("gui@amt.ch", "lionel");
-        Registration reg = new Registration(lioLoaded,lTrail.get(0));
-        Registration reg2 = new Registration(lioLoaded,lTrail.get(1));
-        Registration reg3 = new Registration(guiLoaded,lTrail.get(1));
+        long idTrail2 = trailDao.addTrail(newTrail2);
+        Registration reg = new Registration(userDao.user(idLio),trailDao.trail(idTrail1));
+        Registration reg2 = new Registration(userDao.user(idLio),trailDao.trail(idTrail2));
+        Registration reg3 = new Registration(userDao.user(idGui),trailDao.trail(idTrail2));
         regDao.addReg(reg);
         regDao.addReg(reg2);
         regDao.addReg(reg3);
-        List<Registration> lReg = regDao.allRegTrail(lTrail.get(0).getId());
-        assertEquals(lReg.get(0).getTrail().getName(),lTrail.get(0).getName());
+        List<Registration> lReg = regDao.allRegTrailPagination(idTrail1,1,2);
+        assertEquals(lReg.get(0).getTrail().getName(),newTrail.getName());
         assertEquals(lReg.size(),1);
     }
 
     @Test
-    //@Transactional(TransactionMode.ROLLBACK)
+    @Transactional(TransactionMode.ROLLBACK)
     public void itShouldBePossibleToDeleteARegistration() throws DuplicateKeyException, SQLException {
         User lio = new User(0,"lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
-        userDao.addUser(lio);
+        long idUser = userDao.addUser(lio);
         Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
-        trailDao.addTrail(newTrail);
-        List<Trail> lTrail = trailDao.allTrail();
-        User lioLoaded = userDao.connect("amt@amt.ch", "lionel");
-        long idTrail = lTrail.get(0).getId();
-        long idUser = lioLoaded.getId();
-        Registration reg = new Registration(lioLoaded,lTrail.get(0));
+        long idTrail = trailDao.addTrail(newTrail);
+        Registration reg = new Registration(userDao.user(idUser),trailDao.trail(idTrail));
         regDao.addReg(reg);
-        Registration retrReg = regDao.registration(idUser,idTrail);
-        assertNotNull(retrReg);
-        regDao.deleteReg(retrReg.getId());
-        assertNull(retrReg);
+        assertNotNull(regDao.registration(idUser,idTrail));
+        regDao.deleteReg(regDao.registration(idUser,idTrail).getId());
+        assertNull(regDao.registration(idUser,idTrail));
     }
 }
