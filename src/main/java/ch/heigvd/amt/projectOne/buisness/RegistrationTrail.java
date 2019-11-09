@@ -53,7 +53,6 @@ public class RegistrationTrail {
             setError(DATE, e.getMessage() );
         }
 
-
         if (errors.isEmpty() ) {
             long id = -1;
             id = trailDao.addTrail(new Trail(name, distance, upAndDown, description, date));

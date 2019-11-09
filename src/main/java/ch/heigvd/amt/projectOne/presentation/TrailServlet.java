@@ -42,13 +42,7 @@ public class TrailServlet extends HttpServlet {
 
             int rows = trailDao.getNumberOfTrailsToComeWithNoReg(user.getId());
 
-            int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
-
-            if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
-                numberOfPages++;
-            }
-
-            req.setAttribute("noOfPages", numberOfPages);
+            req.setAttribute("noOfPages", getNumberPages(rows));
             req.setAttribute("currentPage", currentPage);
             req.setAttribute("trailPerPage", Consts.ELEMENT_PER_PAGE);
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,16 +66,9 @@ public class TrailServlet extends HttpServlet {
             //WITH PAGINATION
             List<Trail> trails = trailDao.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
 
-
             int rows = trailDao.getNumberOfTrails();
 
-            int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
-
-            if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
-                numberOfPages++;
-            }
-
-            req.setAttribute("noOfPages", numberOfPages);
+            req.setAttribute("noOfPages", getNumberPages(rows));
             req.setAttribute("currentPage", currentPage);
             req.setAttribute("trailPerPage", Consts.ELEMENT_PER_PAGE);
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,5 +98,16 @@ public class TrailServlet extends HttpServlet {
             req.setAttribute("error", registrationTrail);
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
         }
+    }
+
+    private int getNumberPages(int rows){
+
+        int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
+
+        if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
+            numberOfPages++;
+        }
+
+        return  numberOfPages;
     }
 }

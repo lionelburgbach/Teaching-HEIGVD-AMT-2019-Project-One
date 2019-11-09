@@ -5,7 +5,6 @@ import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.utils.Crypto;
 import ch.heigvd.amt.projectOne.utils.DateFormat;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;

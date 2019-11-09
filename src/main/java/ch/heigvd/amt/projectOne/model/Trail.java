@@ -14,11 +14,6 @@ public class Trail {
 
     public Trail(long id, String name, double length, double upAndDown, String description, String date){
 
-        if(upAndDown < 0 || length < 0){
-
-            throw new IllegalArgumentException("Distance or UpAndDown should be positive!");
-        }
-
         this.id = id;
         this.name = name;
         this.distance = length;
@@ -29,11 +24,6 @@ public class Trail {
 
 
     public Trail(String name, double length, double upAndDown, String description, String date){
-
-        if(upAndDown < 0 || length < 0){
-
-            throw new IllegalArgumentException("Distance or UpAndDown should be positive!");
-        }
 
         this.name = name;
         this.distance = length;
