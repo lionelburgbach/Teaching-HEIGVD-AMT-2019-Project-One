@@ -63,6 +63,13 @@ public class RegistrationUser {
             setError(DATE, e.getMessage() );
         }
 
+        try {
+            existEmail(email);
+        }
+        catch ( Exception e ) {
+            setError(EMAIL, e.getMessage() );
+        }
+
         if (errors.isEmpty() ) {
             user = new User(firstname, lastname, date, email, Crypto.getCryptoHash(password));
             long id = userDao.addUser(user);
@@ -109,6 +116,16 @@ public class RegistrationUser {
         if ( email != null ) {
             if ( !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
                 throw new Exception( "You should use a valide Email" );
+            }
+        } else {
+            throw new Exception( "At least write something..." );
+        }
+    }
+
+    private void existEmail(String email ) throws Exception {
+        if ( email != null ) {
+            if (userDao.exist(email)){
+                throw new Exception( "The email already exist!" );
             }
         } else {
             throw new Exception( "At least write something..." );
