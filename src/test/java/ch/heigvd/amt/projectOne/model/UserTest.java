@@ -8,11 +8,7 @@ class UserTest {
 
   @Test
   void itShouldBePossibleToCreateUsers() {
-    User gBlanco = User.builder()
-      .firstName("Guillaume")
-      .lastName("Blanco")
-      .email("guitch@blanco.com")
-      .build();
+    User gBlanco = User.builder().firstName("Guillaume").lastName("Blanco").email("guitch@blanco.com").build();
     assertNotNull(gBlanco);
     assertEquals("Guillaume", gBlanco.getFirstName());
   }

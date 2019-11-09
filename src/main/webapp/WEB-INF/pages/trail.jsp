@@ -21,7 +21,52 @@
 
   <% if (session.getAttribute("user") != null){ %>
   <div class="wrapper" id="addTrail" style="padding-bottom: 50px;">
-    <button onclick="addTrail()" class="btn btn-outline-warning">Add Trail</button>
+    <div class="container" style="color: white; max-width: 500px;">
+      <form method="post" action="${pageContext.request.contextPath}/trail">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
+        </div>
+        <div class="form-group">
+          <c:choose>
+            <c:when test="${not empty error.errors['distance']}">
+              <label style="color: red;">${error.errors['distance']}</label>
+            </c:when>
+            <c:otherwise>
+              <label for="distance">Distance</label>
+            </c:otherwise>
+          </c:choose>
+          <input type="text" class="form-control" name="distance" id="distance" placeholder="Distance" required>
+        </div>
+        <div class="form-group">
+          <c:choose>
+            <c:when test="${not empty error.errors['upAndDown']}">
+              <label style="color: red;">${error.errors['upAndDown']}</label>
+            </c:when>
+            <c:otherwise>
+              <label for="upAndDown">Up and Down</label>
+            </c:otherwise>
+          </c:choose>
+          <input type="text" class="form-control" name="upAndDown" id="upAndDown" placeholder="Up and Down(sum)" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea type="text" class="form-control" name="description" id="description" placeholder="Description" required></textarea>
+        </div>
+        <div class="form-group">
+          <c:choose>
+            <c:when test="${not empty error.errors['date']}">
+              <label style="color: red;">${error.errors['date']}</label>
+            </c:when>
+            <c:otherwise>
+              <label for="date">Date</label>
+            </c:otherwise>
+          </c:choose>
+          <input type="text" class="form-control" name="date" id="date" placeholder="Date" required>
+        </div>
+        <button type="submit" class="btn btn-outline-warning">Add Trail</button>
+      </form>
+    </div>
   </div>
   <% } %>
 
@@ -35,7 +80,6 @@
           <th scope="col">Up and Down</th>
           <th scope="col">Description</th>
           <th scope="col">Date</th>
-          <th scope="col">Places Left</th>
           <th scope="col">Registration</th>
           <th scope="col">Who is in?</th>
         </tr>
@@ -48,7 +92,6 @@
             <td style="white-space: nowrap;">${trail.upAndDown} M</td>
             <td>${trail.description}</td>
             <td style="white-space: nowrap;">${trail.date}</td>
-            <td>${trail.capacity - trail.nbIn}</td>
             <form method="post" action="${pageContext.request.contextPath}/user/registration?action=enroll">
               <td><button type="submit" name ="trail_id" value="${trail.id}" class="btn btn-outline-warning">Enroll Me</button></td>
             </form>
@@ -143,40 +186,6 @@
 
 <!-- Custom scripts for this template -->
 <script src="./grayscale/js/grayscale.min.js"></script>
-
-<script>
-  function addTrail() {
-    document.getElementById("addTrail").innerHTML ='<div class="container" style="color: white; max-width: 500px;">\n' +
-            '    <form method="post" action="${pageContext.request.contextPath}/trail">\n' +
-            '      <div class="form-group">\n' +
-            '        <label for="name">Name</label>\n' +
-            '        <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>\n' +
-            '      </div>\n' +
-            '      <div class="form-group">\n' +
-            '        <label for="lastName">Distance</label>\n' +
-            '        <input type="text" class="form-control" name="distance" id="distance" placeholder="Distance" required>\n' +
-            '      </div>\n' +
-            '      <div class="form-group">\n' +
-            '        <label for="upAndDown">Up and Down</label>\n' +
-            '        <input type="text" class="form-control" name="upAndDown" id="upAndDown" placeholder="Up and Down(sum)" required>\n' +
-            '      </div>\n' +
-            '      <div class="form-group">\n' +
-            '        <label for="description">Description</label>\n' +
-            '        <textarea type="text" class="form-control" name="description" id="description" placeholder="Description" required></textarea>\n' +
-            '      </div>\n' +
-            '      <div class="form-group">\n' +
-            '        <label for="date">Date</label>\n' +
-            '        <input type="text" class="form-control" name="date" id="date" placeholder="Date" required>\n' +
-            '      </div>\n' +
-            '      <div class="form-group">\n' +
-            '        <label for="capacity">Capacity</label>\n' +
-            '        <input type="text" class="form-control" name="capacity" id="capacity" placeholder="Capacity" required>\n' +
-            '      </div>\n' +
-            '      <button type="submit" class="btn btn-outline-warning">Add Trail</button>\n' +
-            '    </form>\n' +
-            '  </div>'
-  }
-</script>
 
 </body>
 

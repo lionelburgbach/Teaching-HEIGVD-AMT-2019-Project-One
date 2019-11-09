@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="include/head.jsp" />
 
 <body id="page-top">
@@ -15,17 +16,17 @@
               <img src="./grayscale/img/pict.jpg" style="width:400px;" class="img-fluid" alt="">
             </div>
             <div style="padding-top: 20px;">
-              <form method="post" action="" enctype="multipart/form-data">
+              <form method="post" action="${pageContext.request.contextPath}/user/profile?action=picture" enctype="multipart/form-data">
                 <div class="custom-file" style="width: 400px;">
                   <input type="file" class="custom-file-input" id="customFile">
                   <label class="custom-file-label" for="customFile">File</label>
-                  <button type="submit" class="btn btn-outline-warning" value="updatePerson">Update</button>
+                  <button type="submit" class="btn btn-outline-warning" value="profile_picture">Update</button>
                 </div>
               </form>
             </div>
           </div>
           <div class="text-white col-sm" style="padding-bottom: 40px; width: 400px;">
-            <form method="post" action="${pageContext.request.contextPath}/user/profile">
+            <form method="post" action="${pageContext.request.contextPath}/user/profile?action=user">
               <div class="form-group">
                 <label for="firstName">Firstname</label>
                 <input type="text" class="form-control" id="firstName" name="firstname" aria-describedby="emailHelp" value="${user.firstName}">
@@ -35,7 +36,14 @@
                 <input type="text" class="form-control" id="lastName" name="lastname" value="${user.lastName}">
               </div>
               <div class="form-group">
-                <label for="dateOfBirth">Date of Birth</label>
+                <c:choose>
+                  <c:when test="${not empty error.errors['date']}">
+                    <label style="color: red;">${error.errors['date']}</label>
+                  </c:when>
+                  <c:otherwise>
+                    <label for="dateOfBirth">Date of Birth</label>
+                  </c:otherwise>
+                </c:choose>
                 <input type="text" class="form-control" id="dateOfBirth" name="date" value="${user.dateOfBirth}">
               </div>
               <div class="form-group">

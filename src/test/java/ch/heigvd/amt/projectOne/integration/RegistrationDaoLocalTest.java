@@ -38,7 +38,7 @@ public class RegistrationDaoLocalTest {
     public void itShouldBePossibleToCreateARegistration() throws DuplicateKeyException, SQLException {
         User lio = new User(0,"lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
         userDao.addUser(lio);
-        Trail newTrail = new Trail("name",200,300, "description",20, "20-11-2020");
+        Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail);
         List<Trail> lTrail = trailDao.allTrail();
         User lioLoaded = userDao.connect("amt@amt.ch", "lionel");
@@ -51,7 +51,7 @@ public class RegistrationDaoLocalTest {
     public void itShouldBePossibleToCreateAndRetrieveARegistration() throws DuplicateKeyException, SQLException {
         User lio = new User(0,"lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
         userDao.addUser(lio);
-        Trail newTrail = new Trail("name",200,300, "description",20, "20-11-2020");
+        Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail);
         List<Trail> lTrail = trailDao.allTrail();
         User lioLoaded = userDao.connect("amt@amt.ch", "lionel");
@@ -70,9 +70,9 @@ public class RegistrationDaoLocalTest {
         userDao.addUser(lio);
         User gui = new User(0,"lionel","burgbacher", "05-03-1989", "gui@amt.ch", "lionel");
         userDao.addUser(gui);
-        Trail newTrail = new Trail("name",200,300, "description",20, "20-11-2020");
+        Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail);
-        Trail newTrail2 = new Trail("name2",200,300, "description",20, "20-11-2020");
+        Trail newTrail2 = new Trail("name2",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail2);
         List<Trail> lTrail = trailDao.allTrail();
         User lioLoaded = userDao.connect("amt@amt.ch", "lionel");
@@ -96,9 +96,9 @@ public class RegistrationDaoLocalTest {
         userDao.addUser(lio);
         User gui = new User(0,"lionel","burgbacher", "05-03-1989", "gui@amt.ch", "lionel");
         userDao.addUser(gui);
-        Trail newTrail = new Trail("name",200,300, "description",20, "20-11-2020");
+        Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail);
-        Trail newTrail2 = new Trail("name2",200,300, "description",20, "20-11-2020");
+        Trail newTrail2 = new Trail("name2",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail2);
         List<Trail> lTrail = trailDao.allTrail();
         User lioLoaded = userDao.connect("amt@amt.ch", "lionel");
@@ -119,7 +119,7 @@ public class RegistrationDaoLocalTest {
     public void itShouldBePossibleToDeleteARegistration() throws DuplicateKeyException, SQLException {
         User lio = new User(0,"lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
         userDao.addUser(lio);
-        Trail newTrail = new Trail("name",200,300, "description",20, "20-11-2020");
+        Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
         trailDao.addTrail(newTrail);
         List<Trail> lTrail = trailDao.allTrail();
         User lioLoaded = userDao.connect("amt@amt.ch", "lionel");

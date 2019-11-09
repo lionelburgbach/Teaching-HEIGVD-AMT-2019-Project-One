@@ -33,7 +33,6 @@ public class RegistrationServlet extends HttpServlet {
 
             Trail trail = trailDao.trail(Integer.parseInt(req.getParameter("trail_id")));
             long id = registrationDao.addReg(new Registration(user, trail));
-            //TODO IF THER IS A PROBLEME
         }
         else if (action.equals("delReg")) {
 

@@ -36,16 +36,9 @@ public class HomeServlet extends HttpServlet {
         //WITH PAGINATION
         List<Registration> regs = regDao.allRegUserPagination(user.getId(), currentPage, Consts.ELEMENT_PER_PAGE);
 
-
         int rows = regDao.getNumberOfRegsUser(user.getId());
 
-        int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
-
-        if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
-            numberOfPages++;
-        }
-
-        req.setAttribute("noOfPages", numberOfPages);
+        req.setAttribute("noOfPages", getNumberPages(rows));
         req.setAttribute("currentPage", currentPage);
         req.setAttribute("trailPerPage", Consts.ELEMENT_PER_PAGE);
         //////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,5 +46,16 @@ public class HomeServlet extends HttpServlet {
         //List<Registration> regs = regDao.allRegUser(user.getId());
         req.setAttribute("regs", regs);
         req.getRequestDispatcher(Consts.JSP_HOME).forward(req, resp);
+    }
+
+    private int getNumberPages(int rows){
+
+        int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
+
+        if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
+            numberOfPages++;
+        }
+
+        return  numberOfPages;
     }
 }

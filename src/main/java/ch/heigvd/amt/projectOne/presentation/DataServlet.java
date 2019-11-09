@@ -44,6 +44,7 @@ public class DataServlet extends HttpServlet {
                 ///////////////////////////////////////////////////////////////////////////////////////////////
 
                 int currentPage = 1;
+
                 if(req.getParameter("currentPage") != null){
                     currentPage = Integer.valueOf(req.getParameter("currentPage"));
                 }
@@ -53,13 +54,7 @@ public class DataServlet extends HttpServlet {
 
                 int rows = registrationDao.getNumberOfRegsTrail(id);
 
-                int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
-
-                if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
-                    numberOfPages++;
-                }
-
-                req.setAttribute("noOfPages", numberOfPages);
+                req.setAttribute("noOfPages", getNumberPages(rows));
                 req.setAttribute("currentPage", currentPage);
                 req.setAttribute("trailPerPage", Consts.ELEMENT_PER_PAGE);
                 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,16 +83,9 @@ public class DataServlet extends HttpServlet {
             //WITH PAHINATION
             List<Registration> regs = registrationDao.allRegUserPagination(id, currentPage, Consts.ELEMENT_PER_PAGE);
 
-
             int rows = registrationDao.getNumberOfRegsUser(id);
 
-            int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
-
-            if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
-                numberOfPages++;
-            }
-
-            req.setAttribute("noOfPages", numberOfPages);
+            req.setAttribute("noOfPages", getNumberPages(rows));
             req.setAttribute("currentPage", currentPage);
             req.setAttribute("trailPerPage", Consts.ELEMENT_PER_PAGE);
             //////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,6 +94,16 @@ public class DataServlet extends HttpServlet {
             req.setAttribute("regs", regs);
             req.getRequestDispatcher(Consts.JSP_DATA_USER).forward(req, resp);
         }
+    }
 
+    private int getNumberPages(int rows){
+
+        int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
+
+        if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
+            numberOfPages++;
+        }
+
+        return  numberOfPages;
     }
 }

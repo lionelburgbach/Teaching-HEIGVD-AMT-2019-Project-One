@@ -12,6 +12,7 @@ public interface UsersDaoLocal {
     User user(long id);
     long addUser(User user);
     boolean updateUser(User user);
-    boolean updatePictureUser(long id, InputStream profile_picture);
+    boolean updatePictureUser(long id, InputStream profilePicture);
     boolean deleteUser(long id);
+    boolean exist(String email);
 }

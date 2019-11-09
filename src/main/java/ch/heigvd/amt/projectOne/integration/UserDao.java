@@ -131,8 +131,22 @@ public class UserDao implements UsersDaoLocal {
     }
 
     @Override
-    public boolean updatePictureUser(long id, InputStream profile_picture) {
-        return false;
+    public boolean updatePictureUser(long id, InputStream profilePicture) {
+
+        int rs = 0;
+
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE user SET profile_picture=? WHERE id=?;");
+            pstmt.setObject(1, profilePicture);
+            pstmt.setObject(2, id);
+            rs = pstmt.executeUpdate();
+            connection.close();
+        }catch (SQLException ex){
+
+            LOG.log(Level.SEVERE, null, ex);
+        }
+        return (rs == 1);
     }
 
     //DELETE
@@ -153,4 +167,26 @@ public class UserDao implements UsersDaoLocal {
         }
         return (rs == 1);
     }
+
+    @Override
+    public boolean exist(String email) {
+
+        int numOfRows = 0;
+
+        try{
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS exist FROM user WHERE email=?;");
+            pstmt.setObject(1, email);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next())
+                numOfRows=rs.getInt("exist");
+            connection.close();
+        }catch (SQLException ex){
+
+            LOG.log(Level.SEVERE, null, ex);
+        }
+
+        return (numOfRows==1);
+    }
+
 }

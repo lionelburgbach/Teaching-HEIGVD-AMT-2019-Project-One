@@ -205,9 +205,6 @@ public class RegistrationDao implements RegistrationDaoLocal {
 
         long id = -1;
 
-        //TODO
-        //if(this.registration(reg.getUser().getId(), reg.getTrail().getId()) == null){
-
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO registration (id_user_fk, id_trail_fk) VALUES (?, ?);", Statement.RETURN_GENERATED_KEYS);
@@ -223,14 +220,6 @@ public class RegistrationDao implements RegistrationDaoLocal {
 
             LOG.log(Level.SEVERE, null, ex);
         }
-            /*
-        }
-        else{
-
-            //TODO if the registration already exist
-            return -1;
-        }
-             */
         return id;
     }
 
