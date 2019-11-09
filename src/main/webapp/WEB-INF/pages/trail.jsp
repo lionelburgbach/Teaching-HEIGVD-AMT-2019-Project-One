@@ -21,55 +21,59 @@
 
   <% if (session.getAttribute("user") != null){ %>
   <div class="wrapper" id="addTrail" style="padding-bottom: 50px;">
-    <div class="container" style="color: white; max-width: 500px;">
-      <form method="post" action="${pageContext.request.contextPath}/trail">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
+    <c:if test="${currentPage eq 1}">
+        <div class="container" style="color: white; max-width: 500px;">
+          <form method="post" action="${pageContext.request.contextPath}/trail">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+              <c:choose>
+                <c:when test="${not empty error.errors['distance']}">
+                  <label style="color: red;">${error.errors['distance']}</label>
+                </c:when>
+                <c:otherwise>
+                  <label for="distance">Distance</label>
+                </c:otherwise>
+              </c:choose>
+              <input type="text" class="form-control" name="distance" id="distance" placeholder="Distance" required>
+            </div>
+            <div class="form-group">
+              <c:choose>
+                <c:when test="${not empty error.errors['upAndDown']}">
+                  <label style="color: red;">${error.errors['upAndDown']}</label>
+                </c:when>
+                <c:otherwise>
+                  <label for="upAndDown">Up and Down</label>
+                </c:otherwise>
+              </c:choose>
+              <input type="text" class="form-control" name="upAndDown" id="upAndDown" placeholder="Up and Down(sum)" required>
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea type="text" class="form-control" name="description" id="description" placeholder="Description" required></textarea>
+            </div>
+            <div class="form-group">
+              <c:choose>
+                <c:when test="${not empty error.errors['date']}">
+                  <label style="color: red;">${error.errors['date']}</label>
+                </c:when>
+                <c:otherwise>
+                  <label for="date">Date</label>
+                </c:otherwise>
+              </c:choose>
+              <input type="text" class="form-control" name="date" id="date" placeholder="Date" required>
+            </div>
+            <button type="submit" class="btn btn-outline-warning">Add Trail</button>
+          </form>
         </div>
-        <div class="form-group">
-          <c:choose>
-            <c:when test="${not empty error.errors['distance']}">
-              <label style="color: red;">${error.errors['distance']}</label>
-            </c:when>
-            <c:otherwise>
-              <label for="distance">Distance</label>
-            </c:otherwise>
-          </c:choose>
-          <input type="text" class="form-control" name="distance" id="distance" placeholder="Distance" required>
-        </div>
-        <div class="form-group">
-          <c:choose>
-            <c:when test="${not empty error.errors['upAndDown']}">
-              <label style="color: red;">${error.errors['upAndDown']}</label>
-            </c:when>
-            <c:otherwise>
-              <label for="upAndDown">Up and Down</label>
-            </c:otherwise>
-          </c:choose>
-          <input type="text" class="form-control" name="upAndDown" id="upAndDown" placeholder="Up and Down(sum)" required>
-        </div>
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea type="text" class="form-control" name="description" id="description" placeholder="Description" required></textarea>
-        </div>
-        <div class="form-group">
-          <c:choose>
-            <c:when test="${not empty error.errors['date']}">
-              <label style="color: red;">${error.errors['date']}</label>
-            </c:when>
-            <c:otherwise>
-              <label for="date">Date</label>
-            </c:otherwise>
-          </c:choose>
-          <input type="text" class="form-control" name="date" id="date" placeholder="Date" required>
-        </div>
-        <button type="submit" class="btn btn-outline-warning">Add Trail</button>
-      </form>
-    </div>
+    </c:if>
   </div>
   <% } %>
 
+<c:choose>
+  <c:when test="${empty fail}">
   <div class="container" style="color: white;">
     <div class="table-responsive">
       <table class="table table-dark">
@@ -114,7 +118,7 @@
           </c:if>
 
           <c:choose>
-            <c:when test="${noOfPages le 30}">
+            <c:when test="${noOfPages le nbelem}">
 
               <c:forEach begin="1" end="${noOfPages}" var="i">
                 <c:choose>
@@ -173,6 +177,8 @@
       </nav>
     </div>
   </div>
+  </c:when>
+</c:choose>
 </section>
 
 <jsp:include page="include/footer.jsp" />

@@ -33,9 +33,15 @@ public class Identification {
         String password = getValue(req, PASSWORD);
 
         try {
-            valide(email, password);
+            valideEmail(email);
         } catch (Exception e){
             setError(EMAIL, e.getMessage() );
+        }
+
+        try {
+            valide(email, password);
+        } catch (Exception e){
+            setError(PASSWORD, e.getMessage() );
         }
 
         if (errors.isEmpty()) {
@@ -49,7 +55,8 @@ public class Identification {
         String value = request.getParameter(fieldName);
         if ( value == null || value.trim().length() == 0 ) {
             return null;
-        } else {
+        }
+        else {
             return value.trim();
         }
     }
@@ -62,9 +69,22 @@ public class Identification {
 
         if (password != null && email != null ) {
             if(userDao.connect(email, Crypto.getCryptoHash(password)) == null) {
-                throw new Exception("Wrong Email or Password.");
+                throw new Exception("Hum, try again.");
             }
-        }else {
+        }
+        else {
+            throw new Exception( "At least write something..." );
+        }
+    }
+
+    private void valideEmail(String email) throws Exception {
+
+        if (email != null ) {
+            if(!userDao.exist(email)) {
+                throw new Exception("This email doesn't exist.");
+            }
+        }
+        else {
             throw new Exception( "At least write something..." );
         }
     }
