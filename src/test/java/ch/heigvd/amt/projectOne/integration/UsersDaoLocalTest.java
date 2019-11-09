@@ -7,13 +7,10 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.transaction.api.annotation.TransactionMode;
 import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.junit.Test;
-import org.junit.jupiter.api.Tag;
 import org.junit.runner.RunWith;
 
 import javax.ejb.DuplicateKeyException;
 import javax.ejb.EJB;
-import java.sql.SQLException;
-import java.util.logging.Level;
 
 import static org.junit.Assert.*;
 
