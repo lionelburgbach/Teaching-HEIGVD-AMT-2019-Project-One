@@ -19,5 +19,4 @@ public class Registration {
         this.user = user;
         this.trail = trail;
     }
-
 }

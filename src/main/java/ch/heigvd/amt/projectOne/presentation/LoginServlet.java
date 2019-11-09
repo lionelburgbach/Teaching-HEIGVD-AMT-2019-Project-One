@@ -1,10 +1,10 @@
 package ch.heigvd.amt.projectOne.presentation;
 
+import ch.heigvd.amt.projectOne.buisness.Identification;
+import ch.heigvd.amt.projectOne.buisness.RegistrationUser;
 import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.utils.Consts;
-import ch.heigvd.amt.projectOne.utils.Crypto;
 import ch.heigvd.amt.projectOne.integration.UsersDaoLocal;
-import ch.heigvd.amt.projectOne.utils.DateFormat;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.ParseException;
 
 @WebServlet(urlPatterns = Consts.SERVLET_LOGIN)
 public class LoginServlet extends HttpServlet {
@@ -30,6 +29,10 @@ public class LoginServlet extends HttpServlet {
         if(action.equals("login")) {
 
             req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
+        }
+        if(action.equals("register")) {
+
+            req.getRequestDispatcher(Consts.JSP_REGISTER).forward(req, resp);
         }
         else if(action.equals("logout")){
 
@@ -49,51 +52,39 @@ public class LoginServlet extends HttpServlet {
 
         if(action.equals("login")) {
 
-            String email = req.getParameter("email");
-            String password = req.getParameter("password");
-
-            password = Crypto.getCryptoHash(password);
-            user = userDao.connect(email, password);
+            Identification ident = new Identification(userDao);
+            user = ident.login(req);
 
             if (user != null) {
                 session.setAttribute("user", user);
                 resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
-            } else {
+            }
+            else {
                 req.getSession().removeAttribute("user");
-                req.setAttribute("error", "Wrong password or email!");
+                req.setAttribute("error", ident);
                 req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
             }
         }
         else if(action.equals("registration")){
 
-            String firstName = req.getParameter("firstname");
-            String lastName = req.getParameter("lastname");
-            String date = req.getParameter("date");
-            String email = req.getParameter("email");
-            String password = req.getParameter("password");
+            RegistrationUser newUser = new RegistrationUser(userDao);
+            user = newUser.registrationUser(req);
 
-            password = Crypto.getCryptoHash(password);
+            if(user != null){
 
-            boolean d = DateFormat.correctFormatDate(date);
-            if(!d){
-                req.setAttribute("errorDate", "Wrong Date Format");
-                req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
+                req.setAttribute("regUser", newUser);
+                session.setAttribute("user", user);
+                resp.sendRedirect(req.getContextPath() + Consts.SERVLET_TRAIL);
             }
             else {
 
-                User newUser = new User(firstName, lastName, date, email, password);
-
-                long id = userDao.addUser(newUser);
-
-                if (id != -1) {
-                    user = userDao.user(id);
-                    session.setAttribute("user", user);
-                    resp.sendRedirect(req.getContextPath() + Consts.SERVLET_TRAIL);
-                } else {
-                    req.getSession().removeAttribute("user");
-                    req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
-                }
+                req.setAttribute( "error", newUser );
+                req.getRequestDispatcher(Consts.JSP_REGISTER).forward(req, resp);
             }
+
+        } else {
+            req.getSession().removeAttribute("user");
+            req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
         }
     }
 }

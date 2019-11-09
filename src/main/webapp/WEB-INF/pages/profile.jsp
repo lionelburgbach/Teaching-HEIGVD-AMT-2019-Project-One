@@ -10,14 +10,6 @@
   <div class="container d-flex h-100 align-items-center">
     <div class="mx-auto text-center">
       <div class="container">
-        <c:choose>
-          <c:when test="${not empty errorDate}">
-            <c:set var="e" value="${error}" />
-            <div style="font-size: 20px; color: red; text-align: center">
-              <p>Wrong Date Format!</p>
-            </div>
-          </c:when>
-        </c:choose>
         <div class="row">
           <div class="text-white col-sm" style="padding-top: 30px;">
             <div>
@@ -44,7 +36,14 @@
                 <input type="text" class="form-control" id="lastName" name="lastname" value="${user.lastName}">
               </div>
               <div class="form-group">
-                <label for="dateOfBirth">Date of Birth</label>
+                <c:choose>
+                  <c:when test="${not empty error.errors['date']}">
+                    <label style="color: red;">${error.errors['date']}</label>
+                  </c:when>
+                  <c:otherwise>
+                    <label for="dateOfBirth">Date of Birth</label>
+                  </c:otherwise>
+                </c:choose>
                 <input type="text" class="form-control" id="dateOfBirth" name="date" value="${user.dateOfBirth}">
               </div>
               <div class="form-group">

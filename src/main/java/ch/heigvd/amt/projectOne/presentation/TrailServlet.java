@@ -1,24 +1,23 @@
 package ch.heigvd.amt.projectOne.presentation;
 
+import ch.heigvd.amt.projectOne.buisness.RegistrationTrail;
 import ch.heigvd.amt.projectOne.model.Trail;
 import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.integration.TrailDaoLocal;
 import ch.heigvd.amt.projectOne.utils.Consts;
-import ch.heigvd.amt.projectOne.utils.DateFormat;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 
 @WebServlet(urlPatterns = Consts.SERVLET_TRAIL)
 public class TrailServlet extends HttpServlet {
 
     @EJB
-    TrailDaoLocal trailManager;
+    TrailDaoLocal trailDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,9 +38,9 @@ public class TrailServlet extends HttpServlet {
             }
 
             //WITH PAGINATION
-            List<Trail> trails = trailManager.allTrailToComeWithNoRegPagination(user.getId(), currentPage, Consts.ELEMENT_PER_PAGE);
+            List<Trail> trails = trailDao.allTrailToComeWithNoRegPagination(user.getId(), currentPage, Consts.ELEMENT_PER_PAGE);
 
-            int rows = trailManager.getNumberOfTrailsToComeWithNoReg(user.getId());
+            int rows = trailDao.getNumberOfTrailsToComeWithNoReg(user.getId());
 
             int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
 
@@ -71,10 +70,10 @@ public class TrailServlet extends HttpServlet {
             }
 
             //WITH PAGINATION
-            List<Trail> trails = trailManager.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
+            List<Trail> trails = trailDao.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
 
 
-            int rows = trailManager.getNumberOfTrails();
+            int rows = trailDao.getNumberOfTrails();
 
             int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
 
@@ -98,31 +97,19 @@ public class TrailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String name = req.getParameter("name");
-        double distance = Double.parseDouble(req.getParameter("distance"));
-        double upAndDown = Double.parseDouble(req.getParameter("upAndDown"));
-        String description = req.getParameter("description");
-        String date = req.getParameter("date");
+        RegistrationTrail registrationTrail = new RegistrationTrail(trailDao);
 
-        boolean d = DateFormat.correctFormatDate(date);
-        //TODO controle
-        try {
-            d = DateFormat.possibleDate(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        boolean res = registrationTrail.registrationTrail(req);
 
-        if(!d){
-            req.setAttribute("errorDate", "Wrong Date Format");
-            req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
+        if(res){
+
+            resp.setContentType("text/html;charset=UTF-8");
+            resp.sendRedirect(req.getContextPath() + Consts.SERVLET_TRAIL);
         }
         else {
 
-            if (trailManager.addTrail(new Trail(name, distance, upAndDown, description, date)) != -1) {
-
-                resp.setContentType("text/html;charset=UTF-8");
-                resp.sendRedirect(req.getContextPath() + Consts.SERVLET_TRAIL);
-            }
+            req.setAttribute("error", registrationTrail);
+            req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
         }
     }
 }
