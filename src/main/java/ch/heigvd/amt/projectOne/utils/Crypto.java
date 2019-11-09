@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException;
 public class Crypto {
 
     public static String getCryptoHash(String input) {
+
         try {
             MessageDigest msgDigest = MessageDigest.getInstance("SHA-512");
             byte[] inputDigest = msgDigest.digest(input.getBytes());
@@ -16,8 +17,7 @@ public class Crypto {
                 hashtext = "0" + hashtext;
             }
             return hashtext;
-        }
-        catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
     }

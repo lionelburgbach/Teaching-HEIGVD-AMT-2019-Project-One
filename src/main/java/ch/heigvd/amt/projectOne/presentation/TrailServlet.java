@@ -27,7 +27,7 @@ public class TrailServlet extends HttpServlet {
         resp.setContentType("text/html;charset=UTF-8");
 
         int currentPage = 1;
-        if(req.getParameter(Consts.CURRENT_PAGE) != null){
+        if (req.getParameter(Consts.CURRENT_PAGE) != null){
             currentPage = Integer.valueOf(req.getParameter(Consts.CURRENT_PAGE));
         }
 
@@ -49,8 +49,8 @@ public class TrailServlet extends HttpServlet {
 
             req.setAttribute("trails", trails);
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
-        }
-        else {
+
+        } else {
 
             //LIST WITH PAGINATION
             List<Trail> trails = trailDao.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
@@ -76,12 +76,12 @@ public class TrailServlet extends HttpServlet {
 
         boolean res = registrationTrail.registrationTrail(req);
 
-        if(res){
+        if (res){
 
             resp.setContentType("text/html;charset=UTF-8");
             resp.sendRedirect(req.getContextPath() + Consts.SERVLET_TRAIL);
-        }
-        else {
+
+        } else {
 
             req.setAttribute("error", registrationTrail);
             req.setAttribute(Consts.CURRENT_PAGE, 1);

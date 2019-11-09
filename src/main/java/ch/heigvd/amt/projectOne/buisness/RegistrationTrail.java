@@ -88,8 +88,7 @@ public class RegistrationTrail {
         if ( date != null ) {
             if (!DateFormat.correctFormatDate(date)) {
                 throw new Exception( "It should be dd-mm-yyyy" );
-            }
-            else if(!DateFormat.possibleDate(date)) {
+            } else if(!DateFormat.possibleDate(date)) {
                 throw new Exception( "Time travel ? nice" );
             }
         }

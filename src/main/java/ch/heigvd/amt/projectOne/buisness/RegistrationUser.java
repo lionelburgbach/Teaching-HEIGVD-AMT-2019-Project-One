@@ -94,7 +94,7 @@ public class RegistrationUser {
 
     private void validationPassword( String password, String confirmation ) throws Exception {
         if ( password != null && confirmation != null ) {
-            if ( !password.equals( confirmation ) ) {
+            if (!password.equals( confirmation ) ) {
                 throw new Exception( "There is something different here." );
             }
         } else {
@@ -106,6 +106,8 @@ public class RegistrationUser {
         if ( date != null ) {
             if (!DateFormat.correctFormatDate(date)) {
                 throw new Exception( "It should be dd-mm-yyyy" );
+            } else if (!DateFormat.futurDate(date)) {
+                throw new Exception( "Nice to meet someone from the future" );
             }
         } else {
             throw new Exception( "You are not that old! You can lie you know..." );

@@ -9,8 +9,6 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Stateless
 public class TrailDao implements TrailDaoLocal {
@@ -18,15 +16,14 @@ public class TrailDao implements TrailDaoLocal {
     @Resource(lookup = "java:/jdbc/sakila")
     private DataSource dataSource;
 
-    private static final Logger LOG = Logger.getLogger(TrailDao.class.getName());
-
     //READ
     @Override
     public Trail trail(long id) {
 
+        Connection connection = null;
         Trail trail = null;
-        try{
-            Connection connection = dataSource.getConnection();
+        try {
+            connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail WHERE id=?;");
             pstmt.setObject(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -38,21 +35,24 @@ public class TrailDao implements TrailDaoLocal {
                 String date = rs.getString("date");
                 trail = new Trail(id, name, distance, upAndDown, description, DateFormat.mysqlToJava(date));
             }
-            connection.close();
-        }catch (SQLException ex){
-
-            LOG.log(Level.SEVERE, null, ex);
+            return trail;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Error(ex);
         }
-        return trail;
+        finally {
+            closeConnection(connection);
+        }
     }
 
     //READ
     @Override
     public List<Trail> allTrail() {
 
+        Connection connection = null;
         List<Trail> trails = new ArrayList<>();
-        try{
-            Connection connection = dataSource.getConnection();
+        try {
+            connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail ORDER BY date;");
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
@@ -64,43 +64,45 @@ public class TrailDao implements TrailDaoLocal {
                 String date = rs.getString("date");
                 trails.add(new Trail(id, name, distance, upAndDown, description, DateFormat.mysqlToJava(date)));
             }
-            connection.close();
-        }catch (SQLException ex){
-
-            LOG.log(Level.SEVERE, null, ex);
+            return trails;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Error(ex);
+        } finally {
+            closeConnection(connection);
         }
-        return trails;
     }
 
     @Override
     public int getNumberOfTrails() {
 
+        Connection connection = null;
         int numOfRows = 0;
-
-        try{
-            Connection connection = dataSource.getConnection();
+        try {
+            connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS total FROM trail;");
             ResultSet rs = pstmt.executeQuery();
-            while(rs.next())
-                numOfRows=rs.getInt("total");
-            connection.close();
-        }catch (SQLException ex){
-
-            LOG.log(Level.SEVERE, null, ex);
+            while(rs.next()) {
+                numOfRows = rs.getInt("total");
+            }
+            return numOfRows;
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Error(ex);
         }
-
-        return numOfRows;
+        finally {
+            closeConnection(connection);
+        }
     }
 
     @Override
     public List<Trail> allTrailPagination(int currentPage, int elementPerPage)  {
 
+        Connection connection = null;
         List<Trail> trails = new ArrayList<>();
-
         int start = currentPage * elementPerPage - elementPerPage;
-
-        try{
-            Connection connection = dataSource.getConnection();
+        try {
+            connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail ORDER BY date ASC LIMIT ?,?;");
             pstmt.setObject(1, start);
             pstmt.setObject(2, elementPerPage);
@@ -114,22 +116,23 @@ public class TrailDao implements TrailDaoLocal {
                 String date = rs.getString("date");
                 trails.add(new Trail(id, name, distance, upAndDown, description, DateFormat.mysqlToJava(date)));
             }
-            connection.close();
-        }catch (SQLException ex){
-
-            LOG.log(Level.SEVERE, null, ex);
+            return trails;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Error(ex);
+        } finally {
+            closeConnection(connection);
         }
-
-        return trails;
     }
 
     //READ
     @Override
     public List<Trail> allTrailToComeWithNoReg(long idUser) {
 
+        Connection connection = null;
         List<Trail> trails = new ArrayList<>();
-        try{
-            Connection connection = dataSource.getConnection();
+        try {
+            connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail WHERE id NOT IN (SELECT id_trail_fk FROM registration WHERE id_user_fk=?);");
             pstmt.setObject(1, idUser);
             ResultSet rs = pstmt.executeQuery();
@@ -142,44 +145,45 @@ public class TrailDao implements TrailDaoLocal {
                 String date = rs.getString("date");
                 trails.add(new Trail(id, name, distance, upAndDown, description, DateFormat.mysqlToJava(date)));
             }
-            connection.close();
-        }catch (SQLException ex){
-
-            LOG.log(Level.SEVERE, null, ex);
+            return trails;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Error(ex);
+        } finally {
+            closeConnection(connection);
         }
-        return trails;
     }
 
     @Override
     public int getNumberOfTrailsToComeWithNoReg(long idUser) {
 
+        Connection connection = null;
         int numOfRows = 0;
-
-        try{
-            Connection connection = dataSource.getConnection();
+        try {
+            connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS total FROM trail WHERE id NOT IN (SELECT id_trail_fk FROM registration WHERE id_user_fk=?);");
             pstmt.setObject(1, idUser);
             ResultSet rs = pstmt.executeQuery();
-            while(rs.next())
+            while(rs.next()) {
                 numOfRows = rs.getInt("total");
-            connection.close();
-        }catch (SQLException ex){
-
-            LOG.log(Level.SEVERE, null, ex);
+            }
+            return numOfRows;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Error(ex);
+        } finally {
+            closeConnection(connection);
         }
-
-        return numOfRows;
     }
 
     @Override
     public List<Trail> allTrailToComeWithNoRegPagination(long idUser, int currentPage, int elementPerPage) {
 
+        Connection connection = null;
         List<Trail> trails = new ArrayList<>();
-
         int start = currentPage * elementPerPage - elementPerPage;
-
-        try{
-            Connection connection = dataSource.getConnection();
+        try {
+            connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM trail WHERE id NOT IN (SELECT id_trail_fk FROM registration WHERE id_user_fk=?) ORDER BY date ASC LIMIT ?,?;");
             pstmt.setObject(1, idUser);
             pstmt.setObject(2, start);
@@ -194,24 +198,24 @@ public class TrailDao implements TrailDaoLocal {
                 String date = rs.getString("date");
                 trails.add(new Trail(id, name, distance, upAndDown, description, DateFormat.mysqlToJava(date)));
             }
-            connection.close();
-        }catch (SQLException ex){
-
-            LOG.log(Level.SEVERE, null, ex);
+            return trails;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Error(ex);
+        } finally {
+            closeConnection(connection);
         }
-        return trails;
     }
 
     //CREATE
     @Override
     public long addTrail(Trail trail) {
 
+        Connection connection = null;
         long id = -1;
-
         String date = DateFormat.javaToMysql(trail.getDate());
-
-        try{
-            Connection connection = dataSource.getConnection();
+        try {
+            connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO trail (name, length, up_and_down, description, date)\n" +
                     "VALUES (?, ?, ?, ?,?);", Statement.RETURN_GENERATED_KEYS);
             pstmt.setObject(1, trail.getName());
@@ -224,24 +228,24 @@ public class TrailDao implements TrailDaoLocal {
             if(rs.next()) {
                 id = rs.getLong(1);
             }
-            connection.close();
-        }catch (SQLException ex){
-
-            LOG.log(Level.SEVERE, null, ex);
+            return id;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Error(ex);
+        } finally {
+            closeConnection(connection);
         }
-        return id;
     }
 
 
     @Override
     public boolean updateTrail(Trail trail) {
 
+        Connection connection = null;
         int rs = 0;
-
         String date = DateFormat.javaToMysql(trail.getDate());
-
-        try{
-            Connection connection = dataSource.getConnection();
+        try {
+            connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("UPDATE trail SET name=?, length=?, up_and_down=?, description=?, date=? WHERE id=?;");
             pstmt.setObject(1, trail.getName());
             pstmt.setObject(2, trail.getDistance());
@@ -250,30 +254,40 @@ public class TrailDao implements TrailDaoLocal {
             pstmt.setObject(5, date);
             pstmt.setObject(6, trail.getId());
             rs = pstmt.executeUpdate();
-            connection.close();
-        }catch (SQLException ex){
-
-            LOG.log(Level.SEVERE, null, ex);
+            return (rs == 1);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Error(ex);
+        } finally {
+            closeConnection(connection);
         }
-        return (rs == 1);
     }
 
     //DELETE
     @Override
     public boolean deleteTrail(long id) {
 
+        Connection connection = null;
         int rs = 0;
-
-        try{
-            Connection connection = dataSource.getConnection();
+        try {
+            connection = dataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("DELETE FROM trail WHERE id=?;");
             pstmt.setObject(1, id);
             rs = pstmt.executeUpdate();
-            connection.close();
-        }catch (SQLException ex){
-
-            LOG.log(Level.SEVERE, null, ex);
+            return (rs == 1);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Error(ex);
+        } finally {
+            closeConnection(connection);
         }
-        return (rs == 1);
+    }
+
+    private void closeConnection(Connection connection) {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

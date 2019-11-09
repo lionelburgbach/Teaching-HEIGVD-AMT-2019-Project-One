@@ -26,15 +26,15 @@ public class LoginServlet extends HttpServlet {
 
         String action = req.getParameter("action");
 
-        if(action.equals("login")) {
+        if (action.equals("login")) {
 
             req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
         }
-        if(action.equals("register")) {
+        if (action.equals("register")) {
 
             req.getRequestDispatcher(Consts.JSP_REGISTER).forward(req, resp);
         }
-        else if(action.equals("logout")){
+        else if (action.equals("logout")){
 
             resp.setContentType("text/html;charset=UTF-8");
             req.getSession().invalidate();
@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
         User user = null;
         resp.setContentType("text/html;charset=UTF-8");
 
-        if(action.equals("login")) {
+        if (action.equals("login")) {
 
             Identification ident = new Identification(userDao);
             user = ident.login(req);
@@ -64,19 +64,19 @@ public class LoginServlet extends HttpServlet {
                 req.setAttribute("error", ident);
                 req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
             }
-        }
-        else if(action.equals("registration")){
+
+        } else if (action.equals("registration")){
 
             RegistrationUser newUser = new RegistrationUser(userDao);
             user = newUser.registrationUser(req);
 
-            if(user != null){
+            if (user != null){
 
                 req.setAttribute("regUser", newUser);
                 session.setAttribute("user", user);
                 resp.sendRedirect(req.getContextPath() + Consts.SERVLET_TRAIL);
-            }
-            else {
+
+            } else {
 
                 req.setAttribute( "error", newUser );
                 req.getRequestDispatcher(Consts.JSP_REGISTER).forward(req, resp);

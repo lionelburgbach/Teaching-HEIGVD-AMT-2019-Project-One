@@ -35,13 +35,13 @@ public class Identification {
         try {
             valideEmail(email);
         } catch (Exception e){
-            setError(EMAIL, e.getMessage() );
+            setError(EMAIL, e.getMessage());
         }
 
         try {
             valide(email, password);
         } catch (Exception e){
-            setError(PASSWORD, e.getMessage() );
+            setError(PASSWORD, e.getMessage());
         }
 
         if (errors.isEmpty()) {

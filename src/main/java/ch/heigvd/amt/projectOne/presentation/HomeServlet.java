@@ -27,7 +27,7 @@ public class HomeServlet extends HttpServlet {
         User user = (User)req.getSession().getAttribute("user");
 
         int currentPage = 1;
-        if(req.getParameter(Consts.CURRENT_PAGE) != null){
+        if (req.getParameter(Consts.CURRENT_PAGE) != null){
             currentPage = Integer.valueOf(req.getParameter(Consts.CURRENT_PAGE));
         }
 
