@@ -45,7 +45,7 @@ public class UpdateUser {
         try {
             validationDate(date);
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             setError(DATE, e.getMessage() );
         }
 

@@ -44,14 +44,14 @@ public class RegistrationUser {
         try {
             validationEmail( email );
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             setError(EMAIL, e.getMessage() );
         }
 
         try {
             validationPassword( password, confirmation );
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             setError(PASSWORD, e.getMessage() );
             setError(COMFIRMATION, e.getMessage() );
         }
@@ -59,14 +59,14 @@ public class RegistrationUser {
         try {
             validationDate(date);
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             setError(DATE, e.getMessage() );
         }
 
         try {
             existEmail(email);
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             setError(EMAIL, e.getMessage() );
         }
 

@@ -41,25 +41,25 @@ public class RegistrationTrail {
         try {
             validationDistance(distance);
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             setError(DISTANCE, e.getMessage() );
         }
 
         try {
             validationUpAndDown(upAndDown);
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             setError(UP_AND_DOWN, e.getMessage() );
         }
 
         try {
             validationDate(date);
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             setError(DATE, e.getMessage() );
         }
 
-        if (errors.isEmpty() ) {
+        if (errors.isEmpty()) {
             long id = -1;
             id = trailDao.addTrail(new Trail(name, distance, upAndDown, description, date));
 
