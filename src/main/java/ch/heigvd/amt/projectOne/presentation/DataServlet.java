@@ -5,6 +5,7 @@ import ch.heigvd.amt.projectOne.integration.RegistrationDaoLocal;
 import ch.heigvd.amt.projectOne.integration.TrailDaoLocal;
 import ch.heigvd.amt.projectOne.integration.UsersDaoLocal;
 import ch.heigvd.amt.projectOne.utils.Consts;
+import ch.heigvd.amt.projectOne.utils.Pagination;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -38,31 +39,27 @@ public class DataServlet extends HttpServlet {
             req.setAttribute("trail", trailDao.trail(id));
 
             List<Registration> reg = registrationDao.allRegTrail(id);
+
             if(reg.size() != 0) {
 
-                //PAGINTAION
-                ///////////////////////////////////////////////////////////////////////////////////////////////
-
                 int currentPage = 1;
-
-                if(req.getParameter("currentPage") != null){
-                    currentPage = Integer.valueOf(req.getParameter("currentPage"));
+                if(req.getParameter(Consts.CURRENT_PAGE) != null){
+                    currentPage = Integer.valueOf(req.getParameter(Consts.CURRENT_PAGE));
                 }
 
-                //WITH PAGINATION
                 List<Registration> regs = registrationDao.allRegTrailPagination(id, currentPage, Consts.ELEMENT_PER_PAGE);
 
                 int rows = registrationDao.getNumberOfRegsTrail(id);
 
-                req.setAttribute("noOfPages", getNumberPages(rows));
-                req.setAttribute("currentPage", currentPage);
-                req.setAttribute("trailPerPage", Consts.ELEMENT_PER_PAGE);
-                //////////////////////////////////////////////////////////////////////////////////////////////
+                req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows));
+                req.setAttribute(Consts.CURRENT_PAGE, currentPage);
+                req.setAttribute(Consts.ELEM_PER_PAGE_JSP, Consts.ELEMENT_PER_PAGE);
 
                 req.setAttribute("regs", regs);
                 req.getRequestDispatcher(Consts.JSP_DATA).forward(req, resp);
             }
             else{
+
                 req.setAttribute("error", "No register yet for this Trail!");
                 req.getRequestDispatcher(Consts.JSP_DATA).forward(req, resp);
             }
@@ -72,38 +69,20 @@ public class DataServlet extends HttpServlet {
             long id = Integer.parseInt(req.getParameter("id_user"));
             req.setAttribute("user", usersDao.user(id));
 
-            //PAGINTAION
-            ///////////////////////////////////////////////////////////////////////////////////////////////
-
             int currentPage = 1;
-            if(req.getParameter("currentPage") != null){
-                currentPage = Integer.valueOf(req.getParameter("currentPage"));
+            if(req.getParameter(Consts.CURRENT_PAGE) != null){
+                currentPage = Integer.valueOf(req.getParameter(Consts.CURRENT_PAGE));
             }
-
-            //WITH PAHINATION
             List<Registration> regs = registrationDao.allRegUserPagination(id, currentPage, Consts.ELEMENT_PER_PAGE);
 
             int rows = registrationDao.getNumberOfRegsUser(id);
 
-            req.setAttribute("noOfPages", getNumberPages(rows));
-            req.setAttribute("currentPage", currentPage);
-            req.setAttribute("trailPerPage", Consts.ELEMENT_PER_PAGE);
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
+            req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows));
+            req.setAttribute(Consts.CURRENT_PAGE, currentPage);
+            req.setAttribute(Consts.ELEM_PER_PAGE_JSP, Consts.ELEMENT_PER_PAGE);
 
             req.setAttribute("regs", regs);
             req.getRequestDispatcher(Consts.JSP_DATA_USER).forward(req, resp);
         }
-    }
-
-    private int getNumberPages(int rows){
-
-        int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
-
-        if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
-            numberOfPages++;
-        }
-
-        return  numberOfPages;
     }
 }

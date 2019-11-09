@@ -39,10 +39,16 @@ public class RegistrationTrail {
         String date = getValue( req, DATE);
 
         try {
-            validationDistanceAndUpAndDown(distance, upAndDown);
+            validationDistance(distance);
         }
         catch ( Exception e ) {
             setError(DISTANCE, e.getMessage() );
+        }
+
+        try {
+            validationUpAndDown(upAndDown);
+        }
+        catch ( Exception e ) {
             setError(UP_AND_DOWN, e.getMessage() );
         }
 
@@ -92,9 +98,15 @@ public class RegistrationTrail {
         }
     }
 
-    private void validationDistanceAndUpAndDown( double upAndDown, double distance ) throws Exception {
-        if (upAndDown < 0 || distance < 0 ) {
+    private void validationDistance( double distance ) throws Exception {
+        if (distance < 0 ) {
             throw new Exception( "You can run -2m, really ?" );
+        }
+    }
+
+    private void validationUpAndDown( double upAndDown) throws Exception {
+        if (upAndDown < 0) {
+            throw new Exception( "Do the correct Math plz" );
         }
     }
 }

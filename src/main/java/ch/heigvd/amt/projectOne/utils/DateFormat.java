@@ -7,7 +7,6 @@ import java.util.Date;
 
 public class DateFormat {
 
-
     public static boolean correctFormatDate(String date){
 
         return date.matches("^[0-9]{2}-[0-9]{2}-[0-9]{4}$");

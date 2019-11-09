@@ -4,6 +4,7 @@ import ch.heigvd.amt.projectOne.model.Registration;
 import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.integration.RegistrationDaoLocal;
 import ch.heigvd.amt.projectOne.utils.Consts;
+import ch.heigvd.amt.projectOne.utils.Pagination;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -25,37 +26,20 @@ public class HomeServlet extends HttpServlet {
 
         User user = (User)req.getSession().getAttribute("user");
 
-        //PAGINTAION
-        ///////////////////////////////////////////////////////////////////////////////////////////////
-
         int currentPage = 1;
-        if(req.getParameter("currentPage") != null){
-            currentPage = Integer.valueOf(req.getParameter("currentPage"));
+        if(req.getParameter(Consts.CURRENT_PAGE) != null){
+            currentPage = Integer.valueOf(req.getParameter(Consts.CURRENT_PAGE));
         }
 
-        //WITH PAGINATION
         List<Registration> regs = regDao.allRegUserPagination(user.getId(), currentPage, Consts.ELEMENT_PER_PAGE);
 
         int rows = regDao.getNumberOfRegsUser(user.getId());
 
-        req.setAttribute("noOfPages", getNumberPages(rows));
-        req.setAttribute("currentPage", currentPage);
-        req.setAttribute("trailPerPage", Consts.ELEMENT_PER_PAGE);
-        //////////////////////////////////////////////////////////////////////////////////////////////
+        req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows));
+        req.setAttribute(Consts.CURRENT_PAGE, currentPage);
+        req.setAttribute(Consts.ELEM_PER_PAGE_JSP, Consts.ELEMENT_PER_PAGE);
 
-        //List<Registration> regs = regDao.allRegUser(user.getId());
         req.setAttribute("regs", regs);
         req.getRequestDispatcher(Consts.JSP_HOME).forward(req, resp);
-    }
-
-    private int getNumberPages(int rows){
-
-        int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
-
-        if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
-            numberOfPages++;
-        }
-
-        return  numberOfPages;
     }
 }

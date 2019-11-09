@@ -17,7 +17,9 @@ public class Consts {
     public static final String SERVLET_PROFILE = "/user/profile";
     public static final String SERVLET_REGISTRATION = "/user/registration";
 
+
+    public static final String NO_OF_PAGES = "noOfPages";
+    public static final String CURRENT_PAGE = "currentPage";
+    public static final String ELEM_PER_PAGE_JSP  = "nbelem";
     public static final int ELEMENT_PER_PAGE = 30;
-
-
 }

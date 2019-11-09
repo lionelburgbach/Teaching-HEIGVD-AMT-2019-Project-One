@@ -61,8 +61,8 @@
                                     </c:choose>
                                     <input name="email" type="text" class="form-control" placeholder="Email">
                                     <c:choose>
-                                        <c:when test="${not empty error.errors['email']}">
-                                            <label style="color: red;">${error.errors['email']}</label>
+                                        <c:when test="${not empty error.errors['password']}">
+                                            <label style="color: red;">${error.errors['password']}</label>
                                         </c:when>
                                         <c:otherwise>
                                             <label>Password</label>

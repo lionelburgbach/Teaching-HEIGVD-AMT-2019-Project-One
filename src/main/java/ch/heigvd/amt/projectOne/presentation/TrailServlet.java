@@ -5,6 +5,7 @@ import ch.heigvd.amt.projectOne.model.Trail;
 import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.integration.TrailDaoLocal;
 import ch.heigvd.amt.projectOne.utils.Consts;
+import ch.heigvd.amt.projectOne.utils.Pagination;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -25,56 +26,35 @@ public class TrailServlet extends HttpServlet {
         HttpSession session = req.getSession();
         resp.setContentType("text/html;charset=UTF-8");
 
+        int currentPage = 1;
+        if(req.getParameter(Consts.CURRENT_PAGE) != null){
+            currentPage = Integer.valueOf(req.getParameter(Consts.CURRENT_PAGE));
+        }
+
         if (session.getAttribute("user") != null) {
 
             User user = (User) req.getSession().getAttribute("user");
 
-            //PAGINTAION
-            ///////////////////////////////////////////////////////////////////////////////////////////////
-
-            int currentPage = 1;
-            if(req.getParameter("currentPage") != null){
-                currentPage = Integer.valueOf(req.getParameter("currentPage"));
-            }
-
-            //WITH PAGINATION
             List<Trail> trails = trailDao.allTrailToComeWithNoRegPagination(user.getId(), currentPage, Consts.ELEMENT_PER_PAGE);
 
             int rows = trailDao.getNumberOfTrailsToComeWithNoReg(user.getId());
 
-            req.setAttribute("noOfPages", getNumberPages(rows));
-            req.setAttribute("currentPage", currentPage);
-            req.setAttribute("trailPerPage", Consts.ELEMENT_PER_PAGE);
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            //WITHOUT PAGINATION
-            //List<Trail> trails = trailManager.allTrailToComeWithNoReg(user.getId());
+            req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows));
+            req.setAttribute(Consts.CURRENT_PAGE, currentPage);
+            req.setAttribute(Consts.ELEM_PER_PAGE_JSP, Consts.ELEMENT_PER_PAGE);
 
             req.setAttribute("trails", trails);
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
         }
         else {
 
-            //PAGINTAION
-            ///////////////////////////////////////////////////////////////////////////////////////////////
-
-            int currentPage = 1;
-            if(req.getParameter("currentPage") != null){
-                currentPage = Integer.valueOf(req.getParameter("currentPage"));
-            }
-
-            //WITH PAGINATION
             List<Trail> trails = trailDao.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
 
             int rows = trailDao.getNumberOfTrails();
 
-            req.setAttribute("noOfPages", getNumberPages(rows));
-            req.setAttribute("currentPage", currentPage);
-            req.setAttribute("trailPerPage", Consts.ELEMENT_PER_PAGE);
-            //////////////////////////////////////////////////////////////////////////////////////////////
-
-            //WITHOUT PAGINATION
-            //List<Trail> trails = trailManager.allTrail();
+            req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows));
+            req.setAttribute(Consts.CURRENT_PAGE, currentPage);
+            req.setAttribute(Consts.ELEM_PER_PAGE_JSP , Consts.ELEMENT_PER_PAGE);
 
             req.setAttribute("trails", trails);
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
@@ -96,18 +76,9 @@ public class TrailServlet extends HttpServlet {
         else {
 
             req.setAttribute("error", registrationTrail);
+            req.setAttribute(Consts.CURRENT_PAGE, 1);
+            req.setAttribute("fail", "falg");
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
         }
-    }
-
-    private int getNumberPages(int rows){
-
-        int numberOfPages = rows / Consts.ELEMENT_PER_PAGE;
-
-        if (numberOfPages % Consts.ELEMENT_PER_PAGE > 0) {
-            numberOfPages++;
-        }
-
-        return  numberOfPages;
     }
 }
