@@ -17,11 +17,19 @@ public class DateFormat {
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Date now = Calendar.getInstance().getTime();
         String dateS = format.format(now);
-
         Date date1 = format.parse(date);
         Date date2 = format.parse(dateS);
-
         return date1.compareTo(date2) > 0;
+    }
+
+    public static boolean futurDate(String date) throws ParseException {
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Date now = Calendar.getInstance().getTime();
+        String dateS = format.format(now);
+        Date date1 = format.parse(date);
+        Date date2 = format.parse(dateS);
+        return date1.compareTo(date2) < 0;
     }
 
 
@@ -31,7 +39,6 @@ public class DateFormat {
         String year = s[0];
         String month = s[1];
         String day = s[2];
-
         return day+"-"+month+"-"+year;
     }
 
@@ -41,7 +48,6 @@ public class DateFormat {
         String year = s[2];
         String month = s[1];
         String day = s[0];
-
         return year+"-"+month+"-"+day;
     }
 }

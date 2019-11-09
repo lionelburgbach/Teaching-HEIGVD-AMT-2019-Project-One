@@ -44,14 +44,14 @@ public class RegistrationUser {
         try {
             validationEmail( email );
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             setError(EMAIL, e.getMessage() );
         }
 
         try {
             validationPassword( password, confirmation );
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             setError(PASSWORD, e.getMessage() );
             setError(COMFIRMATION, e.getMessage() );
         }
@@ -59,14 +59,14 @@ public class RegistrationUser {
         try {
             validationDate(date);
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             setError(DATE, e.getMessage() );
         }
 
         try {
             existEmail(email);
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             setError(EMAIL, e.getMessage() );
         }
 
@@ -94,7 +94,7 @@ public class RegistrationUser {
 
     private void validationPassword( String password, String confirmation ) throws Exception {
         if ( password != null && confirmation != null ) {
-            if ( !password.equals( confirmation ) ) {
+            if (!password.equals( confirmation ) ) {
                 throw new Exception( "There is something different here." );
             }
         } else {
@@ -106,6 +106,8 @@ public class RegistrationUser {
         if ( date != null ) {
             if (!DateFormat.correctFormatDate(date)) {
                 throw new Exception( "It should be dd-mm-yyyy" );
+            } else if (!DateFormat.futurDate(date)) {
+                throw new Exception( "Nice to meet someone from the future" );
             }
         } else {
             throw new Exception( "You are not that old! You can lie you know..." );

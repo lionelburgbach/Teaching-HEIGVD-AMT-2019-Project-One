@@ -30,8 +30,6 @@ public class UpdateUser {
 
     public boolean updateUser(HttpServletRequest req, String email, String password, long id){
 
-        boolean res = false;
-
         String firstname = getValue(req, FIRSTNAME);
         String lastname = getValue(req, LASTNAME);
         String date = getValue(req, DATE);
@@ -47,16 +45,16 @@ public class UpdateUser {
         try {
             validationDate(date);
         }
-        catch ( Exception e ) {
+        catch (Exception e) {
             setError(DATE, e.getMessage() );
         }
 
         if (errors.isEmpty() ) {
 
             User user = new User(id, firstname, lastname, date, email, newPassword);
-            res = userDao.updateUser(user);
+            userDao.updateUser(user);
         }
-        return res;
+        return (errors.size()==0);
     }
 
     private void setError(String champ, String message ) {
@@ -76,6 +74,8 @@ public class UpdateUser {
         if ( date != null ) {
             if (!DateFormat.correctFormatDate(date)) {
                 throw new Exception( "It should be dd-mm-yyyy" );
+            } else if (!DateFormat.futurDate(date)) {
+                throw new Exception( "Nice to meet someone from the future" );
             }
         } else {
             throw new Exception( "You are not that old! You can lie you know..." );

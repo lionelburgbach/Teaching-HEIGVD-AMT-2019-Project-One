@@ -7,11 +7,14 @@ import ch.heigvd.amt.projectOne.integration.UsersDaoLocal;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.io.InputStream;
 
 @WebServlet(urlPatterns = Consts.SERVLET_PROFILE)
+@MultipartConfig(maxFileSize = 16177215)
 public class ProfileServlet extends HttpServlet {
 
     @EJB
@@ -37,17 +40,28 @@ public class ProfileServlet extends HttpServlet {
             UpdateUser updateUser = new UpdateUser(userDao);
             ok = updateUser.updateUser(req, user.getEmail(), user.getPassword(), user.getId());
 
-            if(ok){
+            if (ok){
                 session.setAttribute("user", userDao.user(user.getId()));
                 req.getRequestDispatcher(Consts.JSP_PROFILE).forward(req, resp);
-            }
-            else{
+
+            } else{
                 req.setAttribute("error", updateUser);
                 req.getRequestDispatcher(Consts.JSP_PROFILE).forward(req, resp);
             }
+
+        } else if(action.equals("picture")){
+
+            InputStream inputStream = null;
+
+            Part filePart = req.getPart("photo");
+            if (filePart != null) {
+
+                inputStream = filePart.getInputStream();
+                userDao.updatePictureUser(user.getId(), inputStream);
+
+                resp.sendRedirect(req.getContextPath() + Consts.SERVLET_PROFILE);
+            }
         }
-        //TODO PITCURE
-        else if(action.equals("picture")){}
     }
 
 }

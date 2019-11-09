@@ -13,9 +13,9 @@
             <div class="container">
                 <div class="row">
                     <div class="text-white col-sm" style="padding-top: 30px;">
-                        <img src="./grayscale/img/pict.jpg" style="width:400px;" class="img-fluid" alt="">
+                        <img src="./grayscale/img/pict.jpg" style="width:400px; height: auto;" class="img-fluid" alt="">
                     </div>
-                    <div class="text-white col-sm" style="padding-bottom: 40px; width: 400px;">
+                    <div class="text-white col-sm" style="padding-bottom: 40px; padding-top:30px; width: 400px;">
                         <div class="form-group">
                             <label for="firstName">Firstname</label>
                             <input type="text" class="form-control" id="firstName" name="firstname" aria-describedby="emailHelp" value="${user.firstName}" disabled>
@@ -28,7 +28,7 @@
                             <label for="dateOfBirth">Date of Birth</label>
                             <input type="text" class="form-control" id="dateOfBirth" name="date" value="${user.dateOfBirth}" disabled>
                         </div>
-                        <div style="font-size: large;"><p>And More if you Scroll!</p></div>
+                        <div style="font-size: large; color: #B33C12"><p>And More if you Scroll!</p></div>
                     </div>
                 </div>
             </div>
