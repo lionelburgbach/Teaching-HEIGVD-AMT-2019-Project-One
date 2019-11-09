@@ -35,7 +35,7 @@ public class HomeServlet extends HttpServlet {
 
         int rows = regDao.getNumberOfRegsUser(user.getId());
 
-        req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows));
+        req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows, Consts.ELEMENT_PER_PAGE));
         req.setAttribute(Consts.CURRENT_PAGE, currentPage);
         req.setAttribute(Consts.ELEM_PER_PAGE_JSP, Consts.ELEMENT_PER_PAGE);
 

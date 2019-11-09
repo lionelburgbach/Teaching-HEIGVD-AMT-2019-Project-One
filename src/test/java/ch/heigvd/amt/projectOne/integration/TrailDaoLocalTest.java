@@ -33,7 +33,6 @@ public class TrailDaoLocalTest {
     @EJB
     RegistrationDaoLocal regDao;
 
-
     @Test
     @Transactional(TransactionMode.ROLLBACK)
     public void itShouldBePossibleToCreateAndRetrieveASpecificTrail() throws DuplicateKeyException, SQLException {
@@ -147,6 +146,4 @@ public class TrailDaoLocalTest {
         trailDao.deleteTrail(idTrail);
         assertNull(trailDao.trail(idTrail));
     }
-
-
 }
