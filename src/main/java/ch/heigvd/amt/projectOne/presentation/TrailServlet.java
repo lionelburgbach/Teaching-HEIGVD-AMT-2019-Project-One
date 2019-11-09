@@ -35,6 +35,7 @@ public class TrailServlet extends HttpServlet {
 
             User user = (User) req.getSession().getAttribute("user");
 
+            //LIST WITH PAGINATION
             List<Trail> trails = trailDao.allTrailToComeWithNoRegPagination(user.getId(), currentPage, Consts.ELEMENT_PER_PAGE);
 
             int rows = trailDao.getNumberOfTrailsToComeWithNoReg(user.getId());
@@ -43,11 +44,15 @@ public class TrailServlet extends HttpServlet {
             req.setAttribute(Consts.CURRENT_PAGE, currentPage);
             req.setAttribute(Consts.ELEM_PER_PAGE_JSP, Consts.ELEMENT_PER_PAGE);
 
+            //LIST WITH NO PAGINATION
+            //List<Trail> trails = trailDao.allTrailToComeWithNoReg(user.getId());
+
             req.setAttribute("trails", trails);
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
         }
         else {
 
+            //LIST WITH PAGINATION
             List<Trail> trails = trailDao.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
 
             int rows = trailDao.getNumberOfTrails();
@@ -55,6 +60,9 @@ public class TrailServlet extends HttpServlet {
             req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows));
             req.setAttribute(Consts.CURRENT_PAGE, currentPage);
             req.setAttribute(Consts.ELEM_PER_PAGE_JSP , Consts.ELEMENT_PER_PAGE);
+
+            //LIST WITH NO PAGINATION
+            //List<Trail> trails = trailDao.allTrail();
 
             req.setAttribute("trails", trails);
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
