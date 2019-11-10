@@ -92,6 +92,7 @@ public class RegistrationUser {
         }
     }
 
+    
     private void validationPassword( String password, String confirmation ) throws Exception {
         if ( password != null && confirmation != null ) {
             if (!password.equals( confirmation ) ) {
@@ -102,6 +103,11 @@ public class RegistrationUser {
         }
     }
 
+    /**
+     *
+     * @param date  of which we will check if it's valid
+     * @throws Exception
+     */
     private void validationDate( String date) throws Exception {
         if ( date != null ) {
             if (!DateFormat.correctFormatDate(date)) {
@@ -114,6 +120,11 @@ public class RegistrationUser {
         }
     }
 
+    /**
+     *
+     * @param email of which we will check if it's valid
+     * @throws Exception
+     */
     private void validationEmail( String email ) throws Exception {
         if ( email != null ) {
             if ( !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
@@ -124,6 +135,11 @@ public class RegistrationUser {
         }
     }
 
+    /**
+     *
+     * @param email of which we will check the presence in the DB
+     * @throws Exception
+     */
     private void existEmail(String email ) throws Exception {
         if ( email != null ) {
             if (userDao.exist(email)){

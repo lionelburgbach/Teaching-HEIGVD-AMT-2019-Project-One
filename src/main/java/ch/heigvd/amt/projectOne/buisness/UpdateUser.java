@@ -70,6 +70,11 @@ public class UpdateUser {
         }
     }
 
+    /**
+     *
+     * @param date that we want to check ( correct format, date is not in futur)
+     * @throws Exception
+     */
     private void validationDate( String date) throws Exception {
         if ( date != null ) {
             if (!DateFormat.correctFormatDate(date)) {

@@ -5,6 +5,12 @@ import lombok.Getter;
 
 import java.io.InputStream;
 
+/**
+ * Class User represent a client in our application. He have a unique ID who is determnine by the DB (auto-increment). He is characterized
+ * by a firstname, a lastname, a date of birth, a picture of profl, an email (who is unique and serves to authentication) and a password
+ * who do the pair with the mail. The password is stocked as an hash.
+ */
+
 @Builder
 @Getter
 public class User {

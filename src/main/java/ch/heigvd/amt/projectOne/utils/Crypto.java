@@ -6,6 +6,11 @@ import java.security.NoSuchAlgorithmException;
 
 public class Crypto {
 
+    /**
+     *
+     * @param input a String that we want to hash with SHA-512 algorithme
+     * @return The digest of the String
+     */
     public static String getCryptoHash(String input) {
 
         try {

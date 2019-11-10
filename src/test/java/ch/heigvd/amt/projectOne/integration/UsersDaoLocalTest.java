@@ -64,4 +64,14 @@ public class UsersDaoLocalTest {
         assertEquals(lio.getEmail(), lioModified.getEmail());
         assertNotEquals(lio.getFirstName(), lioModified.getFirstName());
     }
+
+    @Test
+    @Transactional(TransactionMode.ROLLBACK)
+    public void itShouldBePossibleToKnowIfAnEmailIsAlreadyInTheDB() throws DuplicateKeyException{
+
+        User lio = new User("lionel","burgbacher", "05-03-1989", "amt@amt.ch", "lionel");
+        usersDao.addUser(lio);
+        assertEquals(usersDao.exist("amt@amt.ch"),true);
+    }
+
 }
