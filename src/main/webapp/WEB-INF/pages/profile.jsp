@@ -16,7 +16,6 @@
               <img src="./grayscale/img/pict.jpg" style="width:400px; height: auto;" class="img-fluid" alt="">
             </div>
             <div style="padding-top: 20px;">
-              <!--
               <form method="post" action="${pageContext.request.contextPath}/user/profile?action=picture" enctype="multipart/form-data">
                 <div class="custom-file" style="width: 400px;">
                   <input type="file" class="custom-file-input" id="customFile">
@@ -24,8 +23,7 @@
                   <button type="submit" class="btn btn-outline-warning" name="photo">Update</button>
                 </div>
               </form>
-              -->
-              <p>Under Construction</p>
+              <p>Under Construction, It's possible to upload but nothing more.</p>
             </div>
           </div>
           <div class="text-white col-sm" style="padding-bottom: 40px; width: 400px;">
