@@ -203,7 +203,6 @@ public class RegistrationDao implements RegistrationDaoLocal {
         }
     }
 
-    //CREATE
     @Override
     public long addReg(Registration reg) {
 
@@ -228,7 +227,6 @@ public class RegistrationDao implements RegistrationDaoLocal {
         }
     }
 
-    //DELETE
     @Override
     public boolean deleteReg(long id) {
 
