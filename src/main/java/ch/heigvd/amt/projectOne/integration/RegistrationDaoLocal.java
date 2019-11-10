@@ -9,70 +9,70 @@ import java.util.List;
 public interface RegistrationDaoLocal {
 
     /**
-     *
-     * @param idUser is the id of the user who want to regitrate in the trail
-     * @param idTrail is the id of the trail where the user want to registrate
-     * @return the regitration of the user in the trail
+     * Return the registraion for a User for a Trail
+     * @param idUser    id of the user
+     * @param idTrail   id of the trail
+     * @return the registration of a user for a trail
      */
     Registration registration(long idUser, long idTrail);
 
     /**
-     *
-     * @param idUser ID that we use to check if the registration contain the user
-     * @return a list of all registration of a user
+     * Return all registration of the user
+     * @param idUser    id of the user
+     * @return a list of all registration for a user
      */
     List<Registration> allRegUser(long idUser);
 
     /**
-     *
-     * @param idUser ID that we use to check if the registration contain the user
-     * @return the number of registration who contain the user
+     * Return the number of registrion for a user
+     * @param idUser    id of the user
+     * @return the number of registration for a user
      */
     int getNumberOfRegsUser(long idUser);
 
     /**
-     *
-     * @param idUser ID that we use to check if the registration contain the user
-     * @param currentPage who represent the page where is the client actually
-     * @param elementPerPage who represent the number of registration that we want to retrieve
-     * @return a list who contain the number of elementPerPage registrations who contain the user
+     * Return some registration for a user for pagination
+     * @param idUser            id of the user
+     * @param currentPage       current page
+     * @param elementPerPage    number of element per page
+     * @return a list of registration for a user with pagination
      */
     List<Registration> allRegUserPagination(long idUser, int currentPage, int elementPerPage);
 
     /**
-     *
-     * @param idTrail ID that we use to check if the registration contain the trail
-     * @return a list of all registration at a trail
+     * Return all registration for a trail
+     * @param idTrail  id of the trail
+     * @return a list of all registration for a trail
      */
     List<Registration> allRegTrail(long idTrail);
 
     /**
-     *
-     * @param idTrail ID that we use to check if the registration contain the trail
-     * @return the number of registration who contain the trail
+     * Return the number of registrion for a trail
+     * @param idTrail   id of the trail
+     * @return the number of registration for a trail
      */
     int getNumberOfRegsTrail(long idTrail);
 
     /**
-     *
-     * @param idTrail ID that we use to check if the registration contain the trail
-     * @param currentPage who represent the page where is the client actually
-     * @param elementPerPage who represent the number of registration that we want to retrieve
-     * @return a list who contain the number of elementPerPage registrations who contain the trail
+     * Return some registration for a trail for pagination
+     * @param idTrail           id of the trail
+     * @param currentPage       current page
+     * @param elementPerPage    number of element per page
+     * @return a list of registration for a trail with pagination
      */
     List<Registration> allRegTrailPagination(long idTrail, int currentPage, int elementPerPage);
 
     /**
-     *
-     * @param reg the registration that we want to add in the DB
-     * @return the ID of the registration
+     * Add a registration
+     * @param reg   the registration
+     * @return the id of the registration
      */
     long addReg(Registration reg);
 
     /**
-     *
-     * @param id the ID of the registration that we want to delete
-     * @return a boolean who indicate if the suppression passed
+     * Delete a registration
+     * @param id    id of the registration
+     * @return boolean if the registration has been delete or not
      */
     boolean deleteReg(long id);
 }

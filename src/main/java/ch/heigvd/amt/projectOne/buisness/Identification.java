@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Check data from the identification form
+ */
 @Getter
 public class Identification {
 
@@ -25,6 +28,11 @@ public class Identification {
         this.userDao = userDao;
     }
 
+    /**
+     * Return a user if all test passed
+     * @param req  request
+     * @return a user if all test passed
+     */
     public User login(HttpServletRequest req) {
 
         User user = null;
@@ -61,10 +69,16 @@ public class Identification {
         }
     }
 
-    private void setError(String champ, String message ) {
-        errors.put( champ, message );
+    private void setError(String field, String message ) {
+        errors.put(field, message );
     }
 
+    /**
+     * Check if the email exist or not
+     * @param email      email
+     * @param password   password
+     * @throws Exception
+     */
     private void valide(String email, String password) throws Exception {
 
         if (password != null && email != null ) {
@@ -77,6 +91,11 @@ public class Identification {
         }
     }
 
+    /**
+     * Check if the email has a correct format
+     * @param email email
+     * @throws Exception
+     */
     private void valideEmail(String email) throws Exception {
 
         if (email != null ) {

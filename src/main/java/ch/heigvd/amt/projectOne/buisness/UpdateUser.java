@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Check data from the update user form
+ */
 @Getter
 public class UpdateUser {
 
@@ -57,8 +60,8 @@ public class UpdateUser {
         return (errors.size()==0);
     }
 
-    private void setError(String champ, String message ) {
-        errors.put( champ, message );
+    private void setError(String field, String message ) {
+        errors.put(field, message );
     }
 
     private static String getValue( HttpServletRequest request, String fieldName ) {
@@ -71,8 +74,8 @@ public class UpdateUser {
     }
 
     /**
-     *
-     * @param date that we want to check ( correct format, date is not in futur)
+     * Check if the date has the correct format and if it's not in the future
+     * @param date  date
      * @throws Exception
      */
     private void validationDate( String date) throws Exception {

@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Check data from the registration trail form
+ */
 @Getter
 public class RegistrationTrail {
 
@@ -71,8 +74,8 @@ public class RegistrationTrail {
         return res;
     }
 
-    private void setError(String champ, String message ) {
-        errors.put( champ, message );
+    private void setError(String field, String message ) {
+        errors.put(field, message );
     }
 
     private static String getValue( HttpServletRequest request, String fieldName ) {
@@ -84,6 +87,11 @@ public class RegistrationTrail {
         }
     }
 
+    /**
+     * Check if the date is after the current date and if the format is correct
+     * @param date  date
+     * @throws Exception
+     */
     private void validationDate( String date) throws Exception {
         if ( date != null ) {
             if (!DateFormat.correctFormatDate(date)) {
@@ -97,12 +105,22 @@ public class RegistrationTrail {
         }
     }
 
+    /**
+     * Check if the distance is positive
+     * @param distance distance
+     * @throws Exception
+     */
     private void validationDistance( double distance ) throws Exception {
         if (distance < 0 ) {
             throw new Exception( "You can run -2m, really ?" );
         }
     }
 
+    /**
+     * Check if the sum is > 0
+     * @param upAndDown sum of up and down
+     * @throws Exception
+     */
     private void validationUpAndDown( double upAndDown) throws Exception {
         if (upAndDown < 0) {
             throw new Exception( "Do the correct Math plz" );
