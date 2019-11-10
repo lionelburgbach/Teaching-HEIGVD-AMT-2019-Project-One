@@ -26,19 +26,18 @@ public class LoginServlet extends HttpServlet {
 
         String action = req.getParameter("action");
 
-        if (action.equals("login")) {
-
-            req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
-        }
-        if (action.equals("register")) {
-
-            req.getRequestDispatcher(Consts.JSP_REGISTER).forward(req, resp);
-        }
-        else if (action.equals("logout")){
-
-            resp.setContentType("text/html;charset=UTF-8");
-            req.getSession().invalidate();
-            resp.sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
+        switch (action) {
+            case "login":
+                req.getRequestDispatcher(Consts.JSP_LOGIN).forward(req, resp);
+                break;
+            case "register":
+                req.getRequestDispatcher(Consts.JSP_REGISTER).forward(req, resp);
+                break;
+            case "logout":
+                resp.setContentType("text/html;charset=UTF-8");
+                req.getSession().invalidate();
+                resp.sendRedirect(req.getContextPath() + Consts.SERVLET_TRAIL);
+                break;
         }
     }
 
