@@ -27,7 +27,7 @@ public class TrailServlet extends HttpServlet {
         resp.setContentType("text/html;charset=UTF-8");
 
         int currentPage = 1;
-        if (req.getParameter(Consts.CURRENT_PAGE) != null){
+        if (req.getParameter(Consts.CURRENT_PAGE) != null) {
             currentPage = Integer.valueOf(req.getParameter(Consts.CURRENT_PAGE));
         }
 
@@ -76,9 +76,9 @@ public class TrailServlet extends HttpServlet {
 
         RegistrationTrail registrationTrail = new RegistrationTrail(trailDao);
 
-        boolean res = registrationTrail.registrationTrail(req);
+        boolean hasBeenRegistered = registrationTrail.registrationTrail(req);
 
-        if (res){
+        if (hasBeenRegistered){
 
             resp.setContentType("text/html;charset=UTF-8");
             resp.sendRedirect(req.getContextPath() + Consts.SERVLET_TRAIL);
