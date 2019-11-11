@@ -24,7 +24,6 @@ Nous avons créer un site permettant à des utilisateurs de créer des sessions 
 
 <div style="text-align:center"><font size="-1">Page de modification de profil</font></div>
 
-
 ### Description fonctionnelle
 
 #### Page Trail (avant connexion) :
@@ -96,3 +95,16 @@ Nous avons dû au fur est à mesure du projet élaguer ce dernier pour rendre un
 À l'heure actuelle, il est possible d'upload une photo (stocké au format binaire dans la base de données) mais nous n'avons pas eu le temps d'afficher cette dernière sur notre application. Nous avons décider de laisser cela en l'état pour une possible amélioration future.
 
 Nous avons aussi décidé que le prénom, le nom, la date de naissance et la photo d'une personne étaient des données publiques qui permettaient aux utilisateurs de ce faire une idée des personnes avec qui ils allaient partager la randonnée. Et que d'autres informations comme l'email ou le password devaient rester privé.
+
+### Bugs & Limitations
+
+#### Bugs
+
+Au niveau des bugs, le seul bug que nous avons constaté est que dans certains cas, si la base de données n'est pas "UP", il peut y avoir un NullPointerException dans la page de Trail. Si ce cas devait arriver, il faut recharger la page après avoir relancer la base de données.
+
+#### Limitations
+
+Le projet a été réduit au strict minimum comme expliqué dans la partie implémentation. 
+
+L'affichage de la photo à été stoppé.
+
