@@ -20,7 +20,7 @@ user: guillaume.blanco@heig-vd.ch mdp: guillaume
 
 ##### Script python pour générer les données 
 
-Pour générer les données, nous utilisons un script python qui génère les utilisateurs, les trails et les inscriptions en fonction du nombre de trail et d'utilisateur. (le nombre de trail et user est codé en dure dans le script, 2 utilisateurs et quelques trails sont aussi codé en dure). On utilise SHA-512 dans le script ainsi que dans l'application, ainsi il y a une différence entre la version python et java, il n'est donc possible de se connecter qu'avec les comptes lionel.burgbacher@heig-vd.ch et guillaume.blanco@heig-vd.ch.
+Pour générer les données, nous utilisons un script python qui génère les utilisateurs, les trails et les inscriptions en fonction du nombre de trails et d'utilisateurs. (le nombre de trail et user est codé en dure dans le script, 2 utilisateurs et quelques trails sont aussi codé en dure). On utilise SHA-512 dans le script ainsi que dans l'application, ainsi il y a une différence entre la version python et java, il n'est donc possible de se connecter qu'avec les comptes lionel.burgbacher@heig-vd.ch et guillaume.blanco@heig-vd.ch.
 
 Le script se trouve dans le dossier python. Pour le lancer (après avoir changé les paramètres codés en dur dans le script) il suffit d'utiliser la commande : (Il est possible de devoir installer quelques libraires comme faker, names, hashlib)
 `python trailUserReg.py` 
@@ -29,7 +29,7 @@ Il suffit maintenat de copier le fichier générer b_trail.sql dans le dossier d
 Il persiste encore un problème, il est possible que deux adresses email soient pareilles ce qui est impossible
 dans notre base de données, il faut donc build l'application, voir si il existe une erreur DuplicationKey et si oui, regénérer des données.
 
-Concernant les tests pour les effets de la paginations, les registrations ont simplement été commentées car les tests se font sur la page trail.
+Concernant les tests pour les effets de la pagination, les registrations ont simplement été commentées, car les tests se font sur la page trail.
 
 Finalement le script affiche le nombre de données crées.
 
@@ -40,7 +40,7 @@ docker/dockerTest/topologies/
 Pour lancer l'infra, on utilise la commande : 
 `docker-compose up --build`
 
-Il suffit maintenat d'utiliser la commande depuis le dossier contenat le fichier pom.xml (dossier racine)
+Il suffit maintenant d'utiliser la commande depuis le dossier contenat le fichier pom.xml (dossier racine)
 `mvn clean test`
 
 ### Links To our Markdown Project
