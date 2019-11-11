@@ -1,7 +1,7 @@
 package ch.heigvd.amt.projectOne.presentation;
 
-import ch.heigvd.amt.projectOne.buisness.Identification;
-import ch.heigvd.amt.projectOne.buisness.RegistrationUser;
+import ch.heigvd.amt.projectOne.business.Identification;
+import ch.heigvd.amt.projectOne.business.RegistrationUser;
 import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.utils.Consts;
 import ch.heigvd.amt.projectOne.integration.UsersDaoLocal;

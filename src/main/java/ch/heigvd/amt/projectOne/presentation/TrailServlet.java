@@ -1,6 +1,6 @@
 package ch.heigvd.amt.projectOne.presentation;
 
-import ch.heigvd.amt.projectOne.buisness.RegistrationTrail;
+import ch.heigvd.amt.projectOne.business.RegistrationTrail;
 import ch.heigvd.amt.projectOne.model.Trail;
 import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.integration.TrailDaoLocal;

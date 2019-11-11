@@ -48,7 +48,7 @@ Il suffit maintenant d'utiliser la commande depuis le dossier contenat le fichie
 
 `mvn clean test`
 
-La partie Jmeter se fait à l'aide du script contenu dans le dossier jemeter, pour cette étape, il faut changer le code dans le servlet TrailServlet et changer entre les différentes paginations. Pour éviter cela, un .war se trouve dans le dossier jmeter, cette application contient déjà la mauvaise pagination. Il suffit donc de changer le .war existant dans le dossier `docker/dockerTrail/images/wildfly/src/` par celui-ci. Un jeu de données se trouve aussi dans le dossier jmeter avec 400'000 trails. Il faut donc aussi changer le fichier b_trail.mysql dans le dossier docker/dockerTrail/images/mysql/b_trail.sql par celui-ci.
+La partie Jmeter se fait à l'aide du script contenu dans le dossier jemeter, pour cette étape, il faut changer le code dans le servlet TrailServlet et changer entre les différentes paginations. Pour éviter cela, un .war se trouve dans le dossier jmeter, cette application contient déjà la mauvaise pagination. Il suffit donc de changer le .war existant dans le dossier `docker/dockerTrail/images/wildfly/src/` par celui-ci. Un jeu de données se trouve aussi dans le dossier jmeter avec 400'000 trails. Il faut donc aussi changer le fichier b_trail.sql dans le dossier docker/dockerTrail/images/mysql/b_trail.sql par celui-ci.
 
 Pour avoir la bonne pagination, il suffit de lancer le script war.sh et de générer un nouveau jeu de données avec la script python. Cela prend un peu de temps pour copier les données dans mysql.
 

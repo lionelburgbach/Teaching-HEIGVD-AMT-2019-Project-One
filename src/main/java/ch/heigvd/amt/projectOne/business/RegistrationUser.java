@@ -1,4 +1,4 @@
-package ch.heigvd.amt.projectOne.buisness;
+package ch.heigvd.amt.projectOne.business;
 
 import ch.heigvd.amt.projectOne.integration.UsersDaoLocal;
 import ch.heigvd.amt.projectOne.model.User;

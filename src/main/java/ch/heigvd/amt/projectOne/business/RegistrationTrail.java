@@ -1,4 +1,4 @@
-package ch.heigvd.amt.projectOne.buisness;
+package ch.heigvd.amt.projectOne.business;
 
 import ch.heigvd.amt.projectOne.integration.TrailDaoLocal;
 import ch.heigvd.amt.projectOne.model.Trail;
