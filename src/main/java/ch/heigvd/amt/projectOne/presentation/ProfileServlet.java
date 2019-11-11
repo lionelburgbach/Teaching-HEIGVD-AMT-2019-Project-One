@@ -35,30 +35,26 @@ public class ProfileServlet extends HttpServlet {
 
         if (action.equals("user")) {
 
-            boolean ok;
-
+            boolean hasBeenUpdated;
             UpdateUser updateUser = new UpdateUser(userDao);
-            ok = updateUser.updateUser(req, user.getEmail(), user.getPassword(), user.getId());
+            hasBeenUpdated = updateUser.updateUser(req, user.getEmail(), user.getPassword(), user.getId());
 
-            if (ok){
+            if (hasBeenUpdated){
                 session.setAttribute("user", userDao.user(user.getId()));
                 req.getRequestDispatcher(Consts.JSP_PROFILE).forward(req, resp);
-
             } else{
                 req.setAttribute("error", updateUser);
                 req.getRequestDispatcher(Consts.JSP_PROFILE).forward(req, resp);
             }
 
-        } else if(action.equals("picture")){
+        } else if(action.equals("picture")) {
 
             InputStream inputStream = null;
 
             Part filePart = req.getPart("photo");
             if (filePart != null) {
-
                 inputStream = filePart.getInputStream();
                 userDao.updatePictureUser(user.getId(), inputStream);
-
                 resp.sendRedirect(req.getContextPath() + Consts.SERVLET_PROFILE);
             }
         }

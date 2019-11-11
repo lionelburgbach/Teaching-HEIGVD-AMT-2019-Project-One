@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Check data from the registration user form
+ */
 @Getter
 public class RegistrationUser {
 
@@ -79,8 +82,8 @@ public class RegistrationUser {
         return user;
     }
 
-    private void setError(String champ, String message ) {
-        errors.put( champ, message );
+    private void setError(String field, String message ) {
+        errors.put(field, message );
     }
 
     private static String getValue( HttpServletRequest request, String fieldName ) {
@@ -92,7 +95,12 @@ public class RegistrationUser {
         }
     }
 
-    
+    /**
+     * Check if the password and the confirmation are the same
+     * @param password      password
+     * @param confirmation  repeted password
+     * @throws Exception
+     */
     private void validationPassword( String password, String confirmation ) throws Exception {
         if ( password != null && confirmation != null ) {
             if (!password.equals( confirmation ) ) {
@@ -104,8 +112,8 @@ public class RegistrationUser {
     }
 
     /**
-     *
-     * @param date  of which we will check if it's valid
+     * Check if the date has the correct format and if it's not in the future
+     * @param date  date
      * @throws Exception
      */
     private void validationDate( String date) throws Exception {
@@ -121,8 +129,8 @@ public class RegistrationUser {
     }
 
     /**
-     *
-     * @param email of which we will check if it's valid
+     * Check the format of the email
+     * @param email email
      * @throws Exception
      */
     private void validationEmail( String email ) throws Exception {
@@ -136,8 +144,8 @@ public class RegistrationUser {
     }
 
     /**
-     *
-     * @param email of which we will check the presence in the DB
+     * Check if the email already exist or not
+     * @param email email
      * @throws Exception
      */
     private void existEmail(String email ) throws Exception {

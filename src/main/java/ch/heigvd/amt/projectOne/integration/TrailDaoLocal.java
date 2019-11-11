@@ -9,73 +9,73 @@ import java.util.List;
 public interface TrailDaoLocal {
 
     /**
-     *
-     * @param id of the trail that we want to retrieve
-     * @return the trail corresponding to the id
+     * Return a trail
+     * @param id    id of the trail
+     * @return a trail with this id
      */
     Trail trail(long id);
 
     /**
-     *
-     * @return a list who contain all the trails
+     * Return all trail
+     * @return a list who contain all trails
      */
     List<Trail> allTrail();
 
     /**
-     *
-     * @return the number of all trails
+     * Return number of trail
+     * @return the number of all trail
      */
     int getNumberOfTrails();
 
     /**
-     *
-     * @param currentPage who represent the page where is the client actually
-     * @param elementPerPage who represent the number of trail that we want to retrieve
-     * @return a list of trail who contain the number of elementPerPage trail for the currentPage
+     * Return some trail with pagination
+     * @param currentPage       current page
+     * @param elementPerPage    number of element per page
+     * @return some trail with pagination
      */
     List<Trail> allTrailPagination(int currentPage, int elementPerPage);
 
     /**
-     *
-     * @param idUser represent the id of the user what we use to check the registration (if he is in)
-     * @return all the trail who not contain a registration with this user
+     * Return all trail with no registration for a user
+     * @param idUser    id of the user
+     * @return all the trail with no registration for a user
      */
     List<Trail> allTrailToComeWithNoReg(long idUser);
 
     /**
-     *
-     * @param idUser represent the id of the user what we use to check the registration (if he is in)
-     * @return the number of trail who not contain a registration with this user
+     * Return number of trail with no registration for a user
+     * @param idUser    id of the user
+     * @return number of trail with no registration for a user
      */
     int getNumberOfTrailsToComeWithNoReg(long idUser);
 
     /**
-     *
-     * @param idUser represent the id of the user what we use to check the registration (if he is in)
-     * @param currentPage who represent the page where is the client actually
-     * @param elementPerPage who represent the number of trail that we want to retrieve
-     * @return a list of trail who contain the number of elementPerPage trail for the currentPage and that we have no registration with the user
+     * Return all trail with no registration for a user with pagination
+     * @param idUser            id of the user
+     * @param currentPage       current page
+     * @param elementPerPage    number of element per page
+     * @return all trail with no registration for a user with pagination
      */
     List<Trail> allTrailToComeWithNoRegPagination(long idUser, int currentPage, int elementPerPage);
 
     /**
-     *
-     * @param trail that we want to add to the DB
+     * Add a trail
+     * @param trail trail to add
      * @return the id of the trail
      */
     long addTrail(Trail trail);
 
     /**
-     *
-     * @param trail that we want to modify (need that the ID is already set in the trail)
-     * @return a boolean who indicate if the change passed
+     * Update a trail
+     * @param trail trail to modify
+     * @return a boolean if the trail has been update or not
      */
     boolean updateTrail(Trail trail);
 
     /**
-     *
-     * @param id of the trail that we want to delete
-     * @return a boolean who indicate if the suppression passed
+     * Delete a trail
+     * @param id    if for the trail to delete
+     * @return boolean if the trail has been delete or not
      */
     boolean deleteTrail(long id);
 }

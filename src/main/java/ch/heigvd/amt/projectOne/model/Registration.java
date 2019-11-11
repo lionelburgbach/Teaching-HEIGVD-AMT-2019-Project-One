@@ -4,7 +4,7 @@ import lombok.Getter;
 
 /**
  * The Registration class is the link between an user and a trail (a user can registrate to a trail).
- * It has a unique ID who is determnine by the DB (auto-increment), an user and a trail.
+ * It has a unique ID who is determined by the DB (auto-increment), a user and a trail.
  */
 
 @Getter

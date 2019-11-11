@@ -27,7 +27,7 @@ public class TrailServlet extends HttpServlet {
         resp.setContentType("text/html;charset=UTF-8");
 
         int currentPage = 1;
-        if (req.getParameter(Consts.CURRENT_PAGE) != null){
+        if (req.getParameter(Consts.CURRENT_PAGE) != null) {
             currentPage = Integer.valueOf(req.getParameter(Consts.CURRENT_PAGE));
         }
 
@@ -40,32 +40,43 @@ public class TrailServlet extends HttpServlet {
 
             int rows = trailDao.getNumberOfTrailsToComeWithNoReg(user.getId());
 
+            //Param for the pagination
             req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows, Consts.ELEMENT_PER_PAGE));
             req.setAttribute(Consts.CURRENT_PAGE, currentPage);
             req.setAttribute(Consts.ELEM_PER_PAGE_JSP, Consts.ELEMENT_PER_PAGE);
-
-            //LIST WITH NO PAGINATION
-            //List<Trail> trails = trailDao.allTrailToComeWithNoReg(user.getId());
 
             req.setAttribute("trails", trails);
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
 
         } else {
 
-            //LIST WITH PAGINATION
-            List<Trail> trails = trailDao.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
+            //To test with Jmeter we will send some number to display by url
+            /////////////////////////////////////////////////////////////////////////////////////////
+            if(req.getParameter("number")!= null) {
+                int nbr = Integer.parseInt(req.getParameter("number"));
+                int rows = trailDao.getNumberOfTrails();
+                if(nbr > rows){ nbr = rows; }
+                List<Trail> trails = trailDao.allTrailPagination(currentPage, nbr);
+                req.setAttribute(Consts.CURRENT_PAGE, 1);
+                req.setAttribute("trails", trails);
+                req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
+            }
+            /////////////////////////////////////////////////////////////////////////////////////////
+            else {
 
-            int rows = trailDao.getNumberOfTrails();
+                List<Trail> trails = trailDao.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
 
-            req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows, Consts.ELEMENT_PER_PAGE));
-            req.setAttribute(Consts.CURRENT_PAGE, currentPage);
-            req.setAttribute(Consts.ELEM_PER_PAGE_JSP , Consts.ELEMENT_PER_PAGE);
+                int rows = trailDao.getNumberOfTrails();
 
-            //LIST WITH NO PAGINATION
-            //List<Trail> trails = trailDao.allTrail();
+                //Param for the pagination
+                req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows, Consts.ELEMENT_PER_PAGE));
+                req.setAttribute(Consts.CURRENT_PAGE, currentPage);
+                req.setAttribute(Consts.ELEM_PER_PAGE_JSP, Consts.ELEMENT_PER_PAGE);
 
-            req.setAttribute("trails", trails);
-            req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
+
+                req.setAttribute("trails", trails);
+                req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
+            }
         }
     }
 
@@ -74,9 +85,9 @@ public class TrailServlet extends HttpServlet {
 
         RegistrationTrail registrationTrail = new RegistrationTrail(trailDao);
 
-        boolean res = registrationTrail.registrationTrail(req);
+        boolean hasBeenRegistered = registrationTrail.registrationTrail(req);
 
-        if (res){
+        if (hasBeenRegistered){
 
             resp.setContentType("text/html;charset=UTF-8");
             resp.sendRedirect(req.getContextPath() + Consts.SERVLET_TRAIL);
@@ -85,7 +96,7 @@ public class TrailServlet extends HttpServlet {
 
             req.setAttribute("error", registrationTrail);
             req.setAttribute(Consts.CURRENT_PAGE, 1);
-            req.setAttribute("fail", "falg");
+            req.setAttribute("fail", "flag");
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
         }
     }

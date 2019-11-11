@@ -44,7 +44,6 @@ public class UserDao implements UsersDaoLocal {
         }
     }
 
-    //READ
     @Override
     public User user(long id) {
 
@@ -73,7 +72,6 @@ public class UserDao implements UsersDaoLocal {
         }
     }
 
-    //CREATE
     @Override
     public long addUser(User user) {
 
@@ -103,8 +101,6 @@ public class UserDao implements UsersDaoLocal {
         }
     }
 
-
-    //Update
     @Override
     public boolean updateUser(User user) {
 
@@ -150,7 +146,6 @@ public class UserDao implements UsersDaoLocal {
         }
     }
 
-    //DELETE
     @Override
     public boolean deleteUser(long id){
 

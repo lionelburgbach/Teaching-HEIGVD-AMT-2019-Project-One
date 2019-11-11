@@ -9,53 +9,53 @@ import java.io.InputStream;
 public interface UsersDaoLocal {
 
     /**
-     *
-     * @param email of the user who want to connect
-     * @param password of the user who want to connect
-     * @return the user with is ID (if the pair email/password is correct )
+     * Check if the couple email password exist
+     * @param email     user's email
+     * @param password  user's password
+     * @return the user
      */
     User connect(String email, String password);
 
     /**
-     *
-     * @param id of the user that we want to retrieve
+     * Return a user
+     * @param id
      * @return the user who match with the ID
      */
     User user(long id);
 
     /**
-     *
-     * @param user that we want to add in the DB
-     * @return the ID of the user (that we ust add)
+     * Add a user
+     * @param user user
+     * @return the ID of the user
      */
     long addUser(User user);
 
     /**
-     *
-     * @param user that we want to change (we need that the user have already an ID)
-     * @return a boolean who indicate if the change passed
+     * Update a user
+     * @param user user
+     * @return a boolean if the user has been update or not
      */
     boolean updateUser(User user);
 
     /**
-     *
-     * @param id of the user whose photo we want to change
-     * @param profilePicture the new profil picture in an Inputstream format
-     * @return  a boolean who indicate if the change passed
+     * Update a picture
+     * @param id                id of the user
+     * @param profilePicture    the new profil picture in an Inputstream format
+     * @return  a boolean if the picture has been update or not
      */
     boolean updatePictureUser(long id, InputStream profilePicture);
 
     /**
-     *
-     * @param id of the user that we want to delete
-     * @return  a boolean who indicate if the suppression passed
+     * Delete a user
+     * @param id  id of the user
+     * @return  a boolean if the user has been delete or not
      */
     boolean deleteUser(long id);
 
     /**
-     *
-     * @param email that we want to if it's already use
-     * @return a boolean who indicate if the email already exist
+     * Return if the email exist or not
+     * @param email email
+     * @return a boolean if the email already exist or not
      */
     boolean exist(String email);
 }

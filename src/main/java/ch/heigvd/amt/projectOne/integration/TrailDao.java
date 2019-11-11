@@ -16,7 +16,6 @@ public class TrailDao implements TrailDaoLocal {
     @Resource(lookup = "java:/jdbc/sakila")
     private DataSource dataSource;
 
-    //READ
     @Override
     public Trail trail(long id) {
 
@@ -45,7 +44,6 @@ public class TrailDao implements TrailDaoLocal {
         }
     }
 
-    //READ
     @Override
     public List<Trail> allTrail() {
 
@@ -125,7 +123,6 @@ public class TrailDao implements TrailDaoLocal {
         }
     }
 
-    //READ
     @Override
     public List<Trail> allTrailToComeWithNoReg(long idUser) {
 
@@ -207,7 +204,6 @@ public class TrailDao implements TrailDaoLocal {
         }
     }
 
-    //CREATE
     @Override
     public long addTrail(Trail trail) {
 
@@ -263,7 +259,6 @@ public class TrailDao implements TrailDaoLocal {
         }
     }
 
-    //DELETE
     @Override
     public boolean deleteTrail(long id) {
 

@@ -8,8 +8,8 @@ import java.util.Date;
 public class DateFormat {
 
     /**
-     *
-     * @param date that we want to check (if it pass the regex)
+     * Check if the date has a correct format
+     * @param date  that we want to check
      * @return a boolean who indicate if the date has a correct format
      */
     public static boolean correctFormatDate(String date){
@@ -18,9 +18,9 @@ public class DateFormat {
     }
 
     /**
-     *
+     * Check if the trail date is later than the current date
      * @param date that we want to check
-     * @return
+     * @return if the date is in the future
      * @throws ParseException
      */
     public static boolean possibleDate(String date) throws ParseException {
@@ -34,9 +34,9 @@ public class DateFormat {
     }
 
     /**
-     *
+     * Check if the date is in the future or not
      * @param date that we want to check
-     * @return a boolean who indicate
+     * @return a boolean who indicate if in the future or not
      * @throws ParseException
      */
     public static boolean futurDate(String date) throws ParseException {
@@ -50,7 +50,7 @@ public class DateFormat {
     }
 
     /**
-     *
+     * Change format from mysql to java
      * @param date that we want to transforme
      * @return a date in the Java format
      */
@@ -64,7 +64,7 @@ public class DateFormat {
     }
 
     /**
-     *
+     * Change format from java to mysql
      * @param date that we want to transforme
      * @return a date in the MySQL format
      */

@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import java.io.IOException;
 import java.sql.SQLException;
 
 import static org.mockito.Mockito.*;
@@ -41,7 +43,6 @@ public class LoginServletTest {
 
     @Mock
     RequestDispatcher requestDispatcher;
-
 
     LoginServlet servlet;
 
@@ -129,7 +130,4 @@ public class LoginServletTest {
         servlet.doPost(req,res);
         verify(req).getRequestDispatcher(Consts.JSP_LOGIN);
     }
-
-
-
 }

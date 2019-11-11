@@ -3,8 +3,8 @@ package ch.heigvd.amt.projectOne.model;
 import lombok.Getter;
 
 /**
- * Class Trail represent the differents trails that a user can registrate at. It has a unique ID who is determnine by the DB (auto-increment).
- * It as a name, a distance, an upAndDown (who is the difference of height between the sart and the end), a description and a date
+ * Class Trail represent differents trails that a user can be enroll in. It has a unique ID who is determined  by the DB (auto-increment).
+ * It as a name, a distance, an upAndDown (who is the difference of height from the start to the end), a description and a date
  */
 @Getter
 public class Trail {
