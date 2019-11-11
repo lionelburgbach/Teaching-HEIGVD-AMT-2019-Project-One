@@ -44,7 +44,6 @@ Il suffit maintenat d'utiliser la commande depuis le dossier contenat le fichier
 `mvn clean test`
 
 ### Links To our Markdown Project
-
 [Test procedure](doc/procedureDeTest.md)
 
 ## Objectives

@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 import static org.mockito.Mockito.*;
@@ -108,19 +107,7 @@ public class LoginServletTest {
         servlet.doPost(req,res);
         verify(req).getRequestDispatcher(Consts.JSP_REGISTER);
     }
-
-  /*  @Test
-    public void doPostRegistrationWithUser() throws ServletException, IOException, DuplicateKeyException, SQLException{
-        when(req.getParameter("action")).thenReturn("registration");
-        when(req.getSession()).thenReturn(httpSession);
-        User newUser = new User("Gui","Bl","ok","guillaume.blanco@heig-vd.ch","guillaume");
-        when(req.getParameter("email")).thenReturn("gui@lol.com");
-        when(req.getParameter("password")).thenReturn("guillaume");
-        when(userDao.connect(anyString(),anyString())).thenReturn(newUser);
-//        when(userDao.exist(anyString())).thenReturn(true);
-        servlet.doPost(req,res);
-        verify(res).sendRedirect(req.getContextPath()+Consts.SERVLET_TRAIL);
-    }*/
+    
 
     @Test
     public void doPostNothing() throws ServletException, IOException, DuplicateKeyException, SQLException{
