@@ -50,20 +50,20 @@ public class TrailServlet extends HttpServlet {
 
         } else {
 
-            //To test with Jmeter we will send some info in the url
+            //To test with Jmeter we will send some number to display by url
             /////////////////////////////////////////////////////////////////////////////////////////
             if(req.getParameter("number")!= null) {
                 int nbr = Integer.parseInt(req.getParameter("number"));
-                List<Trail> trails = trailDao.allTrailPagination(currentPage, nbr);
                 int rows = trailDao.getNumberOfTrails();
                 if(nbr > rows){ nbr = rows; }
-                req.setAttribute(Consts.NO_OF_PAGES, nbr);
+                List<Trail> trails = trailDao.allTrailPagination(currentPage, nbr);
+                req.setAttribute(Consts.CURRENT_PAGE, 1);
                 req.setAttribute("trails", trails);
                 req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
             }
             /////////////////////////////////////////////////////////////////////////////////////////
             else {
-                //LIST WITH PAGINATION
+
                 List<Trail> trails = trailDao.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
 
                 int rows = trailDao.getNumberOfTrails();
