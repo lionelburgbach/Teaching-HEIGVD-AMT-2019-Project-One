@@ -53,9 +53,18 @@ La partie Jmeter se fait à l'aide du script contenu dans le dossier jemeter, po
 Pour avoir la bonne pagination, il suffit de lancer le script war.sh et de générer un nouveau jeu de données avec la script python. Cela prend un peu de temps pour copier les données dans mysql.
 
 ### Links To our Markdown Project
-[Report](doc/Report.md)
+#### [Report](doc/Report.md)
 
-[Testing Strategy](doc/strategieDeTest.md)
+#### [Testing Strategy](doc/strategieDeTest.md)
+
+
+
+
+
+
+</br></br></br></br></br></br></br></br></br></br>
+
+
 
 ## Objectives
 

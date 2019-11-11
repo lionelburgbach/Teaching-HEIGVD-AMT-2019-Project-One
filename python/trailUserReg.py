@@ -8,7 +8,7 @@ fichier = open("b_trail.sql", "a")
 
 #ICI POUR CHANGER LE NOMBRE DE USER ET DE TRAIL
 nbUser = 100
-nbTrail = 500
+nbTrail = 50000
 
 
 count = 0
@@ -54,7 +54,6 @@ for i in range(11,nbTrail):
 fichier.write("COMMIT;\n\nSET AUTOCOMMIT=0;\n")
 
 #Generate reg
-'''
 index = 1
 for i in range(1,nbTrail):
     
@@ -70,7 +69,7 @@ for i in range(1,nbTrail):
         strVal += str(index) + ","+ str(j)+","+str(i)+");\n"
         fichier.write(strVal)
         index += 1
-'''
+
 print(count)
 fichier.write("COMMIT;\n")
 fichier.close()
