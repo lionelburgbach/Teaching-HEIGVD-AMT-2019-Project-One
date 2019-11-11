@@ -57,6 +57,27 @@ Pour avoir la bonne pagination, il suffit de lancer le script war.sh et de g√©n√
 
 #### [Testing Strategy](doc/strategieDeTest.md)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Objectives
 
 The main objective of this project is to apply the patterns and techniques presented during the lectures, and to create a simple multi-tiered application in Java EE.
