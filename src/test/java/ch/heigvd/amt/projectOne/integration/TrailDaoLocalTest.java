@@ -138,7 +138,7 @@ public class TrailDaoLocalTest {
     }
 
     @Test
-    @Transactional(TransactionMode.COMMIT)
+    @Transactional(TransactionMode.ROLLBACK)
     public void itShouldBePossibleToDeleteATrail() throws DuplicateKeyException, SQLException {
         Trail newTrail = new Trail("name",200,300, "description", "20-11-2020");
         long idTrail = trailDao.addTrail(newTrail);
