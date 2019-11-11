@@ -18,3 +18,6 @@ Avec les tests Arquillian nous allons pouvoir tester les différentes DAO de not
 
 ## Test JMeter
 
+## Efficacité de nos tests
+
+Nous pensons qu'à l'heure actuelle nos différents tests montrent que nous avons compris dans les grandes lignes à quoi servaient les différents framework ou plateforme de test que nous avons utilisés. Il ne garantissent cependant pas une couverture complète de notre application. Cela demanderait beaucoup plus de temps et d'aller beaucoup plus loin dans les réflexions concernant notre stratégie de tests. Ils nous ont cependant permis de "mettre les mains dans le cambouis" et de nous rendre compte de certaines choses comme  l'importance  de la pagination ou de renvoyer un ID lors de l'ajout d'un objet dans la base de données
