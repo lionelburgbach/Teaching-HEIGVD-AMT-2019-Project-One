@@ -1,6 +1,59 @@
 # Teaching-HEIGVD-AMT-2019-Project-One
 
-## Links To our Markdown Project
+### Build, Run and Test
+
+#### Build and Run
+
+Pour générer le .war et le copier dans le dossier wildfly il suffit de lancer le script war.sh. La topologie concernant les tests ne peut pas être up, cela implique que les tests arquilian échoueront (cela n'a pas d'effet sur le .war). 
+
+Il faut se déplacer maintenant dans le dossier docker/dockerTrail/docker-comp/
+Pour lancer l'application, on utilise la commande : 
+`docker-compose up --build`
+
+Si le script contenant les données mysql (docker/dockerTrail/images/mysql/b_trail.sql) est lourd, il faudra patienter quelques minutes, celui de base n'est pas lourd pour un lancement simplifié.
+
+Pour se rendre sur l'application, il faut se rendre sur l'url suivant http://localhost:9090/projectOne/trail
+
+##### Compte :
+
+user: lionel.burgbacher@heig-vd.ch mdp: lionel
+
+user: guillaume.blanco@heig-vd.ch mdp: guillaume
+
+##### Script python pour générer les données 
+
+Pour générer les données, nous utilisons un script python qui génère les utilisateurs, les trails et les inscriptions en fonction du nombre de trails et d'utilisateurs. (le nombre de trail et user est codé en dure dans le script, 2 utilisateurs et quelques trails sont aussi codé en dure). On utilise SHA-512 dans le script ainsi que dans l'application, ainsi il y a une différence entre la version python et java, il n'est donc possible de se connecter qu'avec les comptes lionel.burgbacher@heig-vd.ch et guillaume.blanco@heig-vd.ch.
+
+Le script se trouve dans le dossier python. Pour le lancer (après avoir changé les paramètres codés en dur dans le script) il suffit d'utiliser la commande : (Il est possible de devoir installer quelques libraires comme faker, names, hashlib)
+
+`python trailUserReg.py` 
+
+Il suffit maintenat de copier le fichier générer b_trail.sql dans le dossier docker/dockerTrail/images/mysql/b_trail.sql
+
+Il persiste encore un problème, il est possible que deux adresses email soient pareilles ce qui est impossible
+dans notre base de données, il faut donc build l'application, voir si il existe une erreur DuplicationKey et si oui, regénérer des données.
+
+Concernant les tests pour les effets de la pagination, les registrations ont simplement été commentées, car les tests se font sur la page trail.
+
+Finalement le script affiche le nombre de données crées.
+
+#### Test
+
+Pour les tests, il faut lancer le docker-compose concernant les tests. L'infrastructure se trouve dans
+docker/dockerTest/topologies/
+Pour lancer l'infra, on utilise la commande : 
+`docker-compose up --build`
+
+Il suffit maintenant d'utiliser la commande depuis le dossier contenat le fichier pom.xml (dossier racine)
+
+`mvn clean test`
+
+La partie Jmeter se fait à l'aide du script contenu dans le dossier jemeter, pour cette étape, il faut changer le code dans le servlet TrailServlet et changer entre les différentes paginations. Pour éviter cela, un .war se trouve dans le dossier jmeter, cette application contient déjà la mauvaise pagination. Il suffit donc de changer le .war existant dans le dossier `docker/dockerTrail/images/wildfly/src/` par celui-ci. Un jeu de données se trouve aussi dans le dossier jmeter avec 400'000 trails. Il faut donc aussi changer le fichier b_trail.sql dans le dossier docker/dockerTrail/images/mysql/b_trail.sql par celui-ci.
+
+Pour avoir la bonne pagination, il suffit de lancer le script war.sh et de générer un nouveau jeu de données avec la script python. Cela prend un peu de temps pour copier les données dans mysql.
+
+### Links To our Markdown Project
+[Report](doc/Report.md)
 
 [Test procedure](doc/procedureDeTest.md)
 

@@ -1,6 +1,6 @@
 package ch.heigvd.amt.projectOne.presentation;
 
-import ch.heigvd.amt.projectOne.buisness.RegistrationTrail;
+import ch.heigvd.amt.projectOne.business.RegistrationTrail;
 import ch.heigvd.amt.projectOne.model.Trail;
 import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.integration.TrailDaoLocal;
@@ -50,33 +50,33 @@ public class TrailServlet extends HttpServlet {
 
         } else {
 
-            //To test with Jmeter we will send some number to display by url
-            /////////////////////////////////////////////////////////////////////////////////////////
-            if(req.getParameter("number")!= null) {
-                int nbr = Integer.parseInt(req.getParameter("number"));
-                int rows = trailDao.getNumberOfTrails();
-                if(nbr > rows){ nbr = rows; }
-                List<Trail> trails = trailDao.allTrailPagination(currentPage, nbr);
-                req.setAttribute(Consts.CURRENT_PAGE, 1);
-                req.setAttribute("trails", trails);
-                req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
-            }
-            /////////////////////////////////////////////////////////////////////////////////////////
-            else {
+            //WITH BAD PAGINATION
+            /*
+            List<Trail> trails = trailDao.allTrail();
 
-                List<Trail> trails = trailDao.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
+            int rows = trailDao.getNumberOfTrails();
 
-                int rows = trailDao.getNumberOfTrails();
+            //Param for the pagination
+            req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows, Consts.ELEMENT_PER_PAGE));
+            req.setAttribute(Consts.CURRENT_PAGE, currentPage);
+            req.setAttribute(Consts.ELEM_PER_PAGE_JSP, Consts.ELEMENT_PER_PAGE);
 
-                //Param for the pagination
-                req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows, Consts.ELEMENT_PER_PAGE));
-                req.setAttribute(Consts.CURRENT_PAGE, currentPage);
-                req.setAttribute(Consts.ELEM_PER_PAGE_JSP, Consts.ELEMENT_PER_PAGE);
+            req.setAttribute("trails", trails.subList(1, Consts.ELEMENT_PER_PAGE));
+            req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
+            */
 
+            //WITH GOOD PAGINATION
+            List<Trail> trails = trailDao.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
 
-                req.setAttribute("trails", trails);
-                req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
-            }
+            int rows = trailDao.getNumberOfTrails();
+
+            //Param for the pagination
+            req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows, Consts.ELEMENT_PER_PAGE));
+            req.setAttribute(Consts.CURRENT_PAGE, currentPage);
+            req.setAttribute(Consts.ELEM_PER_PAGE_JSP, Consts.ELEMENT_PER_PAGE);
+
+            req.setAttribute("trails", trails);
+            req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
         }
     }
 

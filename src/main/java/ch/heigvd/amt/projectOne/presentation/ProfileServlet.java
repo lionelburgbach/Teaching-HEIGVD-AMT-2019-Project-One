@@ -1,6 +1,6 @@
 package ch.heigvd.amt.projectOne.presentation;
 
-import ch.heigvd.amt.projectOne.buisness.UpdateUser;
+import ch.heigvd.amt.projectOne.business.UpdateUser;
 import ch.heigvd.amt.projectOne.model.User;
 import ch.heigvd.amt.projectOne.utils.Consts;
 import ch.heigvd.amt.projectOne.integration.UsersDaoLocal;
