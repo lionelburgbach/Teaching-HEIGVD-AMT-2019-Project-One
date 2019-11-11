@@ -55,7 +55,7 @@ Pour avoir la bonne pagination, il suffit de lancer le script war.sh et de g√©n√
 ### Links To our Markdown Project
 [Report](doc/Report.md)
 
-[Test procedure](doc/strategieDeTest.md)
+[Testing Strategy](doc/strategieDeTest.md)
 
 ## Objectives
 
