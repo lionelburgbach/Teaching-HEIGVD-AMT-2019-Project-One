@@ -14,7 +14,8 @@ Si le script contenant les données mysql (docker/dockerTrail/images/mysql/b_tra
 
 Pour se rendre sur l'application, il faut se rendre sur l'url suivant http://localhost:9090/projectOne/trail
 
-**Compte **:
+##### Compte :
+
 user: lionel.burgbacher@heig-vd.ch mdp: lionel
 user: guillaume.blanco@heig-vd.ch mdp: guillaume
 
@@ -44,6 +45,8 @@ Il suffit maintenant d'utiliser la commande depuis le dossier contenat le fichie
 `mvn clean test`
 
 ### Links To our Markdown Project
+[Report](doc/Report.md)
+
 [Test procedure](doc/procedureDeTest.md)
 
 ## Objectives
