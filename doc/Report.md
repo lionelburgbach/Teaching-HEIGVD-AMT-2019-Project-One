@@ -25,7 +25,6 @@ Nous avons créer un site permettant à des utilisateurs de créer des sessions 
 <div style="text-align:center"><font size="-1">Page de modification de profil</font></div>
 
 
-
 ### Description fonctionnelle
 
 #### Page Trail (avant connexion) :
@@ -81,3 +80,19 @@ L'entité registration est le lien entre nos deux première entités. Elle est c
 
 
 ![](Images/entites.jpg)
+
+
+
+### Implémentation
+
+Notre application comporte trois grandes parties. Une partie **model** qui comporte les classes représentant nos différentes entités. Une partie **integration** qui comporte nos différentes DAO et donc les interactions avec la base de données. Une partie **presentation**  qui comporte nos différents servlets qui ont le rôle de contrôleur. Ils vont dispatcher le user sur les différents JSP et vont appliquer le filtre pour vérifier les autorisations et l'authentification. 
+
+Nous avons aussi deux autres plus petites parties. Une partie **business** qui comporte des classes nous permettant de faire différentes vérifications et d'informer l'utilisateur lorsque cela est opportun. Une partie **utils** qui comporte nos utilitaires tel que la création de la pagination, la classe gérant les dates ou encore le hashage des mots de passes.
+
+Nous avons utilisé un bootstrap (Grayscale) pour enjoliver le rendu de notre application.
+
+Nous avons dû au fur est à mesure du projet élaguer ce dernier pour rendre une application fonctionnel à la fin du temps imparti. Nous avons notamment supprimer la partie résultats de notre application. Nous voulions, dans le cadre de randonnées sportive, qu'un admin puisse rentré les résultats des courses et avoir un affichage de ces derniers. Cela nous demandait trop de temps, nous l'avons donc simplement supprimé. Nous voulions aussi que l'utilisateur possède une photo de profil. 
+
+À l'heure actuelle, il est possible d'upload une photo (stocké au format binaire dans la base de données) mais nous n'avons pas eu le temps d'afficher cette dernière sur notre application. Nous avons décider de laisser cela en l'état pour une possible amélioration future.
+
+Nous avons aussi décidé que le prénom, le nom, la date de naissance et la photo d'une personne étaient des données publiques qui permettaient aux utilisateurs de ce faire une idée des personnes avec qui ils allaient partager la randonnée. Et que d'autres informations comme l'email ou le password devaient rester privé.
