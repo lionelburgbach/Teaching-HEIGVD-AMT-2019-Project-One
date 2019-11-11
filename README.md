@@ -62,19 +62,7 @@ Pour avoir la bonne pagination, il suffit de lancer le script war.sh et de g√©n√
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+</br></br></br></br></br>
 
 
 
