@@ -45,29 +45,38 @@ public class TrailServlet extends HttpServlet {
             req.setAttribute(Consts.CURRENT_PAGE, currentPage);
             req.setAttribute(Consts.ELEM_PER_PAGE_JSP, Consts.ELEMENT_PER_PAGE);
 
-            //LIST WITH NO PAGINATION
-            //List<Trail> trails = trailDao.allTrailToComeWithNoReg(user.getId());
-
             req.setAttribute("trails", trails);
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
 
         } else {
 
-            //LIST WITH PAGINATION
-            List<Trail> trails = trailDao.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
+            //To test with Jmeter we will send some info in the url
+            /////////////////////////////////////////////////////////////////////////////////////////
+            if(req.getParameter("number")!= null) {
+                int nbr = Integer.parseInt(req.getParameter("number"));
+                List<Trail> trails = trailDao.allTrailPagination(currentPage, nbr);
+                int rows = trailDao.getNumberOfTrails();
+                if(nbr > rows){ nbr = rows; }
+                req.setAttribute(Consts.NO_OF_PAGES, nbr);
+                req.setAttribute("trails", trails);
+                req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
+            }
+            /////////////////////////////////////////////////////////////////////////////////////////
+            else {
+                //LIST WITH PAGINATION
+                List<Trail> trails = trailDao.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
 
-            int rows = trailDao.getNumberOfTrails();
+                int rows = trailDao.getNumberOfTrails();
 
-            //Param for the pagination
-            req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows, Consts.ELEMENT_PER_PAGE));
-            req.setAttribute(Consts.CURRENT_PAGE, currentPage);
-            req.setAttribute(Consts.ELEM_PER_PAGE_JSP , Consts.ELEMENT_PER_PAGE);
+                //Param for the pagination
+                req.setAttribute(Consts.NO_OF_PAGES, Pagination.getNumberPages(rows, Consts.ELEMENT_PER_PAGE));
+                req.setAttribute(Consts.CURRENT_PAGE, currentPage);
+                req.setAttribute(Consts.ELEM_PER_PAGE_JSP, Consts.ELEMENT_PER_PAGE);
 
-            //LIST WITH NO PAGINATION
-            //List<Trail> trails = trailDao.allTrail();
 
-            req.setAttribute("trails", trails);
-            req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
+                req.setAttribute("trails", trails);
+                req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
+            }
         }
     }
 
