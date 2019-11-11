@@ -12,3 +12,4 @@ buildNumber.properties
 !/.mvn/wrapper/maven-wrapper.jar
 .idea
 projectOne.iml
+src.tar.gz
