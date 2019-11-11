@@ -2,7 +2,7 @@
 
 ### Description globale
 
-Nous avons créer un site permettant à des utilisateurs de créer des sessions de randonnée et de pouvoir s'y inscrire. Le client arrive sur une première page qui lui montre les différentes randonnées auxquelles il pourra s'inscrire s'il crée un compte. Après s'est inscrit au site puis s'est connecté, l'utilisateur peut en plus de voir les différentes randonnées, s'inscrire à ces dernières et voir quels autres utilisateurs y sont déjà inscrit. Il a aussi la possibilité de changer ses informations grâce à une page de profil. La page home lui permet de voir à quelle randonnée(s) il s'est inscrit et bien évidemment de pouvoir se désinscrire. Finalement, il peut se délogger de l'application.
+Nous avons créer un site permettant à des utilisateurs de créer des sessions de randonnée et de pouvoir s'y inscrire. Le client arrive sur une première page qui lui montre les différentes randonnées auxquelles il pourra s'inscrire s'il crée un compte. Après s'être inscrit au site puis s'être connecté, l'utilisateur peut en plus de voir les différentes randonnées, s'inscrire à ces dernières et voir quels autres utilisateurs y sont déjà inscrit. Il a aussi la possibilité de changer ses informations grâce à une page de profil. La page home lui permet de voir à quelle randonnée(s) il s'est inscrit et bien évidemment de pouvoir se désinscrire. Finalement, il peut se délogger de l'application.
 
 ![](Images/p1_trail.png)  
 
@@ -23,7 +23,6 @@ Nous avons créer un site permettant à des utilisateurs de créer des sessions 
 ![](Images/profile.png)
 
 <div style="text-align:center"><font size="-1">Page de modification de profil</font></div>
-
 ### Description fonctionnelle
 
 #### Page Trail (avant connexion) :
@@ -36,7 +35,7 @@ Cette page permet à l'utilisateur de se connecter s'il possède un compte ou de
 
 #### Page Register :
 
-Cette page permet à l'utilisateur de s'enregistrer en fournissant son email (utilisé comme identifiant), son nom, son prénom, son password, une confirmation de ce dernier et une date de naissance.
+Cette page permet à l'utilisateur de s'enregistrer en fournissant son email (unique), son nom, son prénom, son password, une confirmation de ce dernier et une date de naissance.
 
 #### Page Trail (après connexion) :
 

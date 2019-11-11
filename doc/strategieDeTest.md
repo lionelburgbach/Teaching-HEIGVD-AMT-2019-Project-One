@@ -1,16 +1,16 @@
 # Stratégie de test
 
-Pour lancer les tests JUnit, Mockito & Arquillian, il vous faut vous placer dans la racine du projet et de lancer la commande suivante : `mvn clean test`
+Pour lancer les tests JUnit, Mockito & Arquillian, il vous faut vous placer dans la racine du projet et de lancer la commande suivante : `mvn clean test` après avoir build la topologie dockerTest.
 
 ## Test JUnit
 
-Nous avons testé nos classes model et nos classes utilitaires à l'aide de tests unitaire JUnit. Les tests unitaires nous permette de vérifier localement que l'implémentation de nos différentes méthodes sont correct et ne comportent pas d'effet de bord. Tous les effets de bord possible ne sont clairement pas tous testé dans nos tests, cela demanderait à lui seul beaucoup trop de temps. Nous nous sommes donc concentré sur les points que nous trouvions les plus importants (tester le hashage des mots de passes ou les tests concernant la pagination).
+Nous avons testé nos classes model et nos classes utilitaires à l'aide de tests unitaires JUnit. Les tests unitaires nous permettent de vérifier localement que l'implémentation de nos différentes méthodes sont correctes et ne comportent pas d'effet de bord. Tous les effets de bord possible ne sont clairement pas tous testé dans nos tests, cela demanderait à lui seul beaucoup trop de temps. Nous nous sommes donc concentré sur les points que nous trouvions les plus importants (tester le hashage des mots de passes ou les tests concernant la pagination).
 
 ## Test Mockito
 
 Pour tester nos servlets, nous avons utilisé le framework Mockito.  Nous avons donc testé la classe login à l'aide de ce dernier. Si le temps nous l'avait permis, il aurait été intéressant de pouvoir tester tous nos servlets pour vérifier qu'aucun problème ne se soit glisser dans notre implémentation.
 
-Mockito est très intéressant pour automatiser nos tests en créant de "faux objets" que nous pouvons utiliser dans nos servlets. Il demande cependant énormément de code (Exemple : il faut créer des mocks de tous les objets qui seront appelé dans la méthode que nous voulons tester sous peine de recevoir une NullPointerException).
+Mockito est très intéressant pour automatiser nos tests en créant de "faux objets" que nous pouvons utiliser dans nos servlets. Il demande cependant énormément de code (Exemple : il faut créer des mocks de tous les objets qui seront appelé dans la méthode que nous voulons tester sous peine de recevoir un NullPointerException).
 
 ## Test Arquillian
 

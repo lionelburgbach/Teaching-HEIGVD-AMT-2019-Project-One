@@ -44,7 +44,7 @@ docker/dockerTest/topologies/
 Pour lancer l'infra, on utilise la commande : 
 `docker-compose up --build`
 
-Il suffit maintenant d'utiliser la commande depuis le dossier contenat le fichier pom.xml (dossier racine)
+Il suffit maintenant d'utiliser la commande depuis le dossier contenant le fichier pom.xml (dossier racine)
 
 `mvn clean test`
 
