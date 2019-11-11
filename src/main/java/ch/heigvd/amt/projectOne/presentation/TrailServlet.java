@@ -64,8 +64,8 @@ public class TrailServlet extends HttpServlet {
             req.setAttribute("trails", trails.subList(1, Consts.ELEMENT_PER_PAGE));
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
             */
-            //WITH GOOD PAGINATION
 
+            //WITH GOOD PAGINATION
             List<Trail> trails = trailDao.allTrailPagination(currentPage, Consts.ELEMENT_PER_PAGE);
 
             int rows = trailDao.getNumberOfTrails();
@@ -77,7 +77,6 @@ public class TrailServlet extends HttpServlet {
 
             req.setAttribute("trails", trails);
             req.getRequestDispatcher(Consts.JSP_TRAIL).forward(req, resp);
-
         }
     }
 
