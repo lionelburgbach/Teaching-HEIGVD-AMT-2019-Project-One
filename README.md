@@ -17,6 +17,7 @@ Pour se rendre sur l'application, il faut se rendre sur l'url suivant http://loc
 ##### Compte :
 
 user: lionel.burgbacher@heig-vd.ch mdp: lionel
+
 user: guillaume.blanco@heig-vd.ch mdp: guillaume
 
 ##### Script python pour générer les données 
@@ -24,7 +25,9 @@ user: guillaume.blanco@heig-vd.ch mdp: guillaume
 Pour générer les données, nous utilisons un script python qui génère les utilisateurs, les trails et les inscriptions en fonction du nombre de trails et d'utilisateurs. (le nombre de trail et user est codé en dure dans le script, 2 utilisateurs et quelques trails sont aussi codé en dure). On utilise SHA-512 dans le script ainsi que dans l'application, ainsi il y a une différence entre la version python et java, il n'est donc possible de se connecter qu'avec les comptes lionel.burgbacher@heig-vd.ch et guillaume.blanco@heig-vd.ch.
 
 Le script se trouve dans le dossier python. Pour le lancer (après avoir changé les paramètres codés en dur dans le script) il suffit d'utiliser la commande : (Il est possible de devoir installer quelques libraires comme faker, names, hashlib)
+
 `python trailUserReg.py` 
+
 Il suffit maintenat de copier le fichier générer b_trail.sql dans le dossier docker/dockerTrail/images/mysql/b_trail.sql
 
 Il persiste encore un problème, il est possible que deux adresses email soient pareilles ce qui est impossible
