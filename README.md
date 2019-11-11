@@ -1,6 +1,6 @@
 # Teaching-HEIGVD-AMT-2019-Project-One
 
-##Links To our Markdown Project
+## Links To our Markdown Project
 
 [Test procedure](doc/procedureDeTest.md)
 
